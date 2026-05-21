@@ -1,0 +1,31 @@
+---
+import Base from "../../../layouts/Base.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects");
+  return projects.map(p => ({ params: { id: p.id }, props: { project: p } }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+---
+<Base title={project.data.title}>
+  <h1>{project.data.title}</h1>
+  <p class="meta">
+    {project.data.status === "active" ? " Active" : " Past"} ·
+    {project.data.startYear}{project.data.endYear ? `–${project.data.endYear}` : "–present"}
+    {project.data.funder && ` · Funded by: ${project.data.funder}`}
+    {project.data.principalInvestigator && ` · PI: ${project.data.principalInvestigator}`}
+  </p>
+
+  <div class="card prose">
+    <Content />
+  </div>
+
+  {project.data.newsLink && (
+    <p style="margin-top:1rem;">
+      <a href={project.data.newsLink} style="color:#0066cc;">Related news →</a>
+    </p>
+  )}
+</Base>

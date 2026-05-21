@@ -1,0 +1,26 @@
+---
+import Base from "../../layouts/Base.astro";
+import SectionNews from "../../components/SectionNews.astro";
+const base = import.meta.env.BASE_URL;
+---
+<Base title="Research">
+  <h1>Research</h1>
+  <p>Overview of the institute's research activities, projects, publications, and ethics committee.</p>
+
+  <div style="display:grid; grid-template-columns: repeat(auto-fit,minmax(200px,1fr)); gap:1rem; margin-top:1.5rem;">
+    {[
+      { label: "Research Projects", href: `${base}/research/projects`, desc: "Active and past projects" },
+      { label: "Publications",      href: `${base}/research/publications`, desc: "Scientific articles via SICRIS" },
+      { label: "Ethics Committee",  href: `${base}/research/ethics`, desc: "Mandate, operations and decisions" },
+    ].map(item => (
+      <a href={item.href} style="text-decoration:none;">
+        <div class="card" style="height:100%;">
+          <h3 style="margin-top:0; color:#0066cc;">{item.label}</h3>
+          <p style="margin:0;">{item.desc}</p>
+        </div>
+      </a>
+    ))}
+  </div>
+
+  <SectionNews tag="scientific" label="Research News" />
+</Base>

@@ -1,0 +1,18 @@
+---
+import Base from "../../layouts/Base.astro";
+import SectionNews from "../../components/SectionNews.astro";
+import { getCollection } from "astro:content";
+
+const staff = await getCollection("staff");
+const base = import.meta.env.BASE_URL;
+---
+<Base title="Staff">
+  <h1>Staff</h1>
+  {staff.map(p => (
+    <div class="card">
+      <h3><a href={`${base}/staff/${p.id}`}>{p.data.name}</a></h3>
+      <p class="meta">{p.data.role}{p.data.email && ` · ${p.data.email}`}</p>
+    </div>
+  ))}
+  <SectionNews tag="interest-groups" label="Related News" />
+</Base>

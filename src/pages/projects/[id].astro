@@ -1,0 +1,24 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects");
+  return projects.map(p => ({ params: { id: p.id }, props: { project: p } }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+const statusLabel: Record<string, string> = {
+  active: "Activo", completed: "Completado", paused: "Pausado"
+};
+---
+<Base title={project.data.title}>
+  <h1>{project.data.title}</h1>
+  <p class="meta" style="margin-bottom:1rem;">
+    {statusLabel[project.data.status]} · Desde {project.data.startYear}
+  </p>
+  <div class="card prose">
+    <Content />
+  </div>
+</Base>

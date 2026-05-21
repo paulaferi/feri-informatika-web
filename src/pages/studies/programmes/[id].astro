@@ -1,0 +1,25 @@
+---
+import Base from "../../../layouts/Base.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const programmes = await getCollection("studyProgrammes");
+  return programmes.map(p => ({ params: { id: p.id }, props: { programme: p } }));
+}
+
+const { programme } = Astro.props;
+const { Content } = await render(programme);
+---
+<Base title={programme.data.title}>
+  <h1>{programme.data.title}</h1>
+  <p class="meta">
+    {programme.data.type} · {programme.data.duration} years · {programme.data.ects} ECTS
+    {programme.data.scope && ` · ${programme.data.scope}`}
+  </p>
+  <div class="card prose"><Content /></div>
+  {programme.data.externalUrl && (
+    <p><a href={programme.data.externalUrl} target="_blank" style="color:#0066cc;">
+      Full programme details on moja.um.si →
+    </a></p>
+  )}
+</Base>

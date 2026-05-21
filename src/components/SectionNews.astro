@@ -1,0 +1,36 @@
+---
+import { getCollection } from "astro:content";
+
+interface Props {
+  tag: string;
+  label?: string;
+}
+
+const { tag, label = "Related News" } = Astro.props;
+const base = import.meta.env.BASE_URL;
+
+type NewsTag = "interest-groups" | "scientific" | "project" | "student" | "conference" | "professional" | "awards";
+
+const allNews = await getCollection("news");
+const filtered = allNews
+  .filter(n => {
+    const tags = Array.isArray(n.data.tags) ? n.data.tags : [n.data.tags];
+    return tags.includes(tag as NewsTag);
+  })
+  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
+  .slice(0, 5);
+---
+
+{filtered.length > 0 && (
+  <div class="section-news">
+    <h2>{label}</h2>
+    <ul>
+      {filtered.map(n => (
+        <li>
+          <span class="date">{new Date(n.data.date).toLocaleDateString("en-GB") + " "}</span>
+          <a href={`${base}/news/${n.id}`}>{n.data.title}</a>
+        </li>
+      ))}
+    </ul>
+  </div>
+)}

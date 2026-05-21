@@ -1,0 +1,59 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const labs = await getCollection("laboratories");
+  return labs.map(lab => ({ params: { id: lab.id }, props: { lab } }));
+}
+
+const { lab } = Astro.props;
+const { Content } = await render(lab);
+const base = import.meta.env.BASE_URL;
+
+const allStaff = await getCollection("staff");
+const members = allStaff.filter(s =>
+  (lab.data.members ?? []).includes(s.id)
+);
+---
+<Base title={lab.data.name}>
+  <h1>{lab.data.name}{lab.data.acronym && ` (${lab.data.acronym})`}</h1>
+  <p>{lab.data.description}</p>
+
+  {lab.data.researchAreas?.length > 0 && (
+    <>
+      <h2>Research Areas</h2>
+      <ul style="padding-left:1.4rem; color:#444; line-height:2;">
+        {lab.data.researchAreas.map((a: string) => <li>{a}</li>)}
+      </ul>
+    </>
+  )}
+
+  {members.length > 0 && (
+    <>
+      <h2>Laboratory Members</h2>
+      <div>
+        {members.map(m => (
+          <div class="card" style="display:flex; gap:1rem; align-items:center; padding:0.9rem 1.2rem;">
+            <div>
+              <a href={`${base}/staff/${m.id}`} style="font-weight:500; color:#1a1a2e; text-decoration:none;">
+                {m.data.name}
+              </a>
+              <p class="meta" style="margin:0;">{m.data.role}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </>
+  )}
+
+  <div class="prose" style="margin-top:1.5rem;"><Content /></div>
+
+  {lab.data.externalUrl && (
+    <p style="margin-top:1.5rem;">
+      <a href={lab.data.externalUrl} target="_blank" style="color:#0066cc;">
+        Laboratory website →
+      </a>
+    </p>
+  )}
+</Base>

@@ -1,0 +1,60 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const staff = await getCollection("staff");
+  return staff.map(p => ({ params: { id: p.id }, props: { person: p } }));
+}
+
+const { person } = Astro.props;
+const { Content } = await render(person);
+---
+<Base title={person.data.name}>
+
+  <div style="display:flex; gap:2rem; align-items:flex-start; flex-wrap:wrap; margin-bottom:1.5rem;">
+    {person.data.photo && (
+  <img src={typeof person.data.photo === "string" ? person.data.photo : (person.data.photo as any).src}
+       alt={person.data.name}
+       style="width:160px; height:160px; object-fit:cover; border-radius:8px; border:1px solid #ddd;" />
+)}
+    <div>
+      <h1 style="margin-bottom:0.3rem;">{person.data.name}</h1>
+      <p class="meta" style="font-size:1rem; margin-bottom:1rem;">{person.data.role}</p>
+      <ul class="contact-info">
+        {person.data.email    && <li>📧 <a href={`mailto:${person.data.email}`}>{person.data.email}</a></li>}
+        {person.data.phone    && <li>📞 {person.data.phone}</li>}
+        {person.data.office   && <li>🚪 Office: {person.data.office}</li>}
+        {person.data.officeHours && <li>🕐 Office hours: {person.data.officeHours}</li>}
+      </ul>
+    </div>
+  </div>
+
+  {person.data.researchAreas && person.data.researchAreas.length > 0 && (
+  <div class="card">
+    <h2>Main Areas of Research</h2>
+    <ul style="padding-left:1.4rem; line-height:2; color:#444;">
+      {person.data.researchAreas.map((a: string) => <li>{a}</li>)}
+    </ul>
+  </div>
+)}
+
+  {person.data.education && (
+    <div class="card prose">
+      <h2>Education</h2>
+      <Fragment set:html={person.data.education} />
+    </div>
+  )}
+
+  {person.data.achievements && (
+    <div class="card prose">
+      <h2>Achievements</h2>
+      <Fragment set:html={person.data.achievements} />
+    </div>
+  )}
+
+  <div class="card prose">
+    <h2>Research Work & Publications</h2>
+    <Content />
+  </div>
+</Base>

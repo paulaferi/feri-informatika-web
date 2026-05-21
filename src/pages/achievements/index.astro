@@ -1,0 +1,66 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getCollection } from "astro:content";
+
+const all = (await getCollection("achievements"))
+  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+
+const tags = ["student","conference","scientific","professional","project","awards","interest-groups"];
+---
+<Base title="Achievements & Activities">
+  <h1>Achievements & Activities</h1>
+
+  <div id="tag-filters" style="margin-bottom:1.5rem; display:flex; flex-wrap:wrap; gap:8px;">
+    <button data-tag="" class="tag-btn active">All</button>
+    {tags.map(t => <button data-tag={t} class="tag-btn">{t}</button>)}
+  </div>
+
+  <p id="empty-msg" style="color:#888; display:none;">No entries for this tag.</p>
+
+  <div id="list">
+    {all.map(a => (
+      <div class="card achievement-item" data-tags={Array.isArray(a.data.tags) ? a.data.tags.join(",") : a.data.tags}>
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.5rem;">
+          <h3 style="margin-top:0;">{a.data.title}</h3>
+          <span class="meta">{new Date(a.data.date).toLocaleDateString("en-GB")}</span>
+        </div>
+        <p>{a.data.description}</p>
+        <div>
+          {(Array.isArray(a.data.tags) ? a.data.tags : [a.data.tags]).map((t: string) => (
+            <button class="tag tag-btn-inline" data-tag={t}>{t}</button>
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+</Base>
+
+<style>
+  .tag-btn { padding:4px 14px; border-radius:20px; border:1px solid #1a5276;
+             background:transparent; color:#1a5276; font-size:0.82rem; cursor:pointer; }
+  .tag-btn.active { background:#1a5276; color:#fff; }
+  .tag-btn-inline { background:#e8f0fe; color:#1a5276; border:none; border-radius:4px;
+                    padding:2px 8px; font-size:0.78rem; margin-right:4px; cursor:pointer; }
+</style>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>(".tag-btn");
+  const inlines = document.querySelectorAll<HTMLButtonElement>(".tag-btn-inline");
+  const items   = document.querySelectorAll<HTMLElement>(".achievement-item");
+  const empty   = document.getElementById("empty-msg")!;
+
+  function filter(tag: string) {
+    buttons.forEach(b => b.classList.toggle("active", b.dataset.tag === tag));
+    let visible = 0;
+    items.forEach(item => {
+      const itemTags = item.dataset.tags?.split(",") ?? [];
+      const show = tag === "" || itemTags.includes(tag);
+      item.style.display = show ? "block" : "none";
+      if (show) visible++;
+    });
+    empty.style.display = visible === 0 ? "block" : "none";
+  }
+
+  buttons.forEach(b => b.addEventListener("click", () => filter(b.dataset.tag ?? "")));
+  inlines.forEach(b => b.addEventListener("click", () => filter(b.dataset.tag ?? "")));
+</script>

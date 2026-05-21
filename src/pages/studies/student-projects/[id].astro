@@ -1,0 +1,22 @@
+---
+import Base from "../../../layouts/Base.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("studentProjects");
+  return projects.map(p => ({ params: { id: p.id }, props: { project: p } }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+---
+<Base title={project.data.title}>
+  <h1>{project.data.title}</h1>
+  <p class="meta">{project.data.student} · {project.data.year}</p>
+  <div class="card prose"><Content /></div>
+  {project.data.externalUrl && (
+    <p><a href={project.data.externalUrl} target="_blank" style="color:#0066cc;">
+      View on praktik.um.si →
+    </a></p>
+  )}
+</Base>

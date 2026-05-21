@@ -1,0 +1,29 @@
+---
+import Base from "../layouts/Base.astro";
+import SectionNews from "../components/SectionNews.astro";
+---
+<Base title="Research Group">
+  <h1>Research Group</h1>
+
+  <div class="card">
+    <h2>Research Areas</h2>
+    <p>
+      The Institute of Informatics covers a wide range of research areas including
+      distributed systems, artificial intelligence, computer networks, software engineering,
+      and human-computer interaction.
+    </p>
+  </div>
+
+  <div class="card" style="margin-top:1rem;">
+    <h2>SICRIS Profile</h2>
+    <p>
+      Full research group information, including members and bibliographic records,
+      is available on the national SICRIS system.
+    </p>
+    <a href="https://www.sicris.si" target="_blank" style="color:#0066cc;">
+      View on SICRIS →
+    </a>
+  </div>
+
+  <SectionNews tag="scientific" label="Scientific News" />
+</Base>

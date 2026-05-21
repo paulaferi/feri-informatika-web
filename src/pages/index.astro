@@ -1,0 +1,100 @@
+---
+import Base from "../layouts/Base.astro";
+import SectionNews from "../components/SectionNews.astro";
+import { getCollection } from "astro:content";
+
+const base = import.meta.env.BASE_URL;
+const labs = await getCollection("laboratories");
+const groups = await getCollection("interestGroups");
+const staff = await getCollection("staff");
+---
+<Base title="II — Institute of Informatics">
+
+  <h1>Institute of Informatics</h1>
+  <p class="meta">Faculty of Electrical Engineering, Computer Science and Informatics · University of Maribor</p>
+
+  <div class="card" style="margin-top:1.5rem;">
+    <h2 style="margin-top:0;">Contact</h2>
+    <ul class="contact-info">
+      <li>Email: <a href="mailto:informatika@um.si">informatika@um.si</a></li>
+      <li>Address: Koroška cesta 46, 2000 Maribor, Slovenia</li>
+      <li>Phone: (02) 220 7359</li>
+      <li>Web: <a href="https://ii.feri.um.si" target="_blank">ii.feri.um.si</a></li>
+    </ul>
+  </div>
+
+  <!-- Laboratories -->
+  <h2>Laboratories</h2>
+  <p>The institute hosts several specialised research laboratories:</p>
+  <div>
+    {labs.map(lab => (
+      <div class="card">
+        <h3>
+          <a href={`${base}/laboratories/${lab.id}`} style="color:#1a1a2e; text-decoration:none;">
+            {lab.data.name}
+          </a>
+          {lab.data.acronym && <span class="meta" style="margin-left:6px;">({lab.data.acronym})</span>}
+        </h3>
+        <p>{lab.data.description}</p>
+      </div>
+    ))}
+  </div>
+
+  <!-- Interest Groups -->
+  <h2>Interest Groups</h2>
+  <div>
+    {groups.map(g => (
+      <div class="card">
+        <h3>
+          <a href={`${base}/interest-groups/${g.id}`} style="color:#1a1a2e; text-decoration:none;">
+            {g.data.name}
+          </a>
+        </h3>
+        <p>{g.data.description}</p>
+        {g.data.url && (
+          <a href={g.data.url} target="_blank" style="font-size:0.88rem; color:#888;">
+            External link ↗
+          </a>
+        )}
+      </div>
+    ))}
+  </div>
+
+  <!-- Staff -->
+  <h2>Staff</h2>
+  <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:1rem;">
+    {staff.map(p => (
+      <div class="card" style="display:flex; gap:1rem; align-items:flex-start;">
+        {p.data.photo && (
+          <img
+            src={typeof p.data.photo === "string" ? p.data.photo : (p.data.photo as any).src}
+            alt={p.data.name}
+            style="width:56px; height:56px; object-fit:cover; border-radius:50%; border:1px solid #ddd; flex-shrink:0;"
+          />
+        )}
+        {!p.data.photo && (
+          <div style="width:56px; height:56px; border-radius:50%; background:#e8f0fe;
+                      display:flex; align-items:center; justify-content:center;
+                      font-size:1.2rem; color:#1a5276; flex-shrink:0;">
+            {p.data.name.charAt(0)}
+          </div>
+        )}
+        <div style="min-width:0;">
+          <a href={`${base}/staff/${p.id}`}
+             style="font-weight:500; color:#1a1a2e; text-decoration:none; font-size:0.95rem;">
+            {p.data.name}
+          </a>
+          <p class="meta" style="margin:2px 0 4px;">{p.data.role}</p>
+          {p.data.email && (
+            <a href={`mailto:${p.data.email}`}
+               style="font-size:0.8rem; color:#0066cc; word-break:break-all;">
+              {p.data.email}
+            </a>
+          )}
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <SectionNews tag="interest-groups" label="Interest Group News" />
+</Base>

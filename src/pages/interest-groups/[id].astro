@@ -1,0 +1,28 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const groups = await getCollection("interestGroups");
+  return groups.map(g => ({ params: { id: g.id }, props: { group: g } }));
+}
+
+const { group } = Astro.props;
+const { Content } = await render(group);
+---
+<Base title={group.data.name}>
+  <h1>{group.data.name}</h1>
+  <p>{group.data.description}</p>
+
+  <div class="card prose" style="margin-top:1.5rem;">
+    <Content />
+  </div>
+
+  {group.data.url && (
+    <p style="margin-top:1rem;">
+      <a href={group.data.url} target="_blank" style="color:#0066cc;">
+        Visit group website →
+      </a>
+    </p>
+  )}
+</Base>

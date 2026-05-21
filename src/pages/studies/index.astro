@@ -1,0 +1,43 @@
+---
+import Base from "../../layouts/Base.astro";
+import SectionNews from "../../components/SectionNews.astro";
+import { getCollection } from "astro:content";
+
+const base = import.meta.env.BASE_URL;
+const programmes = await getCollection("studyProgrammes");
+const projects   = await getCollection("studentProjects");
+---
+<Base title="Studies IPT and ITK">
+  <h1>Studies IPT and ITK</h1>
+  <p>
+    The institute offers undergraduate and postgraduate study programmes in
+    Information Technologies (IPT) and Information and Communication Technologies (ITK).
+  </p>
+
+  <h2>Study Programmes</h2>
+  {programmes.map(p => (
+    <div class="card">
+      <h3><a href={`${base}/studies/programmes/${p.id}`}>{p.data.title}</a></h3>
+      <p class="meta">
+        {p.data.type} · {p.data.duration} year{p.data.duration > 1 ? "s" : ""} · {p.data.ects} ECTS
+        {p.data.scope && ` · ${p.data.scope}`}
+      </p>
+      {p.data.externalUrl && (
+        <a href={p.data.externalUrl} target="_blank" style="font-size:0.85rem; color:#0066cc;">
+          View on moja.um.si →
+        </a>
+      )}
+    </div>
+  ))}
+
+  <h2>Student Projects</h2>
+  {projects.map(p => (
+    <div class="card">
+      <h3><a href={`${base}/studies/student-projects/${p.id}`}>{p.data.title}</a></h3>
+      <p class="meta">{p.data.student} · {p.data.year}</p>
+      <p>{p.data.description}</p>
+    </div>
+  ))}
+
+  <SectionNews tag="student" label="Student News" />
+</Base>

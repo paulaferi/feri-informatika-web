@@ -1,0 +1,38 @@
+---
+import Base from "../../layouts/Base.astro";
+import SectionNews from "../../components/SectionNews.astro";
+import { getCollection } from "astro:content";
+
+const conferences = (await getCollection("conferences"))
+  .sort((a, b) => new Date(b.data.date ?? 0).getTime() - new Date(a.data.date ?? 0).getTime());
+---
+<Base title="Conference Activities">
+  <h1>Conference Activities</h1>
+  <p>
+    The institute actively organises and participates in international scientific conferences
+    in the field of informatics and computer science.
+  </p>
+
+  {conferences.map(c => (
+    <div class="card">
+      <h3>
+        {c.data.name}
+        {c.data.acronym && <span class="meta" style="margin-left:6px;">({c.data.acronym})</span>}
+      </h3>
+      {(c.data.date || c.data.location) && (
+        <p class="meta">
+          {c.data.date && new Date(c.data.date).toLocaleDateString("en-GB")}
+          {c.data.location && ` · ${c.data.location}`}
+        </p>
+      )}
+      <p>{c.data.description}</p>
+      {c.data.url && (
+        <a href={c.data.url} target="_blank" style="font-size:0.85rem; color:#0066cc;">
+          Conference website →
+        </a>
+      )}
+    </div>
+  ))}
+
+  <SectionNews tag="conference" label="Conference News" />
+</Base>

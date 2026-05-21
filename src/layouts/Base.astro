@@ -1,0 +1,99 @@
+---
+interface Props { title: string }
+const { title } = Astro.props;
+const base = import.meta.env.BASE_URL;
+
+const nav = [
+  { label: "II",           href: `${base}/` },
+  { label: "Research Group", href: `${base}/research-group` },
+  { label: "Research",     href: `${base}/research` },
+  { label: "Studies",      href: `${base}/studies` },
+  { label: "Conferences",  href: `${base}/conferences` },
+  { label: "Industry",     href: `${base}/industry` },
+  { label: "Achievements", href: `${base}/achievements` },
+  { label: "News",         href: `${base}/news` },
+];
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>{title} — Institute of Informatics FERI</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, sans-serif; color: #1a1a2e; background: #f8f9fa; }
+
+    /* ── NAV ── */
+    nav { background: #1a1a2e; padding: 0 2rem; display: flex; align-items: stretch; gap: 0; }
+    .brand { color: #fff; font-weight: 700; font-size: 1rem; padding: 1rem 1.5rem 1rem 0;
+             text-decoration: none; margin-right: auto; white-space: nowrap; }
+    nav a.nav-link { color: #c8d0e0; text-decoration: none; font-size: 0.85rem;
+                     padding: 1rem 0.9rem; display: flex; align-items: center;
+                     border-bottom: 3px solid transparent; transition: all .15s; }
+    nav a.nav-link:hover { color: #fff; border-bottom-color: #4a9eff; }
+    nav a.nav-link.active { color: #fff; border-bottom-color: #4a9eff; }
+    .nav-admin { color: #888 !important; font-size: 0.78rem !important; }
+
+    /* ── LAYOUT ── */
+    main { max-width: 1000px; margin: 0 auto; padding: 2.5rem 1.5rem; }
+    h1 { font-size: 1.9rem; margin-bottom: 0.4rem; color: #1a1a2e; }
+    h2 { font-size: 1.25rem; margin: 1.8rem 0 0.7rem; color: #1a1a2e; }
+    h3 { font-size: 1rem; margin: 1.2rem 0 0.4rem; }
+    p  { line-height: 1.7; color: #444; margin-bottom: 0.8rem; }
+
+    /* ── CARDS ── */
+    .card { background: #fff; border: 1px solid #e0e0e0; border-radius: 10px;
+            padding: 1.25rem 1.5rem; margin-bottom: 1rem; }
+    .card h2, .card h3 { margin-top: 0; }
+    .card h2 a, .card h3 a { color: #1a1a2e; text-decoration: none; }
+    .card h2 a:hover, .card h3 a:hover { color: #0066cc; }
+
+    /* ── TAGS ── */
+    .tag { display: inline-block; background: #e8f0fe; color: #1a5276;
+           border-radius: 4px; padding: 2px 9px; font-size: 0.78rem; margin: 2px; }
+
+    /* ── MISC ── */
+    .meta  { font-size: 0.82rem; color: #888; margin-bottom: 0.35rem; }
+    .prose { line-height: 1.75; }
+    .prose h1, .prose h2, .prose h3 { margin: 1.2rem 0 0.5rem; }
+    .prose p  { margin-bottom: 0.9rem; }
+    .prose ul { padding-left: 1.4rem; margin-bottom: 0.9rem; }
+
+    .contact-info { list-style: none; padding: 0; }
+    .contact-info li { padding: 0.3rem 0; color: #444; font-size: 0.95rem; }
+    .contact-info a { color: #0066cc; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin-top: 1rem; }
+    th { background: #f0f4ff; text-align: left; padding: 8px 12px;
+         border-bottom: 2px solid #ddd; font-size: 0.82rem; text-transform: uppercase;
+         letter-spacing: 0.04em; color: #555; }
+    td { padding: 8px 12px; border-bottom: 1px solid #eee; vertical-align: top; }
+
+    .section-news { margin-top: 3rem; padding-top: 1.5rem;
+                    border-top: 1px solid #e0e0e0; }
+    .section-news h2 { font-size: 1rem; color: #666; margin-bottom: 0.8rem; }
+    .section-news ul { list-style: none; padding: 0; }
+    .section-news li { display: flex; gap: 10px; align-items: baseline;
+                       margin-bottom: 0.5rem; }
+    .section-news .date { font-size: 0.78rem; color: #aaa; white-space: nowrap; }
+    .section-news a { color: #1a5276; text-decoration: none; font-size: 0.9rem; }
+    .section-news a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="brand" href={`${base}/`}>II · FERI</a>
+    {nav.map(item => (
+      <a href={item.href}
+         class={`nav-link${Astro.url.pathname.startsWith(item.href) && item.href !== `${base}/` ? ' active' : Astro.url.pathname === item.href ? ' active' : ''}`}>
+        {item.label}
+      </a>
+    ))}
+    <a href={`${base}/admin`} class="nav-link nav-admin">CMS</a>
+  </nav>
+  <main>
+    <slot />
+  </main>
+</body>
+</html>

@@ -1,0 +1,24 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const news = await getCollection("news");
+  return news.map(n => ({ params: { id: n.id }, props: { article: n } }));
+}
+
+const { article } = Astro.props;
+const { Content } = await render(article);
+---
+<Base title={article.data.title}>
+  <div class="meta" style="margin-bottom:0.5rem;">
+    {new Date(article.data.date).toLocaleDateString("es-ES")}
+  </div>
+  <h1 style="margin-bottom:1rem;">{article.data.title}</h1>
+  <div style="margin-bottom:1.5rem;">
+    {article.data.tags.map((t: string) => <span class="tag">{t+ " "}</span>)}
+  </div>
+  <div class="card prose">
+    <Content />
+  </div>
+</Base>
