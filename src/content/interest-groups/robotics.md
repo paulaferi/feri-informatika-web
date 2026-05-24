@@ -1,5 +1,5 @@
 ---
-name: "Robotics Interest Group"
-description: "Students and researchers interested in robotics and autonomous systems."
-url: ""
+name: Skupina za robotiko
+description: Študenti in raziskovalci, ki jih zanimajo robotika in avtonomni sistemi.
+url: ''
 ---

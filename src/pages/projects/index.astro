@@ -18,7 +18,7 @@ const statusLabel: Record<string, string> = {
 };
 ---
 <Base title="Projects">
-  <h1>Proyectos de investigación</h1>
+  <h1>Raziskovalni projekti</h1>
   {projects.map(p => (
     <div class="card">
       <h2><a href={`${base}/projects/${p.id}`}>{p.data.title}</a></h2>
@@ -30,7 +30,7 @@ const statusLabel: Record<string, string> = {
   {projectNews.length > 0 && (
     <div style="margin-top:2.5rem;">
       <h2 style="font-size:1.1rem; margin-bottom:1rem; color:#555; border-top:1px solid #e0e0e0; padding-top:1.5rem;">
-        Noticias relacionadas
+        Povezane novice
       </h2>
       <ul style="list-style:none; padding:0;">
         {projectNews.map(n => (

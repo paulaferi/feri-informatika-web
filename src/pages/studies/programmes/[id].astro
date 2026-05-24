@@ -13,13 +13,13 @@ const { Content } = await render(programme);
 <Base title={programme.data.title}>
   <h1>{programme.data.title}</h1>
   <p class="meta">
-    {programme.data.type} · {programme.data.duration} years · {programme.data.ects} ECTS
+    {programme.data.type} · {programme.data.duration} let · {programme.data.ects} ECTS
     {programme.data.scope && ` · ${programme.data.scope}`}
   </p>
   <div class="card prose"><Content /></div>
   {programme.data.externalUrl && (
     <p><a href={programme.data.externalUrl} target="_blank" style="color:#0066cc;">
-      Full programme details on moja.um.si →
+      Polni podatki o programu na moja.um.si →
     </a></p>
   )}
 </Base>

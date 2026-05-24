@@ -13,9 +13,9 @@ const { Content } = await render(project);
 <Base title={project.data.title}>
   <h1>{project.data.title}</h1>
   <p class="meta">
-    {project.data.status === "active" ? " Active" : " Past"} ·
-    {project.data.startYear}{project.data.endYear ? `–${project.data.endYear}` : "–present"}
-    {project.data.funder && ` · Funded by: ${project.data.funder}`}
+    {project.data.status === "active" ? " Aktivno" : " Preteklost"} ·
+    {project.data.startYear}{project.data.endYear ? `–${project.data.endYear}` : "–danes"}
+    {project.data.funder && ` · Financirano s strani: ${project.data.funder}`}
     {project.data.principalInvestigator && ` · PI: ${project.data.principalInvestigator}`}
   </p>
 
@@ -25,7 +25,7 @@ const { Content } = await render(project);
 
   {project.data.newsLink && (
     <p style="margin-top:1rem;">
-      <a href={project.data.newsLink} style="color:#0066cc;">Related news →</a>
+      <a href={project.data.newsLink} style="color:#0066cc;">Povezane novice →</a>
     </p>
   )}
 </Base>

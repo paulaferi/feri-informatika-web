@@ -7,25 +7,25 @@ const opinions = (await getCollection("ethicsOpinions"))
   .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
 ---
 <Base title="Research Ethics Committee">
-  <h1>Research Ethics Committee</h1>
+  <h1>Odbor za raziskovalno etiko</h1>
 
   <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin:1.5rem 0;">
     <a href={`${base}/research/ethics/mandate`} style="text-decoration:none;">
       <div class="card">
-        <h3 style="margin-top:0; color:#0066cc;">Committee Mandate & Operations</h3>
-        <p>About the commission and its powers.</p>
+        <h3 style="margin-top:0; color:#0066cc;">Naloge in delovanje odbora</h3>
+        <p>O komisiji in njenih pristojnostih.</p>
       </div>
     </a>
     <a href={`${base}/research/ethics/submissions`} style="text-decoration:none;">
       <div class="card">
-        <h3 style="margin-top:0; color:#0066cc;">Submission of Applications</h3>
-        <p>How to submit and committee decisions.</p>
+        <h3 style="margin-top:0; color:#0066cc;">Vložitev vlog in odločitve komisije</h3>
+        <p>Kako oddati vlogo in odločitve komisije.</p>
       </div>
     </a>
   </div>
 
-  <h2>List of Opinions Issued</h2>
-  {opinions.length === 0 && <p class="meta">No opinions recorded yet.</p>}
+  <h2>Seznam mnenj, izdanih s strani komisije</h2>
+  {opinions.length === 0 && <p class="meta">Ni še zabeleženih mnenj.</p>}
   {opinions.length > 0 && (
     <div style="overflow-x:auto;">
       <table style="width:100%; border-collapse:collapse; table-layout:fixed;">
@@ -37,10 +37,10 @@ const opinions = (await getCollection("ethicsOpinions"))
         </colgroup>
         <thead>
           <tr>
-            <th style="text-align:left; padding:10px 12px; background:#f0f4ff; border-bottom:2px solid #ddd; font-size:0.82rem; text-transform:uppercase; letter-spacing:0.04em; color:#555;">Date</th>
-            <th style="text-align:left; padding:10px 12px; background:#f0f4ff; border-bottom:2px solid #ddd; font-size:0.82rem; text-transform:uppercase; letter-spacing:0.04em; color:#555;">Research</th>
-            <th style="text-align:left; padding:10px 12px; background:#f0f4ff; border-bottom:2px solid #ddd; font-size:0.82rem; text-transform:uppercase; letter-spacing:0.04em; color:#555;">Researchers</th>
-            <th style="text-align:left; padding:10px 12px; background:#f0f4ff; border-bottom:2px solid #ddd; font-size:0.82rem; text-transform:uppercase; letter-spacing:0.04em; color:#555;">Decision</th>
+            <th style="text-align:left; padding:10px 12px; background:#f0f4ff; border-bottom:2px solid #ddd; font-size:0.82rem; text-transform:uppercase; letter-spacing:0.04em; color:#555;">Datum</th>
+            <th style="text-align:left; padding:10px 12px; background:#f0f4ff; border-bottom:2px solid #ddd; font-size:0.82rem; text-transform:uppercase; letter-spacing:0.04em; color:#555;">Raziskava</th>
+            <th style="text-align:left; padding:10px 12px; background:#f0f4ff; border-bottom:2px solid #ddd; font-size:0.82rem; text-transform:uppercase; letter-spacing:0.04em; color:#555;">Raziskovalci</th>
+            <th style="text-align:left; padding:10px 12px; background:#f0f4ff; border-bottom:2px solid #ddd; font-size:0.82rem; text-transform:uppercase; letter-spacing:0.04em; color:#555;">Odločitev</th>
           </tr>
         </thead>
         <tbody>

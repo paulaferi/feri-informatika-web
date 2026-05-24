@@ -1,7 +1,7 @@
 ---
-title: "Smart Parking System"
-student: "Jože Kranjc"
+title: Pametni sistem parkiranja
+student: Jože Kranjc
 year: 2024
-description: "IoT-based smart parking management system for urban environments."
-externalUrl: ""
+description: Sistem za pametno upravljanje parkiranja na podlagi interneta stvari (IoT) za mestna okolja.
+externalUrl: ''
 ---

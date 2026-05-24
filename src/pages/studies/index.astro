@@ -8,10 +8,10 @@ const programmes = await getCollection("studyProgrammes");
 const projects   = await getCollection("studentProjects");
 ---
 <Base title="Studies IPT and ITK">
-  <h1>Studies IPT and ITK</h1>
+  <h1>Študij IPT in ITK</h1>
   <p>
-    The institute offers undergraduate and postgraduate study programmes in
-    Information Technologies (IPT) and Information and Communication Technologies (ITK).
+    Inštitut ponuja dodiplomske in podiplomske študijske programe na področju
+    informacijskih tehnologij (IPT) ter informacijskih in komunikacijskih tehnologij (ITK).
   </p>
 
   <h2>Study Programmes</h2>
@@ -19,18 +19,18 @@ const projects   = await getCollection("studentProjects");
     <div class="card">
       <h3><a href={`${base}/studies/programmes/${p.id}`}>{p.data.title}</a></h3>
       <p class="meta">
-        {p.data.type} · {p.data.duration} year{p.data.duration > 1 ? "s" : ""} · {p.data.ects} ECTS
+        {p.data.type} · {p.data.duration} let{p.data.duration > 1 ? "i" : ""} · {p.data.ects} ECTS
         {p.data.scope && ` · ${p.data.scope}`}
       </p>
       {p.data.externalUrl && (
         <a href={p.data.externalUrl} target="_blank" style="font-size:0.85rem; color:#0066cc;">
-          View on moja.um.si →
+          Polni podatki o programu na moja.um.si →
         </a>
       )}
     </div>
   ))}
 
-  <h2>Student Projects</h2>
+  <h2>Študentski projekti</h2>
   {projects.map(p => (
     <div class="card">
       <h3><a href={`${base}/studies/student-projects/${p.id}`}>{p.data.title}</a></h3>

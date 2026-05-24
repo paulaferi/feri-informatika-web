@@ -1,13 +1,13 @@
 ---
-title: AI-powered sensor network
+title: Omrežje senzorjev, ki deluje na podlagi umetne inteligence
 status: active
-description: Research project on smart sensor networks in industrial environments.
+description: Raziskovalni projekt o pametnih senzorskih omrežjih v industrijskih okoljih.
 startYear: 2022
 funder: ''
 principalInvestigator: ''
 newsLink: ''
 ---
 
-This project combines IoT sensor networks with machine learning models
+Ta projekt združuje omrežja senzorjev IoT z modeli strojnega učenja,
 
-to detect anomalies in real time in industrial environments.
+da v industrijskih okoljih v realnem času zazna odstopanja.

@@ -1,9 +1,9 @@
 ---
-title: "Information Technologies (IPT)"
+title: "Informacijska tehnologija (IPT)"
 type: "IPT"
 duration: 3
 ects: 180
-scope: "Full-time"
+scope: "Polni delovni čas"
 externalUrl: ""
 ---
-Bachelor's programme in Information Technologies covering programming, networks and databases.
+Dodiplomski študijski program Informacijske tehnologije, ki zajema programiranje, omrežja in podatkovne baze.

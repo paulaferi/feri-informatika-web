@@ -1,0 +1,30 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getCollection } from "astro:content";
+
+const base = import.meta.env.BASE_URL;
+const groups = await getCollection("interestGroups");
+---
+<Base title="Interest Groups">
+  <h1>Zainteresirane skupine</h1>
+  <p style="color:#555; margin-bottom:1.5rem;">
+    Zainteresirane skupine na Inštitutu za informatiko združujejo študente in raziskovalce
+  okoli skupnih tem ter spodbujajo sodelovanje in izmenjavo znanja tudi zunaj okvira
+  uradnih raziskovalnih projektov.
+  </p>
+
+  <h2 style="font-size:1.05rem; margin-bottom:0.75rem;">
+    Zainteresirane skupine na Inštitutu za informatiko
+  </h2>
+
+  <ul style="padding-left:1.4rem; line-height:2.2;">
+    {groups.map(g => (
+      <li>
+        <a href={`${base}/interest-groups/${g.id}`}
+           style="color:#0066cc; text-decoration:none;">
+          {g.data.name}
+        </a>
+      </li>
+    ))}
+  </ul>
+</Base>

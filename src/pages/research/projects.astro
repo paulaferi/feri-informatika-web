@@ -9,20 +9,20 @@ const active = all.filter(p => p.data.status === "active");
 const past   = all.filter(p => p.data.status === "past");
 ---
 <Base title="Research Projects">
-  <h1>Research Projects</h1>
+  <h1>Raziskovalni projekti</h1>
 
-  <h2>Active Projects</h2>
-  {active.length === 0 && <p class="meta">No active projects listed.</p>}
+  <h2>Aktivni projekti</h2>
+  {active.length === 0 && <p class="meta">Ni aktivnih projektov.</p>}
   {active.map(p => (
     <div class="card">
       <h3><a href={`${base}/research/projects/${p.id}`}>{p.data.title}</a></h3>
-      <p class="meta">Since {p.data.startYear}{p.data.funder && ` · ${p.data.funder}`}</p>
+      <p class="meta">Ker {p.data.startYear}{p.data.funder && ` · ${p.data.funder}`}</p>
       <p>{p.data.description}</p>
     </div>
   ))}
 
-  <h2>Past Projects</h2>
-  {past.length === 0 && <p class="meta">No past projects listed.</p>}
+  <h2>Pretekli projekti</h2>
+  {past.length === 0 && <p class="meta">Ni preteklih projektov.</p>}
   {past.map(p => (
     <div class="card">
       <h3><a href={`${base}/research/projects/${p.id}`}>{p.data.title}</a></h3>
@@ -31,5 +31,5 @@ const past   = all.filter(p => p.data.status === "past");
     </div>
   ))}
 
-  <SectionNews tag="project" label="Project News" />
+  <SectionNews tag="project" label="Novice o projektu" />
 </Base>

@@ -4,14 +4,14 @@ const { title } = Astro.props;
 const base = import.meta.env.BASE_URL;
 
 const nav = [
-  { label: "II",           href: `${base}/` },
-  { label: "Research Group", href: `${base}/research-group` },
-  { label: "Research",     href: `${base}/research` },
-  { label: "Studies",      href: `${base}/studies` },
-  { label: "Conferences",  href: `${base}/conferences` },
-  { label: "Industry",     href: `${base}/industry` },
-  { label: "Achievements", href: `${base}/achievements` },
-  { label: "News",         href: `${base}/news` },
+  { label: "II",              href: `${base}/` },
+  { label: "Raziskovalna skupina",  href: `${base}/research-group` },
+  { label: "Raziskave",        href: `${base}/research` },
+  { label: "Študiji",         href: `${base}/studies` },
+  { label: "Konference",     href: `${base}/conferences` },
+  { label: "Industrija",        href: `${base}/industry` },
+  { label: "Dosežki",    href: `${base}/achievements` },
+  { label: "Novice",            href: `${base}/news` },
 ];
 ---
 <!doctype html>
@@ -19,7 +19,7 @@ const nav = [
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width" />
-  <title>{title} — Institute of Informatics FERI</title>
+  <title>{title} Inštitut za informatiko FERI</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: system-ui, sans-serif; color: #1a1a2e; background: #f8f9fa; }

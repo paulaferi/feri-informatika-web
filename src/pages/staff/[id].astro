@@ -1,5 +1,6 @@
 ---
 import Base from "../../layouts/Base.astro";
+import { Image } from "astro:assets";
 import { getCollection, render } from "astro:content";
 
 export async function getStaticPaths() {
@@ -8,53 +9,85 @@ export async function getStaticPaths() {
 }
 
 const { person } = Astro.props;
-const { Content } = await render(person);
+
+type Section = { key: keyof typeof person.data; label: string };
+const sections: Section[] = [
+  { key: "researchTopics",  label: "Glavne raziskovalne teme" },
+  { key: "publications",    label: "Seznam izbranih publikacij" },
+  { key: "cv",              label: "CV" },
+  { key: "teaching",        label: "Poučevanje" },
+  { key: "projects",        label: "Vodja projekta / koordinator" },
+  { key: "editorial",       label: "Urednik" },
+  { key: "awards",          label: "Nagrade" },
+  { key: "conferenceOrg",   label: "Organizacija konference" },
+  { key: "projectsCollab",  label: "Projekti Sodelovanje" },
+  { key: "reviewerFor",     label: "Recenzent za znanstvene revije" },
+  { key: "certificates",    label: "Potrdila" },
+];
+
+import { marked } from "marked";
 ---
 <Base title={person.data.name}>
 
-  <div style="display:flex; gap:2rem; align-items:flex-start; flex-wrap:wrap; margin-bottom:1.5rem;">
+  <!-- Header -->
+  <div style="display:flex; gap:2rem; align-items:flex-start; flex-wrap:wrap; margin-bottom:2rem;">
     {person.data.photo && (
-  <img src={typeof person.data.photo === "string" ? person.data.photo : (person.data.photo as any).src}
-       alt={person.data.name}
-       style="width:160px; height:160px; object-fit:cover; border-radius:8px; border:1px solid #ddd;" />
-)}
-    <div>
-      <h1 style="margin-bottom:0.3rem;">{person.data.name}</h1>
-      <p class="meta" style="font-size:1rem; margin-bottom:1rem;">{person.data.role}</p>
+      <Image src={person.data.photo} alt={person.data.name}
+             width={160} height={160}
+             style="width:160px; height:160px; object-fit:cover; border-radius:8px;
+                    border:1px solid #ddd; flex-shrink:0;" />
+    )}
+    {!person.data.photo && (
+      <div style="width:160px; height:160px; border-radius:8px; background:#e8f0fe;
+                  display:flex; align-items:center; justify-content:center;
+                  font-size:3rem; color:#1a5276; flex-shrink:0;">
+        {person.data.name.charAt(0)}
+      </div>
+    )}
+    <div style="flex:1; min-width:220px;">
+      <h1 style="margin-bottom:0.2rem;">{person.data.name}</h1>
+      {person.data.title && (
+        <p style="font-size:0.95rem; color:#666; margin-bottom:0.3rem;">{person.data.title}</p>
+      )}
+      <p style="color:#444; margin-bottom:1rem;">{person.data.role}</p>
       <ul class="contact-info">
-        {person.data.email    && <li>📧 <a href={`mailto:${person.data.email}`}>{person.data.email}</a></li>}
-        {person.data.phone    && <li>📞 {person.data.phone}</li>}
-        {person.data.office   && <li>🚪 Office: {person.data.office}</li>}
-        {person.data.officeHours && <li>🕐 Office hours: {person.data.officeHours}</li>}
+        {person.data.email && (
+          <li>E-mail: <a href={`mailto:${person.data.email}`}>{person.data.email}</a></li>
+        )}
+        {person.data.phone    && <li>Telefon: {person.data.phone}</li>}
+        {person.data.office   && <li>Soba: {person.data.office}</li>}
+        {person.data.contactHours && (
+          <li>Ure za stike: <a href={person.data.contactHours} target="_blank">link</a></li>
+        )}
+        {person.data.linkedin && (
+          <li>LinkedIn: <a href={person.data.linkedin} target="_blank">link</a></li>
+        )}
       </ul>
     </div>
   </div>
 
-  {person.data.researchAreas && person.data.researchAreas.length > 0 && (
-  <div class="card">
-    <h2>Main Areas of Research</h2>
-    <ul style="padding-left:1.4rem; line-height:2; color:#444;">
-      {person.data.researchAreas.map((a: string) => <li>{a}</li>)}
-    </ul>
-  </div>
-)}
+  <!-- Dynamic sections -->
+  {sections.map(({ key, label }) => {
+    const value = person.data[key];
+    if (!value || value === "") return null;
+    return (
+      <div class="card" style="margin-bottom:1rem;">
+        <h2 style="margin-top:0; font-size:1.1rem; border-bottom:1px solid #eee;
+                   padding-bottom:0.5rem; margin-bottom:0.8rem;">{label}</h2>
+        <div class="prose" set:html={marked.parse(value as string)} />
+      </div>
+    );
+  })}
 
-  {person.data.education && (
-    <div class="card prose">
-      <h2>Education</h2>
-      <Fragment set:html={person.data.education} />
+  <!-- Publications COBISS -->
+  {person.data.cobiss && (
+    <div class="card">
+      <h2 style="margin-top:0; font-size:1.1rem;">Publikacije</h2>
+      <p>Poln poročilo je na voljo na COBISS:</p>
+      <a href={person.data.cobiss} target="_blank" style="color:#0066cc;">
+        Oglej na COBISS →
+      </a>
     </div>
   )}
 
-  {person.data.achievements && (
-    <div class="card prose">
-      <h2>Achievements</h2>
-      <Fragment set:html={person.data.achievements} />
-    </div>
-  )}
-
-  <div class="card prose">
-    <h2>Research Work & Publications</h2>
-    <Content />
-  </div>
 </Base>

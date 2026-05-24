@@ -4,19 +4,24 @@ import sveltia from "astro-loader-sveltia-cms";
 export default defineConfig({
   site: "https://paulaferi.github.io",
   base: "/feri-informatika-web",
+  vite: {
+    resolve: {
+      alias: {
+        "@": "/src",
+      },
+    },
+  },
   integrations: [
     sveltia({
       config: {
         backend: {
           name: "github",
-          repo: "TU-USUARIO/feri-informatika-web",
+          repo: "paulaferi/feri-informatika-web",
           branch: "main",
         },
-        media_folder: "public/images",
-        public_folder: "/feri-informatika-web/images",
+        media_folder: "/src/assets/media",
+        public_folder: "@/assets/media",
         collections: [
-
-          // ── LABORATORIES ──────────────────────────────────────────────
           {
             name: "laboratories",
             label: "Laboratories",
@@ -26,17 +31,15 @@ export default defineConfig({
             fields: [
               { name: "name", label: "Laboratory Name", widget: "string" },
               { name: "acronym", label: "Acronym", widget: "string", required: false },
-              { name: "description", label: "Description", widget: "text" },
-              { name: "researchAreas", label: "Research Areas", widget: "list",
+              { name: "description", label: "Description", widget: "text", required: false },
+              { name: "researchAreas", label: "Research Areas", widget: "list", required: false,
                 field: { name: "area", label: "Area", widget: "string" } },
-              { name: "members", label: "Staff Members (slugs)", widget: "list",
+              { name: "members", label: "Staff Members (slugs)", widget: "list",required: false,
                 field: { name: "member", label: "Staff slug", widget: "string" } },
               { name: "externalUrl", label: "External URL", widget: "string", required: false },
               { name: "body", label: "Extended description", widget: "markdown", required: false },
             ],
           },
-
-          // ── INTEREST GROUPS ───────────────────────────────────────────
           {
             name: "interestGroups",
             label: "Interest Groups",
@@ -50,32 +53,37 @@ export default defineConfig({
               { name: "body", label: "Full description", widget: "markdown", required: false },
             ],
           },
-
-          // ── STAFF ─────────────────────────────────────────────────────
           {
             name: "staff",
             label: "Staff",
             folder: "src/content/staff",
             create: true,
             slug: "{{slug}}",
+            identifier_field: "name",
             fields: [
               { name: "name", label: "Full Name", widget: "string" },
-              { name: "role", label: "Position / Title", widget: "string" },
-              { name: "email", label: "Email", widget: "string", required: false },
-              { name: "phone", label: "Phone", widget: "string", required: false },
-              { name: "office", label: "Office Number", widget: "string", required: false },
-              { name: "officeHours", label: "Office Hours", widget: "string", required: false },
               { name: "photo", label: "Photo", widget: "image", required: false },
-              { name: "researchAreas", label: "Main Areas of Research", widget: "list",
-                required: false,
-                field: { name: "area", label: "Area", widget: "string" } },
-              { name: "education", label: "Education", widget: "markdown", required: false },
-              { name: "achievements", label: "Achievements", widget: "markdown", required: false },
-              { name: "body", label: "Research Work & Publications", widget: "markdown", required: false },
+              { name: "title", label: "Title (e.g. Assoc. Prof., PhD.)", widget: "string", required: false },
+              { name: "role", label: "Position / Role", widget: "string" },
+              { name: "email", label: "E-mail", widget: "string", required: false },
+              { name: "phone", label: "Telephone", widget: "string", required: false },
+              { name: "office", label: "Room", widget: "string", required: false },
+              { name: "contactHours", label: "Contact Hours (URL)", widget: "string", required: false },
+              { name: "linkedin", label: "LinkedIn Profile (URL)", widget: "string", required: false },
+              { name: "cobiss", label: "Publications — COBISS URL", widget: "string", required: false },
+              { name: "researchTopics", label: "Main Research Topics", widget: "markdown", required: false },
+              { name: "publications", label: "List of Selected Publications", widget: "markdown", required: false },
+              { name: "cv", label: "CV", widget: "markdown", required: false },
+              { name: "teaching", label: "Teaching", widget: "markdown", required: false },
+              { name: "projects", label: "Project Leader / Coordinator", widget: "markdown", required: false },
+              { name: "editorial", label: "Editor", widget: "markdown", required: false },
+              { name: "awards", label: "Awards", widget: "markdown", required: false },
+              { name: "conferenceOrg", label: "Conference Organization", widget: "markdown", required: false },
+              { name: "projectsCollab", label: "Projects Collaboration", widget: "markdown", required: false },
+              { name: "reviewerFor", label: "Reviewer for Journals", widget: "markdown", required: false },
+              { name: "certificates", label: "Certificates", widget: "markdown", required: false },
             ],
           },
-
-          // ── RESEARCH PROJECTS ─────────────────────────────────────────
           {
             name: "projects",
             label: "Research Projects",
@@ -95,8 +103,6 @@ export default defineConfig({
               { name: "body", label: "Full Description & Details", widget: "markdown", required: false },
             ],
           },
-
-          // ── ETHICS COMMITTEE OPINIONS ─────────────────────────────────
           {
             name: "ethicsOpinions",
             label: "Ethics Committee — Opinions",
@@ -110,8 +116,6 @@ export default defineConfig({
               { name: "decision", label: "Decision / Opinion", widget: "text", required: false },
             ],
           },
-
-          // ── STUDY PROGRAMMES ──────────────────────────────────────────
           {
             name: "studyProgrammes",
             label: "Study Programmes",
@@ -129,8 +133,6 @@ export default defineConfig({
               { name: "body", label: "Curriculum & General Info", widget: "markdown", required: false },
             ],
           },
-
-          // ── STUDENT PROJECTS ──────────────────────────────────────────
           {
             name: "studentProjects",
             label: "Student Projects",
@@ -146,8 +148,6 @@ export default defineConfig({
               { name: "body", label: "Full Details", widget: "markdown", required: false },
             ],
           },
-
-          // ── CONFERENCES ───────────────────────────────────────────────
           {
             name: "conferences",
             label: "Conferences",
@@ -164,8 +164,6 @@ export default defineConfig({
               { name: "body", label: "Full Details", widget: "markdown", required: false },
             ],
           },
-
-          // ── INDUSTRY PARTNERS ─────────────────────────────────────────
           {
             name: "industryPartners",
             label: "Industry Partners",
@@ -179,26 +177,26 @@ export default defineConfig({
               { name: "url", label: "Website", widget: "string", required: false },
             ],
           },
-
-          // ── ACHIEVEMENTS (TOTEM) ──────────────────────────────────────
           {
             name: "achievements",
             label: "Achievements & Activities",
             folder: "src/content/achievements",
             create: true,
             slug: "{{slug}}",
+            identifier_field: "title",
             fields: [
               { name: "title", label: "Title", widget: "string" },
+              { name: "subtitle", label: "Subtitle", widget: "string", required: false },
               { name: "date", label: "Date", widget: "datetime" },
               { name: "tags", label: "Tags", widget: "select", multiple: true,
                 options: ["student", "conference", "scientific", "professional",
                           "project", "awards", "interest-groups"] },
-              { name: "description", label: "Description", widget: "text" },
-              { name: "body", label: "Full Details", widget: "markdown", required: false },
+              { name: "coverImage", label: "Cover Image", widget: "image", required: false },
+              { name: "images", label: "Additional Images", widget: "list", required: false,
+                field: { name: "image", label: "Image", widget: "image" } },
+              { name: "body", label: "Full Text", widget: "markdown" },
             ],
           },
-
-          // ── NEWS ──────────────────────────────────────────────────────
           {
             name: "news",
             label: "News",
@@ -212,10 +210,12 @@ export default defineConfig({
                 options: ["student", "conference", "scientific", "professional",
                           "project", "awards", "interest-groups"] },
               { name: "summary", label: "Summary", widget: "text" },
+              { name: "coverImage", label: "Cover Image", widget: "image", required: false },
+              { name: "images", label: "Additional Images", widget: "list", required: false,
+                field: { name: "image", label: "Image", widget: "image" } },
               { name: "body", label: "Full Content", widget: "markdown" },
             ],
           },
-
         ],
       },
     }),

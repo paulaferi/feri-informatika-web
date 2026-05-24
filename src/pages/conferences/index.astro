@@ -7,10 +7,10 @@ const conferences = (await getCollection("conferences"))
   .sort((a, b) => new Date(b.data.date ?? 0).getTime() - new Date(a.data.date ?? 0).getTime());
 ---
 <Base title="Conference Activities">
-  <h1>Conference Activities</h1>
+  <h1>Konferenčne dejavnosti</h1>
   <p>
-    The institute actively organises and participates in international scientific conferences
-    in the field of informatics and computer science.
+    Inštitut aktivno organizira mednarodne znanstvene konference
+    na področju informatike in računalništva ter se jih udeležuje.
   </p>
 
   {conferences.map(c => (
@@ -28,11 +28,11 @@ const conferences = (await getCollection("conferences"))
       <p>{c.data.description}</p>
       {c.data.url && (
         <a href={c.data.url} target="_blank" style="font-size:0.85rem; color:#0066cc;">
-          Conference website →
+          Spletna stran konference →
         </a>
       )}
     </div>
   ))}
-
+ 
   <SectionNews tag="conference" label="Conference News" />
 </Base>

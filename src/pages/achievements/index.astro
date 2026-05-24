@@ -1,51 +1,148 @@
 ---
 import Base from "../../layouts/Base.astro";
+import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
 
 const all = (await getCollection("achievements"))
   .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
 
-const tags = ["student","conference","scientific","professional","project","awards","interest-groups"];
+const base = import.meta.env.BASE_URL;
+const tags = ["student", "conference", "scientific", "professional",
+              "project", "awards", "interest-groups"];
 ---
 <Base title="Achievements & Activities">
-  <h1>Achievements & Activities</h1>
+  <h1>Dosežki in dejavnosti</h1>
 
-  <div id="tag-filters" style="margin-bottom:1.5rem; display:flex; flex-wrap:wrap; gap:8px;">
+  <div id="tag-filters" style="margin-bottom:1.5rem; display:flex; flex-wrap:wrap; gap:8px; align-items:center;">
+    <span style="font-size:0.85rem; color:#888; margin-right:4px;">Filter:</span>
     <button data-tag="" class="tag-btn active">All</button>
     {tags.map(t => <button data-tag={t} class="tag-btn">{t}</button>)}
   </div>
 
-  <p id="empty-msg" style="color:#888; display:none;">No entries for this tag.</p>
+  <p id="empty-msg" style="color:#888; display:none;">Za to oznako ni dosežkov.</p>
 
-  <div id="list">
+  <div id="achievements-grid" class="achievements-grid">
     {all.map(a => (
-      <div class="card achievement-item" data-tags={Array.isArray(a.data.tags) ? a.data.tags.join(",") : a.data.tags}>
-        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.5rem;">
-          <h3 style="margin-top:0;">{a.data.title}</h3>
-          <span class="meta">{new Date(a.data.date).toLocaleDateString("en-GB")}</span>
-        </div>
-        <p>{a.data.description}</p>
-        <div>
-          {(Array.isArray(a.data.tags) ? a.data.tags : [a.data.tags]).map((t: string) => (
-            <button class="tag tag-btn-inline" data-tag={t}>{t}</button>
-          ))}
-        </div>
+      <div class="achievement-item"
+           data-tags={Array.isArray(a.data.tags) ? a.data.tags.join(",") : a.data.tags}>
+        <a href={`${base}/achievements/${a.id}`} class="achievement-card-link">
+          <article class="achievement-card">
+
+            <div class="achievement-card-image">
+              {a.data.coverImage
+                ? <Image src={a.data.coverImage} alt={a.data.title}
+                         width={400} height={200}
+                         style="width:100%; height:100%; object-fit:cover;" />
+                : <div class="achievement-card-placeholder">II · FERI</div>
+              }
+            </div>
+
+            <div class="achievement-card-body">
+              <time class="achievement-date">
+                {new Date(a.data.date).toLocaleDateString("en-GB", {
+                  day: "numeric", month: "long", year: "numeric"
+                })}
+              </time>
+              <h2 class="achievement-title">{a.data.title}</h2>
+              {a.data.subtitle && (
+                <p class="achievement-subtitle">{a.data.subtitle}</p>
+              )}
+
+              <div style="margin-top:0.75rem; display:flex; flex-wrap:wrap; gap:4px;">
+                {(Array.isArray(a.data.tags) ? a.data.tags : [a.data.tags]).map((t: string) => (
+                  <span class="tag">{t}</span>
+                ))}
+              </div>
+            </div>
+
+          </article>
+        </a>
       </div>
     ))}
   </div>
 </Base>
 
 <style>
-  .tag-btn { padding:4px 14px; border-radius:20px; border:1px solid #1a5276;
-             background:transparent; color:#1a5276; font-size:0.82rem; cursor:pointer; }
-  .tag-btn.active { background:#1a5276; color:#fff; }
-  .tag-btn-inline { background:#e8f0fe; color:#1a5276; border:none; border-radius:4px;
-                    padding:2px 8px; font-size:0.78rem; margin-right:4px; cursor:pointer; }
+  .achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.25rem;
+  }
+  .achievement-item { display: block; }
+  .achievement-card-link { text-decoration: none; display: block; height: 100%; }
+  .achievement-card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .achievement-card:hover {
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+  }
+  .achievement-card-image {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    background: #f0f4ff;
+    flex-shrink: 0;
+  }
+  .achievement-card-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1a5276;
+    font-weight: 600;
+    font-size: 1.1rem;
+    background: #e8f0fe;
+  }
+  .achievement-card-body {
+    padding: 1rem 1.25rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  .achievement-date {
+    font-size: 0.78rem;
+    color: #999;
+    margin-bottom: 0.3rem;
+    display: block;
+  }
+  .achievement-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1a1a2e;
+    margin: 0 0 0.3rem;
+    line-height: 1.4;
+  }
+  .achievement-subtitle {
+    font-size: 0.88rem;
+    color: #666;
+    margin: 0 0 0.5rem;
+    font-style: italic;
+  }
+  .tag-btn {
+    padding: 4px 14px;
+    border-radius: 20px;
+    border: 1px solid #1a5276;
+    background: transparent;
+    color: #1a5276;
+    font-size: 0.82rem;
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .tag-btn.active { background: #1a5276; color: #fff; }
+  .tag-btn:hover { opacity: 0.8; }
 </style>
 
 <script>
   const buttons = document.querySelectorAll<HTMLButtonElement>(".tag-btn");
-  const inlines = document.querySelectorAll<HTMLButtonElement>(".tag-btn-inline");
   const items   = document.querySelectorAll<HTMLElement>(".achievement-item");
   const empty   = document.getElementById("empty-msg")!;
 
@@ -62,5 +159,4 @@ const tags = ["student","conference","scientific","professional","project","awar
   }
 
   buttons.forEach(b => b.addEventListener("click", () => filter(b.dataset.tag ?? "")));
-  inlines.forEach(b => b.addEventListener("click", () => filter(b.dataset.tag ?? "")));
-</script>
+</script> 

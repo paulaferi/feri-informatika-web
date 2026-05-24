@@ -1,8 +1,13 @@
 ---
-title: "Smart Campus FERI"
-description: "Plataforma de gestión inteligente del campus universitario."
-status: "active"
+title: Pametni kampus FERI
+status: active
+description: Platforma za pametno upravljanje univerzitetnega kampusa.
 startYear: 2023
+funder: ''
+principalInvestigator: ''
+newsLink: ''
 ---
-Desarrollo de un sistema integrado para optimizar el consumo energético
-y la gestión de espacios del campus de la FERI.
+
+Razvoj integriranega sistema za optimizacijo porabe energije
+
+in upravljanja prostorov na kampusu FERI.
