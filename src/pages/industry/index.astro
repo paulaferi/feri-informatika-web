@@ -4,39 +4,68 @@ import SectionNews from "../../components/SectionNews.astro";
 import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
 
-const partners     = await getCollection("industryPartners");
-const achievements = await getCollection("achievements");
 const base = import.meta.env.BASE_URL;
+const partners = await getCollection("industryPartners");
 
-const industryAchievements = achievements.filter(a => {
-  const tags = Array.isArray(a.data.tags) ? a.data.tags : [a.data.tags];
-  return tags.includes("professional");
-});
+const sidebarLinks = partners.map(p => ({
+  label: p.data.name,
+  href: `${base}/industry#${p.id}`,
+}));
 ---
-<Base title="Industry">
-  <h1>Industrija</h1>
+<Base title="Industrija" sidebarLinks={sidebarLinks}>
 
-  <h2>Kdo sodelujemo z</h2>
-  {partners.length === 0 && <p class="meta">Ni še dodanih partnerjev.</p>}
-  <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:1rem; margin-bottom:2rem;">
-    {partners.map(p => (
-      <div class="card" style="text-align:center;">
+  <h2 style="font-family:'Titillium Web',sans-serif; font-size:1.4rem; font-weight:400;
+             color:#222; margin-bottom:1.25rem;">
+    S kom sodelujemo
+  </h2>
+
+  {partners.length === 0 && (
+    <div class="card">
+      <p style="color:#888; margin:0;">Ni vpisanih partnerjev.</p>
+    </div>
+  )}
+
+  {partners.map(p => (
+    <div class="card" id={p.id}>
+
+      <div style="display:flex; gap:1.5rem; align-items:flex-start; flex-wrap:wrap;">
+
         {p.data.logo && (
-          <Image src={p.data.logo} alt={p.data.name}
-                 width={100} height={100}
-                 style="max-height:80px; width:auto; object-fit:contain; margin-bottom:0.75rem;" />
+          <div style="flex-shrink:0; width:120px; display:flex; align-items:center;
+                      justify-content:center; padding:0.5rem;
+                      border:1px solid #eee; background:#fafafa;">
+            <Image src={p.data.logo} alt={p.data.name}
+                   width={120} height={60}
+                   style="max-height:60px; width:auto; object-fit:contain;" />
+          </div>
         )}
-        <h3 style="margin-top:0; font-size:1rem;">{p.data.name}</h3>
-        <p style="font-size:0.85rem;">{p.data.description}</p>
-        {p.data.url && (
-          <a href={p.data.url} target="_blank" style="font-size:0.82rem; color:#0066cc;">
-            Spletna stran →
-          </a>
-        )}
-      </div> 
-    ))}
-  </div>
 
-  
-  <SectionNews tag="professional" label="Novice iz industrije" />
+        <div style="flex:1; min-width:200px;">
+          <div style="display:flex; gap:0.75rem; align-items:center; margin-bottom:0.6rem;">
+            <div style="width:4px; background:#ffc70f; flex-shrink:0; border-radius:1px; min-height:24px;"></div>
+            <h3 style="margin:0; font-family:'Titillium Web',sans-serif; font-size:1.05rem;
+                       font-weight:700; color:#222;">
+              {p.data.name}
+            </h3>
+          </div>
+
+          <p style="margin:0 0 0.75rem; text-align:left; padding-left:1rem;">
+            {p.data.description}
+          </p>
+
+          {p.data.url && (
+            <div style="padding-left:1rem;">
+              <a href={p.data.url} target="_blank"
+                 style="font-size:0.88rem; color:#006A8E; text-decoration:none;">
+                Spletna stran →
+              </a>
+            </div>
+          )}
+        </div>
+
+      </div>
+    </div>
+  ))}
+
+  <SectionNews tag="professional" label="ZADNJE NOVICE" />
 </Base>

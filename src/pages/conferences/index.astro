@@ -3,36 +3,78 @@ import Base from "../../layouts/Base.astro";
 import SectionNews from "../../components/SectionNews.astro";
 import { getCollection } from "astro:content";
 
+const base = import.meta.env.BASE_URL;
 const conferences = (await getCollection("conferences"))
   .sort((a, b) => new Date(b.data.date ?? 0).getTime() - new Date(a.data.date ?? 0).getTime());
+
+const sidebarLinks = conferences.map(c => ({
+  label: c.data.acronym ? `${c.data.acronym} — ${c.data.name}` : c.data.name,
+  href: `${base}/conferences/${c.id}`,
+}));
 ---
-<Base title="Conference Activities">
-  <h1>Konferenčne dejavnosti</h1>
-  <p>
-    Inštitut aktivno organizira mednarodne znanstvene konference
-    na področju informatike in računalništva ter se jih udeležuje.
-  </p>
+<Base title="Konferenčne aktivnosti" sidebarLinks={sidebarLinks}>
+
+  <h2 style="font-family:'Titillium Web',sans-serif; font-size:1.4rem; font-weight:400;
+             color:#222; margin-bottom:1.25rem;">
+    Konferenčne aktivnosti
+  </h2>
+
+  <div class="card">
+    <div style="display:flex; gap:0.75rem; align-items:stretch; margin-bottom:0;">
+      <div style="width:4px; background:#ffc70f; flex-shrink:0; border-radius:1px;"></div>
+      <p style="margin:0; text-align:left;">
+        Inštitut za informatiko aktivno organizira in sodeluje na mednarodnih znanstvenih
+        konferencah s področja informatike in računalništva. Spodaj je seznam konferenc,
+        ki jih inštitut organizira ali pri katerih aktivno sodeluje.
+      </p>
+    </div>
+  </div>
+
+  {conferences.length === 0 && (
+    <div class="card">
+      <p style="color:#888; margin:0;">Ni vpisanih konferenc.</p>
+    </div>
+  )}
 
   {conferences.map(c => (
     <div class="card">
-      <h3>
-        {c.data.name}
-        {c.data.acronym && <span class="meta" style="margin-left:6px;">({c.data.acronym})</span>}
-      </h3>
+      <div style="display:flex; gap:0.75rem; align-items:center; margin-bottom:0.75rem;">
+        <div style="width:4px; background:#ffc70f; flex-shrink:0; border-radius:1px; min-height:24px;"></div>
+        <h3 style="margin:0; font-family:'Titillium Web',sans-serif; font-size:1.05rem;
+                   font-weight:700; color:#222;">
+          <a href={`${base}/conferences/${c.id}`}
+             style="color:#006A8E; text-decoration:none;">
+            {c.data.name}
+            {c.data.acronym && (
+              <span style="font-size:0.85rem; color:#888; margin-left:6px;">
+                ({c.data.acronym})
+              </span>
+            )}
+          </a>
+        </h3>
+      </div>
+
       {(c.data.date || c.data.location) && (
-        <p class="meta">
-          {c.data.date && new Date(c.data.date).toLocaleDateString("en-GB")}
+        <p style="font-size:0.88rem; color:#888; margin:0 0 0.6rem; padding-left:1rem;">
+          {c.data.date && new Date(c.data.date).toLocaleDateString("sl-SI")}
           {c.data.location && ` · ${c.data.location}`}
         </p>
       )}
-      <p>{c.data.description}</p>
+
+      <p style="margin:0 0 0.6rem; padding-left:1rem; text-align:left;">
+        {c.data.description}
+      </p>
+
       {c.data.url && (
-        <a href={c.data.url} target="_blank" style="font-size:0.85rem; color:#0066cc;">
-          Spletna stran konference →
-        </a>
+        <div style="padding-left:1rem;">
+          <a href={c.data.url} target="_blank"
+             style="font-size:0.88rem; color:#006A8E; text-decoration:none;">
+            Spletna stran konference →
+          </a>
+        </div>
       )}
     </div>
   ))}
- 
-  <SectionNews tag="conference" label="Conference News" />
+
+  <SectionNews tag="conference" label="ZADNJE NOVICE" />
 </Base>

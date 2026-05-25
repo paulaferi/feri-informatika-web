@@ -1,5 +1,7 @@
 ---
 import Base from "../../layouts/Base.astro";
+import { Image } from "astro:assets";
+import SectionNews from "../../components/SectionNews.astro";
 import { getCollection, render } from "astro:content";
 
 export async function getStaticPaths() {
@@ -11,50 +13,117 @@ const { lab } = Astro.props;
 const { Content } = await render(lab);
 const base = import.meta.env.BASE_URL;
 
+const allLabs = await getCollection("laboratories");
 const allStaff = await getCollection("staff");
-const members = allStaff.filter(s =>
-  (lab.data.members ?? []).includes(s.id)
-);
-const researchAreas = lab.data.researchAreas || [];
+const members = allStaff.filter(s => (lab.data.members ?? []).includes(s.id));
+
+const sidebarLinks = [
+  {
+    label: "Laboratoriji",
+    href: `${base}/laboratories`,
+    children: allLabs.map(l => ({
+      label: l.data.name,
+      href: `${base}/laboratories/${l.id}`,
+    })),
+  },
+  { label: "Interesne skupine", href: `${base}/interest-groups` },
+  { label: "Osebje",            href: `${base}/staff` },
+];
 ---
-<Base title={lab.data.name}>
-  <h1>{lab.data.name}{lab.data.acronym && ` (${lab.data.acronym})`}</h1>
-  <p>{lab.data.description}</p>
+<Base title={lab.data.name} sidebarLinks={sidebarLinks}>
 
-  {researchAreas.length > 0 && (
-    <>
-      <h2>Raziskovalna področja</h2>
-      <ul style="padding-left:1.4rem; color:#444; line-height:2;">
-        {researchAreas.map((a: string) => <li>{a}</li>)}
-      </ul>
-    </>
-  )}
+  <h2 style="font-family:'Titillium Web',sans-serif; font-size:1.4rem; font-weight:400;
+             color:#222; margin-bottom:1.25rem;">
+    {lab.data.name}
+    {lab.data.acronym && <span style="font-size:1rem; color:#888; margin-left:8px;">({lab.data.acronym})</span>}
+  </h2>
 
-  {members.length > 0 && (
-    <>
-      <h2>Člani laboratorija</h2>
-      <div>
-        {members.map(m => (
-          <div class="card" style="display:flex; gap:1rem; align-items:center; padding:0.9rem 1.2rem;">
-            <div>
-              <a href={`${base}/staff/${m.id}`} style="font-weight:500; color:#1a1a2e; text-decoration:none;">
-                {m.data.name}
-              </a>
-              <p class="meta" style="margin:0;">{m.data.role}</p>
-            </div>
-          </div>
-        ))}
+  <div class="card">
+
+    <!-- Descripción -->
+    <div style="display:flex; gap:0.75rem; align-items:stretch; margin-bottom:1.25rem;">
+      <div style="width:4px; background:#ffc70f; flex-shrink:0; border-radius:1px;"></div>
+      <p style="margin:0; text-align:left;">{lab.data.description}</p>
+    </div>
+
+    <!-- Research Areas -->
+    {lab.data.researchAreas && lab.data.researchAreas.length > 0 && (
+      <div style="margin-bottom:1.25rem;">
+        <div style="display:flex; gap:0.75rem; align-items:center; margin-bottom:0.6rem;">
+          <div style="width:4px; background:#ffc70f; flex-shrink:0; border-radius:1px; align-self:stretch;"></div>
+          <h3 style="margin:0; font-family:'Titillium Web',sans-serif; font-size:1rem; font-weight:700; color:#222;">
+            Področja raziskav
+          </h3>
+        </div>
+        <ul style="padding-left:1.5rem; margin:0;">
+          {lab.data.researchAreas.map((a: string) => (
+            <li style="font-size:1.05rem; color:#444; padding:0.15rem 0;">{a}</li>
+          ))}
+        </ul>
       </div>
-    </>
-  )}
+    )}
 
-  <div class="prose" style="margin-top:1.5rem;"><Content /></div>
+    <!-- Members -->
+    {members.length > 0 && (
+      <div style="margin-bottom:0.5rem;">
+        <div style="display:flex; gap:0.75rem; align-items:center; margin-bottom:0.75rem;">
+          <div style="width:4px; background:#ffc70f; flex-shrink:0; border-radius:1px; align-self:stretch;"></div>
+          <h3 style="margin:0; font-family:'Titillium Web',sans-serif; font-size:1rem; font-weight:700; color:#222;">
+            Člani laboratorija
+          </h3>
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(200px,1fr)); gap:0.75rem;">
+          {members.map(m => (
+            <a href={`${base}/staff/${m.id}`}
+               style="display:flex; align-items:center; gap:0.75rem; text-decoration:none;
+                      padding:0.6rem; border:1px solid #eee; transition:background .15s;"
+               onmouseover="this.style.background='#f9f9f9'"
+               onmouseout="this.style.background=''">
+              {m.data.photo
+                ? <Image src={m.data.photo} alt={m.data.name} width={40} height={40}
+                         style="width:40px; height:40px; border-radius:50%; object-fit:cover; flex-shrink:0;" />
+                : <div style="width:40px; height:40px; border-radius:50%; background:#e0f0f7;
+                               display:flex; align-items:center; justify-content:center;
+                               font-size:1rem; color:#006A8E; font-weight:600; flex-shrink:0;">
+                    {m.data.name.charAt(0)}
+                  </div>
+              }
+              <div>
+                <p style="font-size:0.88rem; font-weight:600; color:#006A8E; margin:0; line-height:1.3;">
+                  {m.data.name}
+                </p>
+                <p style="font-size:0.75rem; color:#888; margin:0;">{m.data.role}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    )}
 
-  {lab.data.externalUrl && (
-    <p style="margin-top:1.5rem;">
-      <a href={lab.data.externalUrl} target="_blank" style="color:#0066cc;">
-        Spletna stran laboratorija →
-      </a>
-    </p>
-  )}
+    <!-- Body content -->
+    {lab.data.body && (
+      <div style="margin-top:1.25rem;">
+        <div style="display:flex; gap:0.75rem; align-items:center; margin-bottom:0.6rem;">
+          <div style="width:4px; background:#ffc70f; flex-shrink:0; border-radius:1px; align-self:stretch;"></div>
+          <h3 style="margin:0; font-family:'Titillium Web',sans-serif; font-size:1rem; font-weight:700; color:#222;">
+            Opis
+          </h3>
+        </div>
+        <div class="prose"><Content /></div>
+      </div>
+    )}
+
+    <!-- External link -->
+    {lab.data.externalUrl && (
+      <div style="margin-top:1.25rem; padding-top:1rem; border-top:1px solid #eee;">
+        <a href={lab.data.externalUrl} target="_blank"
+           style="color:#006A8E; font-size:0.9rem;">
+          Spletna stran laboratorija →
+        </a>
+      </div>
+    )}
+
+  </div>
+
+  <SectionNews tag="scientific" label="ZADNJE NOVICE" />
 </Base>

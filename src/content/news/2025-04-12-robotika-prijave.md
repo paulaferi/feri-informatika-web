@@ -1,9 +1,7 @@
 ---
 title: Skupina za robotiko odpira prijave za nove člane
 date: 2025-04-12T09:00:00.000Z
-tags:
-  - interest-groups
-  - student
+tags: ["interest-groups", "student"]
 summary: Interesna skupina za robotiko na FERI sprejema prijave študentov za študijsko leto 2025/2026.
 coverImage: '@/assets/media/2025-04-12-robotika-prijave_01.jpg'
 images: []

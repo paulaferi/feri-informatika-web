@@ -1,9 +1,7 @@
 ---
 title: Študenti predstavili zaključne projekte na letnem simpoziju
 date: 2025-05-06T10:00:00.000Z
-tags:
-  - student
-  - conference
+tags: ["conference", "student"]
 summary: Na letnem študentskem simpoziju je 24 študentov predstavilo svoje zaključne projekte pred komisijo in industrijskimi partnerji.
 coverImage: '@/assets/media/2025-05-06-studentski-simpozij_01.jpg'
 images: []

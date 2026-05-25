@@ -1,10 +1,7 @@
 ---
 title: Projekt Horizon Europe prejel podaljšanje financiranja
 date: 2025-04-05T08:00:00.000Z
-tags:
-  - project
-  - scientific
-  - professional
+tags: ["project", "scientific", "professional"]
 summary: Projekt inštituta v okviru programa Horizon Europe je prejel 12-mesečno podaljšanje in dodatnih 180.000 € financiranja.
 coverImage: '@/assets/media/2025-04-05-horizon-podaljsanje_01.png'
 images: []

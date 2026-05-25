@@ -1,9 +1,7 @@
 ---
 title: Inštitut gosti delavnico o kibernetski varnosti za podjetja
 date: 2025-05-14T09:00:00.000Z
-tags:
-  - professional
-  - interest-groups
+tags: ["interest-groups", "professional"]
 summary: Inštitut za informatiko je organiziral enodnevno delavnico o kibernetski varnosti, namenjeno slovenskim malim in srednje velikim podjetjem.
 coverImage: '@/assets/media/2025-05-14-delavnica-kibernetska-varnost_01.jpg'
 images: []

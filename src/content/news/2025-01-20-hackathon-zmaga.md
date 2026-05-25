@@ -1,9 +1,7 @@
 ---
 title: Študenti FERI osvojili prvo mesto na državnem hackathonu
 date: 2025-01-20T09:00:00.000Z
-tags:
-  - student
-  - awards
+tags: ["student", "awards"]
 summary: Ekipa študentov Inštituta za informatiko je na državnem hackathonu v Ljubljani osvojila prvo mesto s projektom pametnega upravljanja energije.
 coverImage: '@/assets/media/2025-01-20-hackathon-zmaga_01.jpg'
 images:

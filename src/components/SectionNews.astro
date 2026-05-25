@@ -7,15 +7,20 @@ interface Props {
   label?: string;
 }
 
-const { tag, label = "Related News" } = Astro.props;
+const { tag, label = "Zadnje novice" } = Astro.props;
 
 type NewsTag = "interest-groups" | "scientific" | "project" | "student" | "conference" | "professional" | "awards";
 
 const allNews = await getCollection("news");
 const filtered = allNews
   .filter(n => {
-    const tags = Array.isArray(n.data.tags) ? n.data.tags : [n.data.tags];
-    return tags.includes(tag as NewsTag);
+    let tags: string[] = [];
+    if (Array.isArray(n.data.tags)) {
+      tags = n.data.tags.map(t => String(t).trim());
+    } else if (typeof n.data.tags === "string") {
+      tags = [String(n.data.tags).trim()];
+    }
+    return tags.includes(tag);
   })
   .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
   .slice(0, 3);
@@ -37,21 +42,3 @@ const filtered = allNews
     </div>
   </div>
 )}
-
-<style>
-  .section-news {
-    margin-top: 3rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid #e0e0e0;
-  }
-  .section-news h2 {
-    font-size: 1.1rem;
-    color: #555;
-    margin-bottom: 1rem;
-  }
-  .news-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 1.25rem;
-  }
-</style>

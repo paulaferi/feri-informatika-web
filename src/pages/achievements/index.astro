@@ -10,135 +10,110 @@ const base = import.meta.env.BASE_URL;
 const tags = ["student", "conference", "scientific", "professional",
               "project", "awards", "interest-groups"];
 ---
-<Base title="Achievements & Activities">
-  <h1>Dosežki in dejavnosti</h1>
+<Base title="Dosežki in aktivnosti">
 
+  <h2 style="font-family:'Titillium Web',sans-serif; font-size:1.4rem; font-weight:400;
+             color:#222; margin-bottom:1.25rem;">
+    Dosežki in aktivnosti
+  </h2>
+
+  <!-- Tag filters -->
   <div id="tag-filters" style="margin-bottom:1.5rem; display:flex; flex-wrap:wrap; gap:8px; align-items:center;">
-    <span style="font-size:0.85rem; color:#888; margin-right:4px;">Filter:</span>
-    <button data-tag="" class="tag-btn active">All</button>
+    <span style="font-family:'Titillium Web',sans-serif; font-size:0.82rem;
+                 color:#888; margin-right:4px;">Filtriraj:</span>
+    <button data-tag="" class="tag-btn active">Vse</button>
     {tags.map(t => <button data-tag={t} class="tag-btn">{t}</button>)}
   </div>
 
-  <p id="empty-msg" style="color:#888; display:none;">Za to oznako ni dosežkov.</p>
+  <p id="empty-msg" style="color:#888; display:none; font-size:1rem;">
+    Ni dosežkov za ta tag.
+  </p>
 
-  <div id="achievements-grid" class="achievements-grid">
+  <!-- Grid -->
+  <div id="achievements-grid" style="display:grid;
+       grid-template-columns:repeat(auto-fill, minmax(300px,1fr)); gap:1.25rem;">
     {all.map(a => (
       <div class="achievement-item"
-           data-tags={Array.isArray(a.data.tags) ? a.data.tags.join(",") : a.data.tags}>
-        <a href={`${base}/achievements/${a.id}`} class="achievement-card-link">
-          <article class="achievement-card">
+           data-tags={Array.isArray(a.data.tags) ? a.data.tags.join(",") : String(a.data.tags)}>
+        <a href={`${base}/achievements/${a.id}`} style="text-decoration:none; display:block; height:100%;">
+          <div style="background:#fff; border:1px solid #e0e0e0; height:100%;
+                      display:flex; flex-direction:column;
+                      transition:box-shadow .2s, transform .2s;"
+               onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,0.1)'; this.style.transform='translateY(-2px)'"
+               onmouseout="this.style.boxShadow=''; this.style.transform=''">
 
-            <div class="achievement-card-image">
+            <!-- Image -->
+            <div style="width:100%; height:180px; overflow:hidden;
+                        background:#e0f0f7; flex-shrink:0;">
               {a.data.coverImage
                 ? <Image src={a.data.coverImage} alt={a.data.title}
-                         width={400} height={200}
-                         style="width:100%; height:100%; object-fit:cover;" />
-                : <div class="achievement-card-placeholder">II · FERI</div>
+                         width={400} height={180}
+                         style="width:100%; height:100%; object-fit:cover; display:block;" />
+                : <div style="width:100%; height:100%; display:flex; align-items:center;
+                               justify-content:center; background:#e0f0f7;">
+                    <div style="width:4px; height:60px; background:#ffc70f; border-radius:2px;"></div>
+                  </div>
               }
             </div>
 
-            <div class="achievement-card-body">
-              <time class="achievement-date">
-                {new Date(a.data.date).toLocaleDateString("en-GB", {
-                  day: "numeric", month: "long", year: "numeric"
-                })}
-              </time>
-              <h2 class="achievement-title">{a.data.title}</h2>
-              {a.data.subtitle && (
-                <p class="achievement-subtitle">{a.data.subtitle}</p>
-              )}
+            <!-- Top accent bar -->
+            <div style="height:3px; background:#ffc70f; flex-shrink:0;"></div>
 
-              <div style="margin-top:0.75rem; display:flex; flex-wrap:wrap; gap:4px;">
-                {(Array.isArray(a.data.tags) ? a.data.tags : [a.data.tags]).map((t: string) => (
-                  <span class="tag">{t}</span>
+            <!-- Body -->
+            <div style="padding:1rem 1.25rem 1.25rem; display:flex;
+                        flex-direction:column; flex:1;">
+              <time style="font-size:0.78rem; color:#999; margin-bottom:0.3rem; display:block;">
+                {new Date(a.data.date).toLocaleDateString("sl-SI")}
+              </time>
+              <h3 style="font-family:'Titillium Web',sans-serif; font-size:1rem;
+                         font-weight:700; color:#1a1a2e; margin:0 0 0.3rem; line-height:1.4;">
+                {a.data.title}
+              </h3>
+              {a.data.subtitle && (
+                <p style="font-size:0.85rem; color:#666; margin:0 0 0.5rem; font-style:italic;">
+                  {a.data.subtitle}
+                </p>
+              )}
+              {a.data.summary && (
+                <p style="font-size:0.88rem; color:#555; line-height:1.6;
+                           margin:0 0 0.75rem; flex:1;">
+                  {a.data.summary}
+                </p>
+              )}
+              <div style="display:flex; flex-wrap:wrap; gap:4px; margin-top:auto;">
+                {(Array.isArray(a.data.tags) ? a.data.tags : [String(a.data.tags)]).map((t: string) => (
+                  <span style="display:inline-block; background:#fff8e1; color:#856404;
+                               border:1px solid #ffc70f; border-radius:2px;
+                               padding:2px 8px; font-size:0.72rem;
+                               font-family:'Titillium Web',sans-serif;">
+                    {t}
+                  </span>
                 ))}
               </div>
             </div>
 
-          </article>
+          </div>
         </a>
       </div>
     ))}
   </div>
+
 </Base>
 
 <style>
-  .achievements-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1.25rem;
-  }
-  .achievement-item { display: block; }
-  .achievement-card-link { text-decoration: none; display: block; height: 100%; }
-  .achievement-card {
-    background: #fff;
-    border: 1px solid #e0e0e0;
-    border-radius: 10px;
-    overflow: hidden;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    transition: box-shadow 0.2s, transform 0.2s;
-  }
-  .achievement-card:hover {
-    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-    transform: translateY(-2px);
-  }
-  .achievement-card-image {
-    width: 100%;
-    height: 200px;
-    overflow: hidden;
-    background: #f0f4ff;
-    flex-shrink: 0;
-  }
-  .achievement-card-placeholder {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #1a5276;
-    font-weight: 600;
-    font-size: 1.1rem;
-    background: #e8f0fe;
-  }
-  .achievement-card-body {
-    padding: 1rem 1.25rem 1.25rem;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-  }
-  .achievement-date {
-    font-size: 0.78rem;
-    color: #999;
-    margin-bottom: 0.3rem;
-    display: block;
-  }
-  .achievement-title {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #1a1a2e;
-    margin: 0 0 0.3rem;
-    line-height: 1.4;
-  }
-  .achievement-subtitle {
-    font-size: 0.88rem;
-    color: #666;
-    margin: 0 0 0.5rem;
-    font-style: italic;
-  }
   .tag-btn {
-    padding: 4px 14px;
-    border-radius: 20px;
-    border: 1px solid #1a5276;
+    padding: 5px 14px;
+    border: 1px solid #006A8E;
     background: transparent;
-    color: #1a5276;
+    color: #006A8E;
     font-size: 0.82rem;
     cursor: pointer;
+    font-family: 'Titillium Web', sans-serif;
     transition: all .15s;
   }
-  .tag-btn.active { background: #1a5276; color: #fff; }
-  .tag-btn:hover { opacity: 0.8; }
+  .tag-btn.active { background: #006A8E; color: #fff; }
+  .tag-btn:hover { background: #ffc70f; color: #000; border-color: #ffc70f; }
+  .achievement-item { display: block; }
 </style>
 
 <script>
@@ -150,7 +125,7 @@ const tags = ["student", "conference", "scientific", "professional",
     buttons.forEach(b => b.classList.toggle("active", b.dataset.tag === tag));
     let visible = 0;
     items.forEach(item => {
-      const itemTags = item.dataset.tags?.split(",") ?? [];
+      const itemTags = item.dataset.tags?.split(",").map(t => t.trim()) ?? [];
       const show = tag === "" || itemTags.includes(tag);
       item.style.display = show ? "block" : "none";
       if (show) visible++;
@@ -159,4 +134,4 @@ const tags = ["student", "conference", "scientific", "professional",
   }
 
   buttons.forEach(b => b.addEventListener("click", () => filter(b.dataset.tag ?? "")));
-</script> 
+</script>

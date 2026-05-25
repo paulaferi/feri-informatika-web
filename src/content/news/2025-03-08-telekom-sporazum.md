@@ -1,9 +1,7 @@
 ---
 title: Inštitut podpisal sporazum o sodelovanju s Telekomom Slovenije
 date: 2025-03-08T09:00:00.000Z
-tags:
-  - professional
-  - project
+tags: ["project", "professional"]
 summary: Inštitut za informatiko je podpisal dvoletni raziskovalni sporazum s Telekomom Slovenije za optimizacijo omrežij 5G z uporabo strojnega učenja.
 coverImage: '@/assets/media/2025-03-08-telekom-sporazum_01.jpg'
 images: []

@@ -1,9 +1,7 @@
 ---
 title: Nova objava v reviji Nature Scientific Reports
 date: 2025-02-25T08:00:00.000Z
-tags:
-  - scientific
-  - project
+tags: ["project", "scientific"]
 summary: Raziskovalci inštituta so v reviji Nature Scientific Reports objavili članek o adaptivnih protokolih za senzorska omrežja IoT.
 coverImage: '@/assets/media/2025-02-25-objava-nature_01.webp'
 images:

@@ -1,0 +1,66 @@
+---
+import Base from "../../layouts/Base.astro";
+import SectionNews from "../../components/SectionNews.astro";
+import { getCollection } from "astro:content";
+
+const base = import.meta.env.BASE_URL;
+const projects = await getCollection("studentProjects");
+
+const sidebarLinks = [
+  { label: "Študijski programi",    href: `${base}/studies/programmes` },
+  { label: "Študentske aktivnosti", href: `${base}/studies/student-projects` },
+];
+---
+<Base title="Študentske aktivnosti" sidebarLinks={sidebarLinks}>
+
+  <h2 style="font-family:'Titillium Web',sans-serif; font-size:1.4rem; font-weight:400;
+             color:#222; margin-bottom:1.25rem;">
+    Študentske aktivnosti
+  </h2>
+
+  <div class="card">
+    <div style="display:flex; gap:0.75rem; align-items:stretch; margin-bottom:1.25rem;">
+      <div style="width:4px; background:#ffc70f; flex-shrink:0; border-radius:1px;"></div>
+      <p style="margin:0; text-align:left;">
+        Študenti Inštituta za informatiko sodelujejo v številnih projektih in aktivnostih,
+        ki dopolnjujejo formalno izobraževanje in razvijajo praktične veščine.
+        Projekti so dostopni tudi na portalu praktik.um.si.
+      </p>
+    </div>
+
+    <div style="display:flex; gap:0.75rem; align-items:center; margin-bottom:0.75rem;">
+      <div style="width:4px; background:#ffc70f; flex-shrink:0; border-radius:1px; min-height:24px;"></div>
+      <h3 style="margin:0; font-family:'Titillium Web',sans-serif; font-size:1rem;
+                 font-weight:700; color:#222;">Projekti</h3>
+    </div>
+
+    <ul style="list-style:none; padding:0; margin:0;">
+      {projects.map(p => (
+        <li style="display:flex; align-items:center; gap:0.75rem; padding:0.4rem 0;
+                   border-bottom:1px solid #f5f5f5;">
+          <span style="display:inline-flex; align-items:center; justify-content:center;
+                       width:28px; height:28px; background:#ffc70f; flex-shrink:0;">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M2 7h10M8 3l4 4-4 4" stroke="#222" stroke-width="1.8"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <a href={`${base}/studies/student-projects/${p.id}`}
+             style="color:#006A8E; text-decoration:none; font-size:1.05rem;">
+            {p.data.title}
+            <span style="font-size:0.82rem; color:#888; margin-left:6px;">
+              ({p.data.student} · {p.data.year})
+            </span>
+          </a>
+        </li>
+      ))}
+      {projects.length === 0 && (
+        <li style="color:#888; font-size:1rem; padding:0.5rem 0;">
+          Ni vpisanih projektov.
+        </li>
+      )}
+    </ul>
+  </div>
+
+  <SectionNews tag="student" label="ZADNJE NOVICE" />
+</Base>

@@ -1,9 +1,7 @@
 ---
 title: Prof. dr. Marko Novak prejel Zoisovo priznanje
 date: 2025-03-25T10:00:00.000Z
-tags:
-  - awards
-  - scientific
+tags: ["awards", "professional"]
 summary: Prof. dr. Marku Novaku je bilo podeljeno Zoisovo priznanje za izjemne dosežke mladega raziskovalca na področju računalništva.
 coverImage: '@/assets/media/2025-03-25-novak-zoisovo-priznanje_01.png'
 images: []

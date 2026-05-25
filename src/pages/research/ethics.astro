@@ -1,67 +1,113 @@
 ---
 import Base from "../../layouts/Base.astro";
+import SectionNews from "../../components/SectionNews.astro";
 import { getCollection } from "astro:content";
 
 const base = import.meta.env.BASE_URL;
 const opinions = (await getCollection("ethicsOpinions"))
   .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
----
-<Base title="Research Ethics Committee">
-  <h1>Odbor za raziskovalno etiko</h1>
 
-  <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin:1.5rem 0;">
-    <a href={`${base}/research/ethics/mandate`} style="text-decoration:none;">
-      <div class="card">
-        <h3 style="margin-top:0; color:#0066cc;">Naloge in delovanje odbora</h3>
-        <p>O komisiji in njenih pristojnostih.</p>
+const sidebarLinks = [
+  { label: "Raziskovalni projekti", href: `${base}/research/projects` },
+  { label: "Publikacije",           href: `${base}/research/publications` },
+  { label: "Etična komisija",       href: `${base}/research/ethics` },
+];
+---
+<Base title="Etična komisija" sidebarLinks={sidebarLinks}>
+
+  <h2 style="font-family:'Titillium Web',sans-serif; font-size:1.4rem; font-weight:400;
+             color:#222; margin-bottom:1.25rem;">
+    Etična komisija za raziskave
+  </h2>
+
+  <div class="card">
+
+    <!-- Enlaces a subpáginas -->
+    <div style="display:flex; gap:0.75rem; align-items:center; margin-bottom:0.6rem;">
+      <div style="width:4px; background:#ffc70f; flex-shrink:0; border-radius:1px; min-height:24px;"></div>
+      <h3 style="margin:0; font-family:'Titillium Web',sans-serif; font-size:1rem;
+                 font-weight:700; color:#222;">Vsebina</h3>
+    </div>
+
+    <ul style="list-style:none; padding:0; margin:0 0 1.5rem;">
+      {[
+        { label: "Naloge in delovanje komisije", href: `${base}/research/ethics/mandate` },
+        { label: "Vlaganje vlog in odločitve komisije", href: `${base}/research/ethics/submissions` },
+      ].map(item => (
+        <li style="display:flex; align-items:center; gap:0.75rem; padding:0.4rem 0;
+                   border-bottom:1px solid #f5f5f5;">
+          <span style="display:inline-flex; align-items:center; justify-content:center;
+                       width:28px; height:28px; background:#ffc70f; flex-shrink:0;">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M2 7h10M8 3l4 4-4 4" stroke="#222" stroke-width="1.8"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <a href={item.href} style="color:#006A8E; text-decoration:none; font-size:1.05rem;">
+            {item.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <!-- Tabla de opiniones -->
+    <div style="display:flex; gap:0.75rem; align-items:center; margin-bottom:0.75rem;">
+      <div style="width:4px; background:#ffc70f; flex-shrink:0; border-radius:1px; min-height:24px;"></div>
+      <h3 style="margin:0; font-family:'Titillium Web',sans-serif; font-size:1rem;
+                 font-weight:700; color:#222;">Seznam izdanih mnenj</h3>
+    </div>
+
+    {opinions.length === 0 && (
+      <p style="color:#888; margin:0;">Ni evidentiranih mnenj.</p>
+    )}
+
+    {opinions.length > 0 && (
+      <div style="overflow-x:auto;">
+        <table style="width:100%; border-collapse:collapse; table-layout:fixed;">
+          <colgroup>
+            <col style="width:110px;" />
+            <col style="width:35%;" />
+            <col style="width:25%;" />
+            <col style="width:auto;" />
+          </colgroup>
+          <thead>
+            <tr>
+              {["Datum", "Raziskava", "Raziskovalci", "Odločitev"].map(h => (
+                <th style="background:#ffc70f; color:#222; text-align:left; padding:10px 12px;
+                           font-family:'Titillium Web',sans-serif; font-size:0.82rem;
+                           text-transform:uppercase; letter-spacing:0.04em; border:none;">
+                  {h}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {opinions.map((o, i) => (
+              <tr style={i % 2 === 1 ? "background:#fffdf0;" : ""}>
+                <td style="padding:10px 12px; border-bottom:1px solid #eee; vertical-align:top;
+                           white-space:nowrap; font-size:0.88rem; color:#666;">
+                  {new Date(o.data.date).toLocaleDateString("sl-SI")}
+                </td>
+                <td style="padding:10px 12px; border-bottom:1px solid #eee; vertical-align:top;
+                           font-size:0.9rem; word-wrap:break-word; overflow-wrap:break-word;">
+                  {o.data.research}
+                </td>
+                <td style="padding:10px 12px; border-bottom:1px solid #eee; vertical-align:top;
+                           font-size:0.9rem; word-wrap:break-word; overflow-wrap:break-word;">
+                  {o.data.researchers}
+                </td>
+                <td style="padding:10px 12px; border-bottom:1px solid #eee; vertical-align:top;
+                           font-size:0.9rem; word-wrap:break-word; overflow-wrap:break-word;">
+                  {o.data.decision ?? "—"}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
-    </a>
-    <a href={`${base}/research/ethics/submissions`} style="text-decoration:none;">
-      <div class="card">
-        <h3 style="margin-top:0; color:#0066cc;">Vložitev vlog in odločitve komisije</h3>
-        <p>Kako oddati vlogo in odločitve komisije.</p>
-      </div>
-    </a>
+    )}
+
   </div>
 
-  <h2>Seznam mnenj, izdanih s strani komisije</h2>
-  {opinions.length === 0 && <p class="meta">Ni še zabeleženih mnenj.</p>}
-  {opinions.length > 0 && (
-    <div style="overflow-x:auto;">
-      <table style="width:100%; border-collapse:collapse; table-layout:fixed;">
-        <colgroup>
-          <col style="width:110px;" />
-          <col style="width:35%;" />
-          <col style="width:25%;" />
-          <col style="width:auto;" />
-        </colgroup>
-        <thead>
-          <tr>
-            <th style="text-align:left; padding:10px 12px; background:#f0f4ff; border-bottom:2px solid #ddd; font-size:0.82rem; text-transform:uppercase; letter-spacing:0.04em; color:#555;">Datum</th>
-            <th style="text-align:left; padding:10px 12px; background:#f0f4ff; border-bottom:2px solid #ddd; font-size:0.82rem; text-transform:uppercase; letter-spacing:0.04em; color:#555;">Raziskava</th>
-            <th style="text-align:left; padding:10px 12px; background:#f0f4ff; border-bottom:2px solid #ddd; font-size:0.82rem; text-transform:uppercase; letter-spacing:0.04em; color:#555;">Raziskovalci</th>
-            <th style="text-align:left; padding:10px 12px; background:#f0f4ff; border-bottom:2px solid #ddd; font-size:0.82rem; text-transform:uppercase; letter-spacing:0.04em; color:#555;">Odločitev</th>
-          </tr>
-        </thead>
-        <tbody>
-          {opinions.map((o, i) => (
-            <tr style={i % 2 === 1 ? "background:#fafafa;" : ""}>
-              <td style="padding:10px 12px; border-bottom:1px solid #eee; vertical-align:top; white-space:nowrap; font-size:0.88rem; color:#666;">
-                {new Date(o.data.date).toLocaleDateString("en-GB")}
-              </td>
-              <td style="padding:10px 12px; border-bottom:1px solid #eee; vertical-align:top; font-size:0.9rem; word-wrap:break-word; overflow-wrap:break-word;">
-                {o.data.research}
-              </td>
-              <td style="padding:10px 12px; border-bottom:1px solid #eee; vertical-align:top; font-size:0.9rem; word-wrap:break-word; overflow-wrap:break-word;">
-                {o.data.researchers}
-              </td>
-              <td style="padding:10px 12px; border-bottom:1px solid #eee; vertical-align:top; font-size:0.9rem; word-wrap:break-word; overflow-wrap:break-word;">
-                {o.data.decision ?? "—"}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  )}
+  <SectionNews tag="scientific" label="ZADNJE NOVICE" />
 </Base>

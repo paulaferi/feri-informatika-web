@@ -1,7 +1,9 @@
 ---
 import Base from "../../layouts/Base.astro";
 import { Image } from "astro:assets";
+import SectionNews from "../../components/SectionNews.astro";
 import { getCollection, render } from "astro:content";
+import { marked } from "marked";
 
 export async function getStaticPaths() {
   const staff = await getCollection("staff");
@@ -9,85 +11,111 @@ export async function getStaticPaths() {
 }
 
 const { person } = Astro.props;
+const base = import.meta.env.BASE_URL;
+
+const allStaff = await getCollection("staff");
+const sidebarLinks = [
+  { label: "Laboratoriji",      href: `${base}/laboratories` },
+  { label: "Interesne skupine", href: `${base}/interest-groups` },
+  {
+    label: "Osebje",
+    href: `${base}/staff`,
+    children: allStaff.map(p => ({
+      label: p.data.name,
+      href: `${base}/staff/${p.id}`,
+    })),
+  },
+];
+
+
 
 type Section = { key: keyof typeof person.data; label: string };
 const sections: Section[] = [
-  { key: "researchTopics",  label: "Glavne raziskovalne teme" },
-  { key: "publications",    label: "Seznam izbranih publikacij" },
-  { key: "cv",              label: "CV" },
-  { key: "teaching",        label: "Poučevanje" },
-  { key: "projects",        label: "Vodja projekta / koordinator" },
+  { key: "researchTopics",  label: "Glavna področja raziskav" },
+  { key: "publications",    label: "Izbrane publikacije" },
+  { key: "cv",              label: "Življenjepis" },
+  { key: "teaching",        label: "Pedagoško delo" },
+  { key: "projects",        label: "Vodja / koordinator projektov" },
   { key: "editorial",       label: "Urednik" },
   { key: "awards",          label: "Nagrade" },
-  { key: "conferenceOrg",   label: "Organizacija konference" },
-  { key: "projectsCollab",  label: "Projekti Sodelovanje" },
-  { key: "reviewerFor",     label: "Recenzent za znanstvene revije" },
-  { key: "certificates",    label: "Potrdila" },
+  { key: "conferenceOrg",   label: "Organizacija konferenc" },
+  { key: "projectsCollab",  label: "Sodelovanje pri projektih" },
+  { key: "reviewerFor",     label: "Recenzent za revije" },
+  { key: "certificates",    label: "Certifikati" },
 ];
-
-import { marked } from "marked";
 ---
-<Base title={person.data.name}>
+<Base title={person.data.name} sidebarLinks={sidebarLinks}>
 
-  <!-- Header -->
-  <div style="display:flex; gap:2rem; align-items:flex-start; flex-wrap:wrap; margin-bottom:2rem;">
-    {person.data.photo && (
-      <Image src={person.data.photo} alt={person.data.name}
-             width={160} height={160}
-             style="width:160px; height:160px; object-fit:cover; border-radius:8px;
-                    border:1px solid #ddd; flex-shrink:0;" />
-    )}
-    {!person.data.photo && (
-      <div style="width:160px; height:160px; border-radius:8px; background:#e8f0fe;
-                  display:flex; align-items:center; justify-content:center;
-                  font-size:3rem; color:#1a5276; flex-shrink:0;">
-        {person.data.name.charAt(0)}
+  <h2 style="font-family:'Titillium Web',sans-serif; font-size:1.4rem; font-weight:400;
+             color:#222; margin-bottom:1.25rem;">
+    {person.data.name}
+  </h2>
+
+  <div class="card">
+
+    <!-- Header: foto + datos de contacto -->
+    <div style="display:flex; gap:1.5rem; align-items:flex-start; flex-wrap:wrap; margin-bottom:1.5rem;">
+      {person.data.photo
+        ? <Image src={person.data.photo} alt={person.data.name} width={120} height={120}
+                 style="width:120px; height:120px; object-fit:cover; border-radius:4px;
+                        border:1px solid #ddd; flex-shrink:0;" />
+        : <div style="width:120px; height:120px; border-radius:4px; background:#e0f0f7;
+                      display:flex; align-items:center; justify-content:center;
+                      font-size:2.5rem; color:#006A8E; flex-shrink:0; font-weight:600;">
+            {person.data.name.charAt(0)}
+          </div>
+      }
+      <div style="flex:1; min-width:200px;">
+        {person.data.title && (
+          <p style="font-size:0.9rem; color:#666; margin-bottom:0.2rem; font-style:italic;">
+            {person.data.title}
+          </p>
+        )}
+        <p style="color:#444; margin-bottom:0.75rem; font-size:1rem;">{person.data.role}</p>
+        <ul class="contact-info" style="font-size:0.95rem;">
+          {person.data.email && <li>E-pošta: <a href={`mailto:${person.data.email}`}>{person.data.email}</a></li>}
+          {person.data.phone && <li>Telefon: {person.data.phone}</li>}
+          {person.data.office && <li>Pisarna: {person.data.office}</li>}
+          {person.data.contactHours && <li>Govorilne ure: <a href={person.data.contactHours} target="_blank">link</a></li>}
+          {person.data.linkedin && <li>LinkedIn: <a href={person.data.linkedin} target="_blank">link</a></li>}
+        </ul>
+      </div>
+    </div>
+
+    <!-- Secciones dinámicas -->
+    {sections.map(({ key, label }) => {
+      const value = person.data[key];
+      if (!value || value === "") return null;
+      return (
+        <div style="margin-bottom:1.25rem;">
+          <div style="display:flex; gap:0.75rem; align-items:center; margin-bottom:0.6rem;">
+            <div style="width:4px; background:#ffc70f; flex-shrink:0; border-radius:1px; align-self:stretch; min-height:24px;"></div>
+            <h3 style="margin:0; font-family:'Titillium Web',sans-serif; font-size:1rem; font-weight:700; color:#222;">
+              {label}
+            </h3>
+          </div>
+          <div class="prose" set:html={marked.parse(value as string)} />
+        </div>
+      );
+    })}
+
+    <!-- COBISS -->
+    {person.data.cobiss && (
+      <div style="margin-top:1.25rem; padding-top:1rem; border-top:1px solid #eee;">
+        <div style="display:flex; gap:0.75rem; align-items:center; margin-bottom:0.5rem;">
+          <div style="width:4px; background:#ffc70f; flex-shrink:0; border-radius:1px; min-height:24px;"></div>
+          <h3 style="margin:0; font-family:'Titillium Web',sans-serif; font-size:1rem; font-weight:700; color:#222;">
+            Publikacije
+          </h3>
+        </div>
+        <p>Celotno poročilo je dostopno na COBISS:</p>
+        <a href={person.data.cobiss} target="_blank" style="color:#006A8E;">
+          Ogled na COBISS →
+        </a>
       </div>
     )}
-    <div style="flex:1; min-width:220px;">
-      <h1 style="margin-bottom:0.2rem;">{person.data.name}</h1>
-      {person.data.title && (
-        <p style="font-size:0.95rem; color:#666; margin-bottom:0.3rem;">{person.data.title}</p>
-      )}
-      <p style="color:#444; margin-bottom:1rem;">{person.data.role}</p>
-      <ul class="contact-info">
-        {person.data.email && (
-          <li>E-mail: <a href={`mailto:${person.data.email}`}>{person.data.email}</a></li>
-        )}
-        {person.data.phone    && <li>Telefon: {person.data.phone}</li>}
-        {person.data.office   && <li>Soba: {person.data.office}</li>}
-        {person.data.contactHours && (
-          <li>Ure za stike: <a href={person.data.contactHours} target="_blank">link</a></li>
-        )}
-        {person.data.linkedin && (
-          <li>LinkedIn: <a href={person.data.linkedin} target="_blank">link</a></li>
-        )}
-      </ul>
-    </div>
+
   </div>
 
-  <!-- Dynamic sections -->
-  {sections.map(({ key, label }) => {
-    const value = person.data[key];
-    if (!value || value === "") return null;
-    return (
-      <div class="card" style="margin-bottom:1rem;">
-        <h2 style="margin-top:0; font-size:1.1rem; border-bottom:1px solid #eee;
-                   padding-bottom:0.5rem; margin-bottom:0.8rem;">{label}</h2>
-        <div class="prose" set:html={marked.parse(value as string)} />
-      </div>
-    );
-  })}
-
-  <!-- Publications COBISS -->
-  {person.data.cobiss && (
-    <div class="card">
-      <h2 style="margin-top:0; font-size:1.1rem;">Publikacije</h2>
-      <p>Poln poročilo je na voljo na COBISS:</p>
-      <a href={person.data.cobiss} target="_blank" style="color:#0066cc;">
-        Oglej na COBISS →
-      </a>
-    </div>
-  )}
-
+  <SectionNews tag="staff" label="ZADNJE NOVICE" />
 </Base>

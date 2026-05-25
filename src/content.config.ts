@@ -1,38 +1,109 @@
 import { defineCollection, z } from "astro:content";
 import { sveltiaLoader } from "astro-loader-sveltia-cms/loader";
 
-const laboratories    = defineCollection({ loader: sveltiaLoader("laboratories") });
-const interestGroups  = defineCollection({ loader: sveltiaLoader("interestGroups") });
+const laboratories = defineCollection({
+  loader: sveltiaLoader("laboratories"),
+  schema: z.object({
+    name:          z.string(),
+    acronym:       z.string().optional(),
+    description:   z.string(),
+    researchAreas: z.array(z.string()).optional(),
+    members:       z.array(z.string()).optional(),
+    externalUrl:   z.string().optional(),
+    body:          z.string().optional(),
+  }),
+});
+
+const interestGroups = defineCollection({
+  loader: sveltiaLoader("interestGroups"),
+  schema: z.object({
+    name:        z.string(),
+    description: z.string(),
+    url:         z.string().optional(),
+    body:        z.string().optional(),
+  }),
+});
+
 const ethicsOpinions  = defineCollection({ loader: sveltiaLoader("ethicsOpinions") });
-const studyProgrammes = defineCollection({ loader: sveltiaLoader("studyProgrammes") });
-const studentProjects = defineCollection({ loader: sveltiaLoader("studentProjects") });
-const conferences     = defineCollection({ loader: sveltiaLoader("conferences") });
-const projects        = defineCollection({ loader: sveltiaLoader("projects") });
+
+const studyProgrammes = defineCollection({
+  loader: sveltiaLoader("studyProgrammes"),
+  schema: z.object({
+    title:       z.string(),
+    type:        z.enum(["IPT", "ITK", "Bachelor", "Master", "PhD"]),
+    duration:    z.number(),
+    ects:        z.number(),
+    scope:       z.string().optional(),
+    externalUrl: z.string().optional(),
+    body:        z.string().optional(),
+  }),
+});
+
+const studentProjects = defineCollection({
+  loader: sveltiaLoader("studentProjects"),
+  schema: z.object({
+    title:       z.string(),
+    student:     z.string(),
+    year:        z.number(),
+    description: z.string(),
+    externalUrl: z.string().optional(),
+    body:        z.string().optional(),
+  }),
+});
+
+const conferences = defineCollection({
+  loader: sveltiaLoader("conferences"),
+  schema: z.object({
+    name:        z.string(),
+    acronym:     z.string().optional(),
+    description: z.string(),
+    date:        z.coerce.date().optional(),
+    location:    z.string().optional(),
+    url:         z.string().optional(),
+    body:        z.string().optional(),
+  }),
+});
+
+
+const projects = defineCollection({
+  loader: sveltiaLoader("projects"),
+  schema: z.object({
+    title:                 z.string(),
+    status:                z.enum(["active", "past"]),
+    description:           z.string(),
+    startYear:             z.number().optional(),
+    endYear:               z.number().optional(),
+    funder:                z.string().optional(),
+    principalInvestigator: z.string().optional(),
+    newsLink:              z.string().optional(),
+    body:                  z.string().optional(),
+  }),
+});
 
 const staff = defineCollection({
   loader: sveltiaLoader("staff"),
   schema: ({ image }) => z.object({
-    name:            z.string(),
-    photo:           image().optional(),
-    title:           z.string().optional(),
-    role:            z.string(),
-    email:           z.string().optional(),
-    phone:           z.string().optional(),
-    office:          z.string().optional(),
-    contactHours:    z.string().optional(),
-    linkedin:        z.string().optional(),
-    cobiss:          z.string().optional(),
-    researchTopics:  z.string().optional(),
-    publications:    z.string().optional(),
-    cv:              z.string().optional(),
-    teaching:        z.string().optional(),
-    projects:        z.string().optional(),
-    editorial:       z.string().optional(),
-    awards:          z.string().optional(),
-    conferenceOrg:   z.string().optional(),
-    projectsCollab:  z.string().optional(),
-    reviewerFor:     z.string().optional(),
-    certificates:    z.string().optional(),
+    name:           z.string(),
+    photo:          image().optional(),
+    title:          z.string().optional(),
+    role:           z.string(),
+    email:          z.string().optional(),
+    phone:          z.string().optional(),
+    office:         z.string().optional(),
+    contactHours:   z.string().optional(),
+    linkedin:       z.string().optional(),
+    cobiss:         z.string().optional(),
+    researchTopics: z.string().optional(),
+    publications:   z.string().optional(),
+    cv:             z.string().optional(),
+    teaching:       z.string().optional(),
+    projects:       z.string().optional(),
+    editorial:      z.string().optional(),
+    awards:         z.string().optional(),
+    conferenceOrg:  z.string().optional(),
+    projectsCollab: z.string().optional(),
+    reviewerFor:    z.string().optional(),
+    certificates:   z.string().optional(),
   }),
 });
 
@@ -71,6 +142,7 @@ const achievements = defineCollection({
       "student", "conference", "scientific", "professional",
       "project", "awards", "interest-groups"
     ])),
+    summary:    z.string().optional(),
     coverImage: image().optional(),
     images:     z.array(image()).optional(),
   }),
