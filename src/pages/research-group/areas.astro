@@ -5,53 +5,34 @@ import SectionNews from "../../components/SectionNews.astro";
 const base = import.meta.env.BASE_URL;
 
 const sidebarLinks = [
-  { label: "Raziskovalna področja", href: `${base}/research-group/areas` },
-  { label: "Povezava do SICRIS",    href: `${base}/research-group/sicris` },
+  { label: "Research Areas",  href: `${base}/research-group/areas` },
+  { label: "Link to SICRIS",  href: `${base}/research-group/sicris` },
+];
+
+const areas = [
+  "Information Systems",
+  "Software Engineering",
+  "Embedded Systems",
+  "Intelligent Systems",
+  "Information and Communication Technologies",
 ];
 ---
-<Base title="Raziskovalna področja" sidebarLinks={sidebarLinks}>
+<Base title="Research Areas" sidebarLinks={sidebarLinks}>
 
-  <h2 style="font-family:'Titillium Web',sans-serif; font-size:1.4rem; font-weight:400;
-             color:#222; margin-bottom:1.25rem;">
-    Raziskovalna področja
-  </h2>
+  <h1 class="page-title">Research Areas</h1>
+  <div class="page-title-rule"></div>
 
   <div class="card">
-    <div style="display:flex; gap:0.75rem; align-items:stretch; margin-bottom:1.25rem;">
-  <div style="width:4px; background:#ffc70f; flex-shrink:0; border-radius:1px;"></div>
-  <p style="margin:0; text-align:left;">
-    The Institute of Informatics covers a wide range of research areas, including
-    distributed systems, artificial intelligence, computer networks, software
-    development and human-computer interaction.
-  </p>
-</div>
-
-    <div style="display:flex; gap:0.75rem; align-items:center; margin-bottom:0.75rem;">
-      <div style="width:4px; background:#ffc70f; flex-shrink:0; border-radius:1px; min-height:24px;"></div>
-      <h3 style="margin:0; font-family:'Titillium Web',sans-serif; font-size:1rem;
-                 font-weight:700; color:#222;">
-        Glavna področja
-      </h3>
+    <div class="intro">
+      <p>The Institute of Informatics covers a wide range of research areas, including distributed systems, artificial intelligence, computer networks, software development and human-computer interaction.</p>
     </div>
 
-    <ul style="list-style:none; padding:0; margin:0;">
-  {[
-    "Information Systems",
-    "Software Engineering",
-    "Embedded Systems",
-    "Intelligent Systems",
-    "Information and Communication Technologies",
-  ].map(area => (
-    <li style="display:flex; align-items:center; gap:0.75rem; padding:0.4rem 0;
-               border-bottom:1px solid #f5f5f5;">
-      <span style="display:inline-block; width:7px; height:7px; border-radius:50%;
-                   background:#222; flex-shrink:0;"></span>
-      <span style="font-size:1.05rem; color:#444;">{area}</span>
-    </li>
-  ))}
-</ul>
+    <div class="section-heading"><h3>Main Areas</h3></div>
+    <ul class="dot-list">
+      {areas.map(area => <li>{area}</li>)}
+    </ul>
   </div>
 
-  <SectionNews tag="scientific" label="ZADNJE NOVICE" />
+  <SectionNews tag="scientific" label="Latest News" />
 
 </Base>

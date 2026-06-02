@@ -16,78 +16,51 @@ const allProgrammes = await getCollection("studyProgrammes");
 
 const sidebarLinks = [
   {
-    label: "Študijski programi",
+    label: "Study Programmes",
     href: `${base}/studies/programmes`,
     children: allProgrammes.map(p => ({
       label: p.data.title,
       href: `${base}/studies/programmes/${p.id}`,
     })),
   },
-  { label: "Študentske aktivnosti", href: `${base}/studies/student-projects` },
+  { label: "Student Activities", href: `${base}/studies/student-projects` },
 ];
 ---
 <Base title={programme.data.title} sidebarLinks={sidebarLinks}>
 
-  <h2 style="font-family:'Titillium Web',sans-serif; font-size:1.4rem; font-weight:400;
-             color:#222; margin-bottom:1.25rem;">
-    {programme.data.title}
-  </h2>
+  <h1 class="page-title">{programme.data.title}</h1>
+  <div class="page-title-rule"></div>
 
   <div class="card">
 
-    <div style="display:flex; gap:0.75rem; align-items:stretch; margin-bottom:1.25rem;">
-      <div style="width:4px; background:#ffc70f; flex-shrink:0; border-radius:1px;"></div>
-      <p style="margin:0; text-align:left;">{programme.data.scope ?? ""}</p>
-    </div>
+    {programme.data.scope && (
+      <div class="intro"><p>{programme.data.scope}</p></div>
+    )}
 
-    <div style="display:flex; gap:0.75rem; align-items:center; margin-bottom:0.6rem;">
-      <div style="width:4px; background:#ffc70f; flex-shrink:0; border-radius:1px; min-height:24px;"></div>
-      <h3 style="margin:0; font-family:'Titillium Web',sans-serif; font-size:1rem;
-                 font-weight:700; color:#222;">Podatki o programu</h3>
-    </div>
-
-    <ul style="list-style:none; padding:0 0 0 0.5rem; margin:0 0 1.25rem;">
-      <li style="display:flex; gap:0.5rem; padding:0.3rem 0; font-size:1.05rem; color:#444;">
-        <span style="display:inline-block; width:7px; height:7px; border-radius:50%;
-                     background:#ffc70f; flex-shrink:0; margin-top:0.5rem;"></span>
-        <span><strong>Vrsta programa:</strong> {programme.data.type}</span>
-      </li>
-      <li style="display:flex; gap:0.5rem; padding:0.3rem 0; font-size:1.05rem; color:#444;">
-        <span style="display:inline-block; width:7px; height:7px; border-radius:50%;
-                     background:#ffc70f; flex-shrink:0; margin-top:0.5rem;"></span>
-        <span>
-          <strong>Trajanje:</strong>{" "}
-          {programme.data.duration} {programme.data.duration === 1 ? "leto" : "leta"}
-        </span>
-      </li>
-      <li style="display:flex; gap:0.5rem; padding:0.3rem 0; font-size:1.05rem; color:#444;">
-        <span style="display:inline-block; width:7px; height:7px; border-radius:50%;
-                     background:#ffc70f; flex-shrink:0; margin-top:0.5rem;"></span>
-        <span><strong>ECTS:</strong> {programme.data.ects}</span>
-      </li>
+    <div class="section-heading"><h3>Programme Information</h3></div>
+    <ul class="detail-list">
+      <li><span><strong>Type:</strong> {programme.data.type}</span></li>
+      <li><span><strong>Duration:</strong> {programme.data.duration} {programme.data.duration === 1 ? "year" : "years"}</span></li>
+      <li><span><strong>ECTS credits:</strong> {programme.data.ects}</span></li>
     </ul>
 
     {programme.data.body && (
-      <>
-        <div style="display:flex; gap:0.75rem; align-items:center; margin-bottom:0.6rem;">
-          <div style="width:4px; background:#ffc70f; flex-shrink:0; border-radius:1px; min-height:24px;"></div>
-          <h3 style="margin:0; font-family:'Titillium Web',sans-serif; font-size:1rem;
-                     font-weight:700; color:#222;">Učni načrt in splošne informacije</h3>
-        </div>
+      <div>
+        <div class="section-heading"><h3>Curriculum &amp; General Information</h3></div>
         <div class="prose"><Content /></div>
-      </>
+      </div>
     )}
 
     {programme.data.externalUrl && (
-      <div style="margin-top:1.25rem; padding-top:1rem; border-top:1px solid #eee;">
-        <a href={programme.data.externalUrl} target="_blank"
-           style="color:#006A8E; font-size:0.9rem;">
-          Ogled programa na moja.um.si →
-        </a>
+      <div class="external-link">
+        <a href={programme.data.externalUrl} target="_blank">View programme on moja.um.si →</a>
       </div>
     )}
 
   </div>
 
-  <SectionNews tag="student" label="ZADNJE NOVICE" />
+  <a href={`${base}/studies/programmes`} class="back-link">← Back to Study Programmes</a>
+
+  <SectionNews tag="student" label="Latest News" />
+
 </Base>

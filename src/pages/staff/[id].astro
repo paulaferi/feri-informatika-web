@@ -2,7 +2,7 @@
 import Base from "../../layouts/Base.astro";
 import { Image } from "astro:assets";
 import SectionNews from "../../components/SectionNews.astro";
-import { getCollection, render } from "astro:content";
+import { getCollection } from "astro:content";
 import { marked } from "marked";
 
 export async function getStaticPaths() {
@@ -15,10 +15,10 @@ const base = import.meta.env.BASE_URL;
 
 const allStaff = await getCollection("staff");
 const sidebarLinks = [
-  { label: "Laboratoriji",      href: `${base}/laboratories` },
-  { label: "Interesne skupine", href: `${base}/interest-groups` },
+  { label: "Laboratories",    href: `${base}/laboratories` },
+  { label: "Interest Groups", href: `${base}/interest-groups` },
   {
-    label: "Osebje",
+    label: "Staff",
     href: `${base}/staff`,
     children: allStaff.map(p => ({
       label: p.data.name,
@@ -27,95 +27,77 @@ const sidebarLinks = [
   },
 ];
 
-
-
 type Section = { key: keyof typeof person.data; label: string };
 const sections: Section[] = [
-  { key: "researchTopics",  label: "Glavna področja raziskav" },
-  { key: "publications",    label: "Izbrane publikacije" },
-  { key: "cv",              label: "Življenjepis" },
-  { key: "teaching",        label: "Pedagoško delo" },
-  { key: "projects",        label: "Vodja / koordinator projektov" },
-  { key: "editorial",       label: "Urednik" },
-  { key: "awards",          label: "Nagrade" },
-  { key: "conferenceOrg",   label: "Organizacija konferenc" },
-  { key: "projectsCollab",  label: "Sodelovanje pri projektih" },
-  { key: "reviewerFor",     label: "Recenzent za revije" },
-  { key: "certificates",    label: "Certifikati" },
+  { key: "researchTopics",  label: "Main Research Topics" },
+  { key: "publications",    label: "Selected Publications" },
+  { key: "cv",              label: "Curriculum Vitae" },
+  { key: "teaching",        label: "Teaching" },
+  { key: "projects",        label: "Project Leader / Coordinator" },
+  { key: "editorial",       label: "Editorial Activity" },
+  { key: "awards",          label: "Awards" },
+  { key: "conferenceOrg",   label: "Conference Organization" },
+  { key: "projectsCollab",  label: "Project Collaboration" },
+  { key: "reviewerFor",     label: "Reviewer for Journals" },
+  { key: "certificates",    label: "Certificates" },
 ];
 ---
 <Base title={person.data.name} sidebarLinks={sidebarLinks}>
 
-  <h2 style="font-family:'Titillium Web',sans-serif; font-size:1.4rem; font-weight:400;
-             color:#222; margin-bottom:1.25rem;">
-    {person.data.name}
-  </h2>
+  <h1 class="page-title">{person.data.name}</h1>
+  <div class="page-title-rule"></div>
 
   <div class="card">
 
-    <!-- Header: foto + datos de contacto -->
-    <div style="display:flex; gap:1.5rem; align-items:flex-start; flex-wrap:wrap; margin-bottom:1.5rem;">
+    <div style="display:flex; gap:1.6rem; align-items:flex-start; flex-wrap:wrap; margin-bottom:1.5rem;">
       {person.data.photo
-        ? <Image src={person.data.photo} alt={person.data.name} width={120} height={120}
-                 style="width:120px; height:120px; object-fit:cover; border-radius:4px;
-                        border:1px solid #ddd; flex-shrink:0;" />
-        : <div style="width:120px; height:120px; border-radius:4px; background:#e0f0f7;
+        ? <Image src={person.data.photo} alt={person.data.name} width={130} height={130}
+                 style="width:130px; height:130px; object-fit:cover; border-radius:4px;
+                        border:1px solid var(--border); flex-shrink:0;" />
+        : <div style="width:130px; height:130px; border-radius:4px; background:var(--um-blue-light);
                       display:flex; align-items:center; justify-content:center;
-                      font-size:2.5rem; color:#006A8E; flex-shrink:0; font-weight:600;">
+                      font-size:2.6rem; color:var(--um-blue); font-weight:700; flex-shrink:0;">
             {person.data.name.charAt(0)}
           </div>
       }
-      <div style="flex:1; min-width:200px;">
+      <div style="flex:1; min-width:220px;">
         {person.data.title && (
-          <p style="font-size:0.9rem; color:#666; margin-bottom:0.2rem; font-style:italic;">
+          <p style="font-size:0.92rem; color:var(--muted); font-style:italic; margin-bottom:0.2rem;">
             {person.data.title}
           </p>
         )}
-        <p style="color:#444; margin-bottom:0.75rem; font-size:1rem;">{person.data.role}</p>
-        <ul class="contact-info" style="font-size:0.95rem;">
-          {person.data.email && <li>E-pošta: <a href={`mailto:${person.data.email}`}>{person.data.email}</a></li>}
-          {person.data.phone && <li>Telefon: {person.data.phone}</li>}
-          {person.data.office && <li>Pisarna: {person.data.office}</li>}
-          {person.data.contactHours && <li>Govorilne ure: <a href={person.data.contactHours} target="_blank">link</a></li>}
-          {person.data.linkedin && <li>LinkedIn: <a href={person.data.linkedin} target="_blank">link</a></li>}
+        <p style="color:var(--text); margin-bottom:0.85rem; font-size:1rem;">{person.data.role}</p>
+        <ul class="contact-info" style="font-size:0.92rem;">
+          {person.data.email && <li><strong>Email:</strong> <a href={`mailto:${person.data.email}`}>{person.data.email}</a></li>}
+          {person.data.phone && <li><strong>Telephone:</strong> {person.data.phone}</li>}
+          {person.data.office && <li><strong>Office:</strong> {person.data.office}</li>}
+          {person.data.contactHours && <li><strong>Contact hours:</strong> <a href={person.data.contactHours} target="_blank">link</a></li>}
+          {person.data.linkedin && <li><strong>LinkedIn:</strong> <a href={person.data.linkedin} target="_blank">link</a></li>}
         </ul>
       </div>
     </div>
 
-    <!-- Secciones dinámicas -->
     {sections.map(({ key, label }) => {
       const value = person.data[key];
       if (!value || value === "") return null;
       return (
-        <div style="margin-bottom:1.25rem;">
-          <div style="display:flex; gap:0.75rem; align-items:center; margin-bottom:0.6rem;">
-            <div style="width:4px; background:#ffc70f; flex-shrink:0; border-radius:1px; align-self:stretch; min-height:24px;"></div>
-            <h3 style="margin:0; font-family:'Titillium Web',sans-serif; font-size:1rem; font-weight:700; color:#222;">
-              {label}
-            </h3>
-          </div>
+        <div style="margin-bottom:1.4rem;">
+          <div class="section-heading"><h3>{label}</h3></div>
           <div class="prose" set:html={marked.parse(value as string)} />
         </div>
       );
     })}
 
-    <!-- COBISS -->
     {person.data.cobiss && (
-      <div style="margin-top:1.25rem; padding-top:1rem; border-top:1px solid #eee;">
-        <div style="display:flex; gap:0.75rem; align-items:center; margin-bottom:0.5rem;">
-          <div style="width:4px; background:#ffc70f; flex-shrink:0; border-radius:1px; min-height:24px;"></div>
-          <h3 style="margin:0; font-family:'Titillium Web',sans-serif; font-size:1rem; font-weight:700; color:#222;">
-            Publikacije
-          </h3>
-        </div>
-        <p>Celotno poročilo je dostopno na COBISS:</p>
-        <a href={person.data.cobiss} target="_blank" style="color:#006A8E;">
-          Ogled na COBISS →
-        </a>
+      <div class="external-link">
+        <div class="section-heading" style="margin-top:0;"><h3>Publications</h3></div>
+        <p style="margin-bottom:0.5rem;">The full report is available on COBISS.</p>
+        <a href={person.data.cobiss} target="_blank">View on COBISS →</a>
       </div>
     )}
 
   </div>
 
-  <SectionNews tag="staff" label="ZADNJE NOVICE" />
+  <SectionNews tag="student" label="Latest News" />
+
 </Base>

@@ -1,6 +1,7 @@
 ---
 import Base from "../../layouts/Base.astro";
 import { Image } from "astro:assets";
+import SectionNews from "../../components/SectionNews.astro";
 import { getCollection, render } from "astro:content";
 
 export async function getStaticPaths() {
@@ -10,60 +11,55 @@ export async function getStaticPaths() {
 
 const { article } = Astro.props;
 const { Content } = await render(article);
-
-const formattedDate = new Date(article.data.date).toLocaleDateString("en-GB", {
-  day: "numeric", month: "long", year: "numeric"
-});
+const base = import.meta.env.BASE_URL;
 ---
 <Base title={article.data.title}>
 
-  <div style="margin-bottom:2rem;">
-    <time style="font-size:0.85rem; color:#999;">{formattedDate}</time>
-    <h1 style="margin:0.4rem 0 1rem;">{article.data.title}</h1>
-    <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:1.5rem;">
-      {(Array.isArray(article.data.tags) ? article.data.tags : [article.data.tags]).map((t: string) => (
-        <span style="display:inline-block; background:#e8f0fe; color:#1a5276;
-                     border-radius:4px; padding:2px 9px; font-size:0.78rem;">{t}</span>
+  <h1 class="page-title">{article.data.title}</h1>
+  <div class="page-title-rule"></div>
+
+  <div class="card">
+
+    <p class="meta" style="margin-bottom:0.75rem;">
+      {new Date(article.data.date).toLocaleDateString("en-GB", {
+        day: "numeric", month: "long", year: "numeric"
+      })}
+    </p>
+
+    <div style="display:flex; flex-wrap:wrap; gap:4px; margin-bottom:1.25rem;">
+      {(Array.isArray(article.data.tags) ? article.data.tags : [String(article.data.tags)]).map((t: string) => (
+        <span class="tag">{t}</span>
       ))}
     </div>
-  </div>
 
-  {article.data.coverImage && (
-    <div style="margin-bottom:2rem; border-radius:10px; overflow:hidden;">
-      <Image src={article.data.coverImage} alt={article.data.title}
-             width={960} height={420}
-             style="width:100%; max-height:420px; object-fit:cover; display:block;" />
-    </div>
-  )}
-
-  <p style="font-size:1.05rem; color:#444; line-height:1.7;
-            border-left:3px solid #1a5276; padding-left:1rem;
-            margin-bottom:2rem; font-style:italic;">
-    {article.data.summary}
-  </p>
-
-  <div class="card prose" style="margin-bottom:2rem;">
-    <Content />
-  </div>
-
-  {article.data.images && article.data.images.length > 0 && (
-    <div style="margin-top:2rem;">
-      <h2 style="font-size:1.1rem; margin-bottom:1rem;">Gallery</h2>
-      <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(240px,1fr)); gap:1rem;">
-        {article.data.images.map((img: ImageMetadata) => (
-          <div style="border-radius:8px; overflow:hidden; aspect-ratio:4/3;">
-            <Image src={img} alt="" width={400} height={300}
-                   style="width:100%; height:100%; object-fit:cover; display:block;" />
-          </div>
-        ))}
+    {article.data.coverImage && (
+      <div style="margin-bottom:1.5rem; border-radius:4px; overflow:hidden;">
+        <Image src={article.data.coverImage} alt={article.data.title}
+               width={900} height={400}
+               style="width:100%; max-height:400px; object-fit:cover; display:block;" />
       </div>
-    </div>
-  )}
+    )}
 
-  <div style="margin-top:2.5rem;">
-    <a href={`${import.meta.env.BASE_URL}/news`}
-       style="color:#1a5276; text-decoration:none; font-size:0.9rem;">
-      ← Nazaj na novice
-    </a>
+    <div class="intro"><p>{article.data.summary}</p></div>
+
+    <div class="prose"><Content /></div>
+
+    {article.data.images && article.data.images.length > 0 && (
+      <div style="margin-top:1.75rem;">
+        <div class="section-heading"><h3>Gallery</h3></div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(220px,1fr)); gap:0.85rem;">
+          {article.data.images.map((img: ImageMetadata) => (
+            <div style="border-radius:4px; overflow:hidden; aspect-ratio:4/3; border:1px solid var(--border);">
+              <Image src={img} alt="" width={400} height={300}
+                     style="width:100%; height:100%; object-fit:cover; display:block;" />
+            </div>
+          ))}
+        </div>
+      </div>
+    )}
+
   </div>
+
+  <a href={`${base}/news`} class="back-link">← Back to News</a>
+
 </Base>

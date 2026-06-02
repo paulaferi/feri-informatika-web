@@ -7,60 +7,42 @@ const base = import.meta.env.BASE_URL;
 const programmes = await getCollection("studyProgrammes");
 
 const sidebarLinks = [
-  { label: "Študijski programi",   href: `${base}/studies/programmes` },
-  { label: "Študentske aktivnosti", href: `${base}/studies/student-projects` },
+  { label: "Study Programmes",   href: `${base}/studies/programmes` },
+  { label: "Student Activities", href: `${base}/studies/student-projects` },
 ];
 ---
-<Base title="Študijski programi" sidebarLinks={sidebarLinks}>
+<Base title="Study Programmes" sidebarLinks={sidebarLinks}>
 
-  <h2 style="font-family:'Titillium Web',sans-serif; font-size:1.4rem; font-weight:400;
-             color:#222; margin-bottom:1.25rem;">
-    Študijski programi
-  </h2>
+  <h1 class="page-title">Study Programmes</h1>
+  <div class="page-title-rule"></div>
 
   <div class="card">
-    <div style="display:flex; gap:0.75rem; align-items:stretch; margin-bottom:1.25rem;">
-      <div style="width:4px; background:#ffc70f; flex-shrink:0; border-radius:1px;"></div>
-      <p style="margin:0; text-align:left;">
-        Inštitut za informatiko je glavni ponudnik izobraževanja na dodiplomskih in
-        podiplomskih študijskih programih Informatika in podatkovne tehnologije (IPT)
-        ter Informacijske in komunikacijske tehnologije (ITK).
-      </p>
+    <div class="intro">
+      <p>The Institute of Informatics is the main provider of education in the undergraduate and postgraduate study programmes Informatics and Data Technologies (IPT) and Information and Communication Technologies (ITK).</p>
     </div>
 
-    <div style="display:flex; gap:0.75rem; align-items:center; margin-bottom:0.75rem;">
-      <div style="width:4px; background:#ffc70f; flex-shrink:0; border-radius:1px; min-height:24px;"></div>
-      <h3 style="margin:0; font-family:'Titillium Web',sans-serif; font-size:1rem;
-                 font-weight:700; color:#222;">Razpoložljivi programi</h3>
-    </div>
-
-    <ul style="list-style:none; padding:0; margin:0;">
+    <div class="section-heading"><h3>Available Programmes</h3></div>
+    <ul class="arrow-list">
       {programmes.map(p => (
-        <li style="display:flex; align-items:center; gap:0.75rem; padding:0.4rem 0;
-                   border-bottom:1px solid #f5f5f5;">
-          <span style="display:inline-flex; align-items:center; justify-content:center;
-                       width:28px; height:28px; background:#ffc70f; flex-shrink:0;">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path d="M2 7h10M8 3l4 4-4 4" stroke="#222" stroke-width="1.8"
+        <li>
+          <span class="arrow-icon">
+            <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+              <path d="M2 7h10M8 3l4 4-4 4" stroke="#1f2933" stroke-width="1.9"
                     stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </span>
-          <a href={`${base}/studies/programmes/${p.id}`}
-             style="color:#006A8E; text-decoration:none; font-size:1.05rem;">
+          <a href={`${base}/studies/programmes/${p.id}`}>
             {p.data.title}
-            <span style="font-size:0.82rem; color:#888; margin-left:6px;">
-              ({p.data.type} · {p.data.duration} {p.data.duration === 1 ? "leto" : "leta"} · {p.data.ects} ECTS)
+            <span style="font-size:0.8rem; color:var(--muted); font-weight:400; margin-left:5px;">
+              ({p.data.type} · {p.data.ects} ECTS)
             </span>
           </a>
         </li>
       ))}
-      {programmes.length === 0 && (
-        <li style="color:#888; font-size:1rem; padding:0.5rem 0;">
-          Ni vpisanih programov.
-        </li>
-      )}
+      {programmes.length === 0 && <li class="empty-state">No programmes listed yet.</li>}
     </ul>
   </div>
 
-  <SectionNews tag="student" label="ZADNJE NOVICE" />
+  <SectionNews tag="student" label="Latest News" />
+
 </Base>

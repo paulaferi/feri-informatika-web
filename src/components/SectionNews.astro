@@ -1,43 +1,63 @@
 ---
-import NewsCard from "./NewsCard.astro";
 import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
 
 interface Props {
   tag: string;
   label?: string;
 }
 
-const { tag, label = "Zadnje novice" } = Astro.props;
-
-type NewsTag = "interest-groups" | "scientific" | "project" | "student" | "conference" | "professional" | "awards";
+const { tag, label = "Related News" } = Astro.props;
+const base = import.meta.env.BASE_URL;
 
 const allNews = await getCollection("news");
 const filtered = allNews
-  .filter(n => {
+  .filter((n: CollectionEntry<"news">) => {
     let tags: string[] = [];
     if (Array.isArray(n.data.tags)) {
-      tags = n.data.tags.map(t => String(t).trim());
+      tags = n.data.tags.map((t: string) => String(t).trim());
     } else if (typeof n.data.tags === "string") {
       tags = [String(n.data.tags).trim()];
     }
     return tags.includes(tag);
   })
-  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
+  .sort((a: CollectionEntry<"news">, b: CollectionEntry<"news">) =>
+    new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+  )
   .slice(0, 3);
 ---
 
 {filtered.length > 0 && (
   <div class="section-news">
-    <h2>{label}</h2>
-    <div class="news-grid">
-      {filtered.map(n => (
-        <NewsCard
-          id={n.id}
-          title={n.data.title}
-          date={n.data.date.toString()}
-          summary={n.data.summary}
-          coverImage={n.data.coverImage}
-        />
+    <div class="section-news-title">{label}</div>
+    <div class="card-grid">
+      {filtered.map((n: CollectionEntry<"news">) => (
+        <a href={`${base}/news/${n.id}`} class="grid-card">
+          <div class="grid-card-image">
+            {n.data.coverImage
+              ? <Image src={n.data.coverImage} alt={n.data.title}
+                       width={400} height={168}
+                       style="width:100%; height:100%; object-fit:cover;" />
+              : <div class="grid-card-placeholder"><span>II · FERI</span></div>
+            }
+          </div>
+          <div class="grid-card-accent"></div>
+          <div class="grid-card-body">
+            <time class="grid-card-date">
+              {new Date(n.data.date).toLocaleDateString("en-GB", {
+                day: "numeric", month: "long", year: "numeric"
+              })}
+            </time>
+            <h3 class="grid-card-title">{n.data.title}</h3>
+            <p class="grid-card-summary">{n.data.summary}</p>
+            <div class="grid-card-tags">
+              {(Array.isArray(n.data.tags) ? n.data.tags : [String(n.data.tags)]).map((t: string) => (
+                <span class="tag">{t}</span>
+              ))}
+            </div>
+          </div>
+        </a>
       ))}
     </div>
   </div>

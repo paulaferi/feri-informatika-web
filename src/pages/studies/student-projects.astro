@@ -7,60 +7,42 @@ const base = import.meta.env.BASE_URL;
 const projects = await getCollection("studentProjects");
 
 const sidebarLinks = [
-  { label: "Študijski programi",    href: `${base}/studies/programmes` },
-  { label: "Študentske aktivnosti", href: `${base}/studies/student-projects` },
+  { label: "Study Programmes",   href: `${base}/studies/programmes` },
+  { label: "Student Activities", href: `${base}/studies/student-projects` },
 ];
 ---
-<Base title="Študentske aktivnosti" sidebarLinks={sidebarLinks}>
+<Base title="Student Activities" sidebarLinks={sidebarLinks}>
 
-  <h2 style="font-family:'Titillium Web',sans-serif; font-size:1.4rem; font-weight:400;
-             color:#222; margin-bottom:1.25rem;">
-    Študentske aktivnosti
-  </h2>
+  <h1 class="page-title">Student Activities</h1>
+  <div class="page-title-rule"></div>
 
   <div class="card">
-    <div style="display:flex; gap:0.75rem; align-items:stretch; margin-bottom:1.25rem;">
-      <div style="width:4px; background:#ffc70f; flex-shrink:0; border-radius:1px;"></div>
-      <p style="margin:0; text-align:left;">
-        Študenti Inštituta za informatiko sodelujejo v številnih projektih in aktivnostih,
-        ki dopolnjujejo formalno izobraževanje in razvijajo praktične veščine.
-        Projekti so dostopni tudi na portalu praktik.um.si.
-      </p>
+    <div class="intro">
+      <p>Students at the Institute of Informatics take part in numerous projects and activities that complement formal education and develop practical skills.</p>
     </div>
 
-    <div style="display:flex; gap:0.75rem; align-items:center; margin-bottom:0.75rem;">
-      <div style="width:4px; background:#ffc70f; flex-shrink:0; border-radius:1px; min-height:24px;"></div>
-      <h3 style="margin:0; font-family:'Titillium Web',sans-serif; font-size:1rem;
-                 font-weight:700; color:#222;">Projekti</h3>
-    </div>
-
-    <ul style="list-style:none; padding:0; margin:0;">
+    <div class="section-heading"><h3>Projects</h3></div>
+    <ul class="arrow-list">
       {projects.map(p => (
-        <li style="display:flex; align-items:center; gap:0.75rem; padding:0.4rem 0;
-                   border-bottom:1px solid #f5f5f5;">
-          <span style="display:inline-flex; align-items:center; justify-content:center;
-                       width:28px; height:28px; background:#ffc70f; flex-shrink:0;">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path d="M2 7h10M8 3l4 4-4 4" stroke="#222" stroke-width="1.8"
+        <li>
+          <span class="arrow-icon">
+            <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+              <path d="M2 7h10M8 3l4 4-4 4" stroke="#1f2933" stroke-width="1.9"
                     stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </span>
-          <a href={`${base}/studies/student-projects/${p.id}`}
-             style="color:#006A8E; text-decoration:none; font-size:1.05rem;">
+          <a href={`${base}/studies/student-projects/${p.id}`}>
             {p.data.title}
-            <span style="font-size:0.82rem; color:#888; margin-left:6px;">
+            <span style="font-size:0.8rem; color:var(--muted); font-weight:400; margin-left:5px;">
               ({p.data.student} · {p.data.year})
             </span>
           </a>
         </li>
       ))}
-      {projects.length === 0 && (
-        <li style="color:#888; font-size:1rem; padding:0.5rem 0;">
-          Ni vpisanih projektov.
-        </li>
-      )}
+      {projects.length === 0 && <li class="empty-state">No student projects listed yet.</li>}
     </ul>
   </div>
 
-  <SectionNews tag="student" label="ZADNJE NOVICE" />
+  <SectionNews tag="student" label="Latest News" />
+
 </Base>

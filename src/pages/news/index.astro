@@ -10,103 +10,54 @@ const base = import.meta.env.BASE_URL;
 const tags = ["student", "conference", "scientific", "professional",
               "project", "awards", "interest-groups"];
 ---
-<Base title="Novice">
+<Base title="News">
 
-  <h2 style="font-family:'Titillium Web',sans-serif; font-size:1.4rem; font-weight:400;
-             color:#222; margin-bottom:1.25rem;">
-    Novice
-  </h2>
+  <h1 class="page-title">News</h1>
+  <div class="page-title-rule"></div>
 
-  <!-- Tag filters -->
-  <div id="tag-filters" style="margin-bottom:1.5rem; display:flex; flex-wrap:wrap; gap:8px; align-items:center;">
-    <span style="font-family:'Titillium Web',sans-serif; font-size:0.82rem;
-                 color:#888; margin-right:4px;">Filtriraj:</span>
-    <button data-tag="" class="tag-btn active">Vse</button>
+  <div class="filter-bar">
+    <span class="filter-label">Filter</span>
+    <button data-tag="" class="tag-btn active">All</button>
     {tags.map(t => <button data-tag={t} class="tag-btn">{t}</button>)}
   </div>
 
-  <p id="empty-msg" style="color:#888; display:none; font-size:1rem;">
-    Ni novic za ta tag.
-  </p>
+  <p id="empty-msg" class="empty-state" style="display:none;">No news for this tag.</p>
 
-  <!-- Grid -->
-  <div id="news-grid" style="display:grid;
-       grid-template-columns:repeat(auto-fill, minmax(300px,1fr)); gap:1.25rem;">
+  <div id="grid" class="card-grid">
     {allNews.map(n => (
-      <div class="news-item"
-           data-tags={Array.isArray(n.data.tags) ? n.data.tags.join(",") : String(n.data.tags)}>
-        <a href={`${base}/news/${n.id}`} style="text-decoration:none; display:block; height:100%;">
-          <div style="background:#fff; border:1px solid #e0e0e0; height:100%;
-                      display:flex; flex-direction:column;
-                      transition:box-shadow .2s, transform .2s;"
-               onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,0.1)'; this.style.transform='translateY(-2px)'"
-               onmouseout="this.style.boxShadow=''; this.style.transform=''">
-
-            <!-- Image -->
-            <div style="width:100%; height:180px; overflow:hidden;
-                        background:#e0f0f7; flex-shrink:0;">
-              {n.data.coverImage
-                ? <Image src={n.data.coverImage} alt={n.data.title}
-                         width={400} height={180}
-                         style="width:100%; height:100%; object-fit:cover; display:block;" />
-                : <div style="width:100%; height:100%; display:flex; align-items:center;
-                               justify-content:center; background:#e0f0f7;">
-                    <div style="width:4px; height:60px; background:#ffc70f; border-radius:2px;"></div>
-                  </div>
-              }
-            </div>
-
-            <!-- Top accent bar -->
-            <div style="height:3px; background:#ffc70f; flex-shrink:0;"></div>
-
-            <!-- Body -->
-            <div style="padding:1rem 1.25rem 1.25rem; display:flex;
-                        flex-direction:column; flex:1;">
-              <time style="font-size:0.78rem; color:#999; margin-bottom:0.3rem; display:block;">
-                {new Date(n.data.date).toLocaleDateString("sl-SI")}
-              </time>
-              <h3 style="font-family:'Titillium Web',sans-serif; font-size:1rem;
-                         font-weight:700; color:#1a1a2e; margin:0 0 0.5rem; line-height:1.4;">
-                {n.data.title}
-              </h3>
-              <p style="font-size:0.88rem; color:#555; line-height:1.6; margin:0 0 0.75rem; flex:1;">
-                {n.data.summary}
-              </p>
-              <div style="display:flex; flex-wrap:wrap; gap:4px; margin-top:auto;">
-                {(Array.isArray(n.data.tags) ? n.data.tags : [String(n.data.tags)]).map((t: string) => (
-                  <span style="display:inline-block; background:#fff8e1; color:#856404;
-                               border:1px solid #ffc70f; border-radius:2px;
-                               padding:2px 8px; font-size:0.72rem;
-                               font-family:'Titillium Web',sans-serif;">
-                    {t}
-                  </span>
-                ))}
-              </div>
-            </div>
-
+      <a href={`${base}/news/${n.id}`} class="grid-card news-item"
+         data-tags={Array.isArray(n.data.tags) ? n.data.tags.join(",") : String(n.data.tags)}>
+        <div class="grid-card-image">
+          {n.data.coverImage
+            ? <Image src={n.data.coverImage} alt={n.data.title} width={400} height={168}
+                     style="width:100%; height:100%; object-fit:cover;" />
+            : <div class="grid-card-placeholder"><span>II · FERI</span></div>
+          }
+        </div>
+        <div class="grid-card-accent"></div>
+        <div class="grid-card-body">
+          <time class="grid-card-date">
+            {new Date(n.data.date).toLocaleDateString("en-GB", {
+              day: "numeric", month: "long", year: "numeric"
+            })}
+          </time>
+          <h3 class="grid-card-title">{n.data.title}</h3>
+          <p class="grid-card-summary">{n.data.summary}</p>
+          <div class="grid-card-tags">
+            {(Array.isArray(n.data.tags) ? n.data.tags : [String(n.data.tags)]).map((t: string) => (
+              <span class="tag">{t}</span>
+            ))}
           </div>
-        </a>
-      </div>
+        </div>
+      </a>
     ))}
   </div>
 
-</Base>
+  {allNews.length === 0 && (
+    <div class="card"><p class="empty-state" style="margin:0;">No news yet.</p></div>
+  )}
 
-<style>
-  .tag-btn {
-    padding: 5px 14px;
-    border: 1px solid #006A8E;
-    background: transparent;
-    color: #006A8E;
-    font-size: 0.82rem;
-    cursor: pointer;
-    font-family: 'Titillium Web', sans-serif;
-    transition: all .15s;
-  }
-  .tag-btn.active { background: #006A8E; color: #fff; }
-  .tag-btn:hover { background: #ffc70f; color: #000; border-color: #ffc70f; }
-  .news-item { display: block; }
-</style>
+</Base>
 
 <script>
   const buttons = document.querySelectorAll<HTMLButtonElement>(".tag-btn");
@@ -119,7 +70,7 @@ const tags = ["student", "conference", "scientific", "professional",
     items.forEach(item => {
       const itemTags = item.dataset.tags?.split(",").map(t => t.trim()) ?? [];
       const show = tag === "" || itemTags.includes(tag);
-      item.style.display = show ? "block" : "none";
+      item.style.display = show ? "flex" : "none";
       if (show) visible++;
     });
     empty.style.display = visible === 0 ? "block" : "none";

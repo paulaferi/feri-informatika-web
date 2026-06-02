@@ -8,73 +8,52 @@ const conferences = (await getCollection("conferences"))
   .sort((a, b) => new Date(b.data.date ?? 0).getTime() - new Date(a.data.date ?? 0).getTime());
 
 const sidebarLinks = conferences.map(c => ({
-  label: c.data.acronym ? `${c.data.acronym} — ${c.data.name}` : c.data.name,
+  label: c.data.acronym ?? c.data.name,
   href: `${base}/conferences/${c.id}`,
 }));
 ---
-<Base title="Konferenčne aktivnosti" sidebarLinks={sidebarLinks}>
+<Base title="Conference Activities" sidebarLinks={sidebarLinks}>
 
-  <h2 style="font-family:'Titillium Web',sans-serif; font-size:1.4rem; font-weight:400;
-             color:#222; margin-bottom:1.25rem;">
-    Konferenčne aktivnosti
-  </h2>
+  <h1 class="page-title">Conference Activities</h1>
+  <div class="page-title-rule"></div>
 
   <div class="card">
-    <div style="display:flex; gap:0.75rem; align-items:stretch; margin-bottom:0;">
-      <div style="width:4px; background:#ffc70f; flex-shrink:0; border-radius:1px;"></div>
-      <p style="margin:0; text-align:left;">
-        Inštitut za informatiko aktivno organizira in sodeluje na mednarodnih znanstvenih
-        konferencah s področja informatike in računalništva. Spodaj je seznam konferenc,
-        ki jih inštitut organizira ali pri katerih aktivno sodeluje.
-      </p>
+    <div class="intro" style="margin-bottom:0;">
+      <p>The Institute of Informatics actively organizes and participates in international scientific conferences in the field of informatics and computer science.</p>
     </div>
   </div>
 
   {conferences.length === 0 && (
-    <div class="card">
-      <p style="color:#888; margin:0;">Ni vpisanih konferenc.</p>
-    </div>
+    <div class="card"><p class="empty-state" style="margin:0;">No conferences listed yet.</p></div>
   )}
 
   {conferences.map(c => (
     <div class="card">
-      <div style="display:flex; gap:0.75rem; align-items:center; margin-bottom:0.75rem;">
-        <div style="width:4px; background:#ffc70f; flex-shrink:0; border-radius:1px; min-height:24px;"></div>
-        <h3 style="margin:0; font-family:'Titillium Web',sans-serif; font-size:1.05rem;
-                   font-weight:700; color:#222;">
-          <a href={`${base}/conferences/${c.id}`}
-             style="color:#006A8E; text-decoration:none;">
+      <div class="section-heading">
+        <h3>
+          <a href={`${base}/conferences/${c.id}`} style="text-decoration:none;">
             {c.data.name}
             {c.data.acronym && (
-              <span style="font-size:0.85rem; color:#888; margin-left:6px;">
-                ({c.data.acronym})
-              </span>
+              <span style="color:var(--muted); font-weight:400;"> ({c.data.acronym})</span>
             )}
           </a>
         </h3>
       </div>
-
       {(c.data.date || c.data.location) && (
-        <p style="font-size:0.88rem; color:#888; margin:0 0 0.6rem; padding-left:1rem;">
-          {c.data.date && new Date(c.data.date).toLocaleDateString("sl-SI")}
+        <p class="meta" style="margin-bottom:0.5rem;">
+          {c.data.date && new Date(c.data.date).toLocaleDateString("en-GB")}
           {c.data.location && ` · ${c.data.location}`}
         </p>
       )}
-
-      <p style="margin:0 0 0.6rem; padding-left:1rem; text-align:left;">
-        {c.data.description}
-      </p>
-
+      <p style="margin-bottom:0.5rem;">{c.data.description}</p>
       {c.data.url && (
-        <div style="padding-left:1rem;">
-          <a href={c.data.url} target="_blank"
-             style="font-size:0.88rem; color:#006A8E; text-decoration:none;">
-            Spletna stran konference →
-          </a>
-        </div>
+        <a href={c.data.url} target="_blank" style="font-size:0.86rem; font-weight:600;">
+          Conference website →
+        </a>
       )}
     </div>
   ))}
 
-  <SectionNews tag="conference" label="ZADNJE NOVICE" />
+  <SectionNews tag="conference" label="Latest News" />
+
 </Base>

@@ -5,57 +5,43 @@ import SectionNews from "../components/SectionNews.astro";
 const base = import.meta.env.BASE_URL;
 
 const sidebarLinks = [
-  { label: "Laboratoriji",      href: `${base}/laboratories` },
-  { label: "Interesne skupine", href: `${base}/interest-groups` },
-  { label: "Osebje",            href: `${base}/staff` },
+  { label: "Laboratories",    href: `${base}/laboratories` },
+  { label: "Interest Groups", href: `${base}/interest-groups` },
+  { label: "Staff",           href: `${base}/staff` },
 ];
 ---
-<Base title="Inštitut za informatiko" sidebarLinks={sidebarLinks}>
+<Base title="Institute of Informatics" sidebarLinks={sidebarLinks}>
+
+  <h1 class="page-title">Institute of Informatics</h1>
+  <div class="page-title-rule"></div>
+  <p class="page-subtitle">
+    Faculty of Electrical Engineering, Computer Science and Information Science · University of Maribor
+  </p>
 
   <div class="card">
-    <h1>Inštitut za informatiko</h1>
-    <p style="font-size:0.95rem; color:#777; margin-bottom:1.25rem;">
-      Fakulteta za elektrotehniko, računalništvo in informatiko · Univerza v Mariboru
-    </p>
+    <div class="intro">
+      <p>The Institute of Informatics conducts research in the field of informatics aimed at the effective development and management of safe, intelligent and reliable information systems, solutions and services. The focus of the research work is on data engineering and big data, artificial intelligence and intelligent systems, cyber, information and digital security and privacy, software engineering and agile development and process automation, centralized and decentralized architectures and systems.</p>
+    </div>
 
-    <p>Inštitut za informatiko izvaja raziskave na področju informatike, namenjene učinkovitemu razvoju in upravljanju varnih, inteligentnih in zanesljivih informacijskih sistemov, rešitev in storitev. Poudarek raziskovalnega dela je na podatkovnem inženirstvu in velikih podatkih, umetni inteligenci in inteligentnih sistemih, kibernetski, informacijski in digitalni varnosti ter zasebnosti, programskem inženirstvu in agilnem razvoju ter avtomatizaciji procesov, centraliziranih in decentraliziranih arhitekturah in sistemih.</p>
-    <p>Na UM FERI je Inštitut za informatiko glavni ponudnik izobraževanja na dodiplomskih in podiplomskih programih Informatika in podatkovne tehnologije.</p>
-    <p>V okviru naših raziskav na področju arhitektur IS raziskujemo decentralizirane, oblačne, big data, mikrostoritvene in brezstrežniške arhitekture; podatkovna skladišča, podatkovna jezera in podatkovne prostore ter decentralizirana omrežja in sisteme AI.</p>
-    <p>Raziskave na širšem področju inteligentnih sistemov naslavljajo izzive naraščajoče obsežnosti, kompleksnosti in multimodalnosti podatkov, pristranskih in nepravičnih odločitev modelov AI, potrebo po prilagojenih rešitvah strojnega učenja ter izzive modelov v produkcijskih okoljih (MLOps / AI engineering).</p>
-    <p>Razvijamo napredne pristope k razvoju IS z uporabo inteligentnih komponent v oblaku, s posebno pozornostjo na praksah DevSecOps, vključno z avtomatizacijo CI/CD, ki zagotavlja neprekinjeno testiranje, uveljavljanje varnih kodnih praks in ocenjevanje kakovosti na podlagi metrik.</p>
-    <p>Raziskave s področja kibernetske varnosti in zasebnosti se osredotočajo na vrednotenje pristopov k izboljšanju varnosti sistemov in zasebnosti, sodobne centralizirane in decentralizirane metode avtentikacije ter proaktivne pristope k zaznavanju in preprečevanju kibernetskih groženj, vključno z uporabo umetne inteligence. V okviru inštituta deluje certificiran Laboratorij za digitalno forenziko.</p>
-    <p>Novi modeli in metode za UX raziskave prispevajo k izboljšanju kakovosti uporabniške izkušnje, zlasti z uporabo naprednih inteligentnih orodij in pristopov, vključno z inkluzivnim UX in uporabniško izkušnjo v kontekstu razložljive umetne inteligence (XAI).</p>
-    <p>Raziskovalno delo na področju upravljanja poslovnih procesov obravnava dinamičen pogled na sodobne informacijske rešitve, ki jih poganjajo napredni pristopi k modeliranju procesov, fleksibilno in nestrukturirano modeliranje procesov ter rudarjenje procesov.</p>
+    <p>At UM FERI, the Institute of Informatics is the main provider of education in undergraduate and postgraduate programs in Informatics and Data Technologies.</p>
+    <p>As part of our research in the field of IS architectures, we explore decentralized, cloud, big data, microservices and serverless architectures; data warehouses, data lakes and data spaces, and decentralized AI networks and systems.</p>
+    <p>Research in the broader field of intelligent systems addresses the challenges of the growing scale, complexity and multimodality of data, biased and unfair decisions of AI models, the need for customized machine learning solutions, and the challenges of models in production environments (MLOps/AI engineering).</p>
+    <p>We develop advanced approaches to IS development using intelligent components in the cloud, with a particular focus on DevSecOps practices, including CI/CD automation that ensures continuous testing, enforcement of secure code practices, and metric-based quality assessment.</p>
+    <p>Research in the field of cybersecurity and privacy focuses on the evaluation of approaches to improving system security and privacy, modern centralized and decentralized authentication methods, and proactive approaches to detecting and preventing cyber threats, including the use of artificial intelligence. Within the institute there is a certified Laboratory for Digital Forensics.</p>
+    <p>New models and methods for UX research contribute to improving the quality of user experience, especially through the use of advanced intelligent tools and approaches, including inclusive UX and user experience in the context of explainable artificial intelligence (XAI).</p>
+    <p style="margin-bottom:0;">The research work in the field of business process management deals with a dynamic view of modern information solutions driven by advanced approaches to process modeling, flexible and unstructured process modeling, and process mining.</p>
 
-    <div style="margin-top:1.5rem; padding-top:1.25rem; border-top:1px solid #eee;">
-      <div style="display:flex; align-items:stretch; gap:0.75rem; margin-bottom:1rem;">
-        <div style="width:4px; background:#ffc70f; flex-shrink:0; border-radius:1px;"></div>
-        <h2 style="margin:0; font-family:'Titillium Web',sans-serif; font-weight:700;
-                   font-size:1.05rem; color:#222; display:flex; align-items:center;">
-          Kontakt
-        </h2>
-      </div>
-      <ul style="list-style:none; padding:0 0 0 1rem;">
-        <li style="padding:0.2rem 0; font-size:1.05rem; color:#444; display:flex; align-items:baseline; gap:0.4rem;">
-          <span style="display:inline-block; width:6px; height:6px; background:#444; flex-shrink:0; margin-top:0.45rem;"></span>
-          <span><strong>E-pošta:</strong> <a href="mailto:informatika@um.si">informatika@um.si</a></span>
-        </li>
-        <li style="padding:0.2rem 0; font-size:1.05rem; color:#444; display:flex; align-items:baseline; gap:0.4rem;">
-          <span style="display:inline-block; width:6px; height:6px; background:#444; flex-shrink:0; margin-top:0.45rem;"></span>
-          <span><strong>Naslov:</strong> Koroška cesta 46, 2000 Maribor, Slovenija</span>
-        </li>
-        <li style="padding:0.2rem 0; font-size:1.05rem; color:#444; display:flex; align-items:baseline; gap:0.4rem;">
-          <span style="display:inline-block; width:6px; height:6px; background:#444; flex-shrink:0; margin-top:0.45rem;"></span>
-          <span><strong>Telefon:</strong> (02) 220 7359</span>
-        </li>
-        <li style="padding:0.2rem 0; font-size:1.05rem; color:#444; display:flex; align-items:baseline; gap:0.4rem;">
-          <span style="display:inline-block; width:6px; height:6px; background:#444; flex-shrink:0; margin-top:0.45rem;"></span>
-          <span><strong>Splet:</strong> <a href="https://ii.feri.um.si" target="_blank">ii.feri.um.si</a></span>
-        </li>
+    <div style="margin-top:1.6rem; padding-top:1.3rem; border-top:1px solid var(--border);">
+      <div class="section-heading"><h3>Contact</h3></div>
+      <ul class="contact-info">
+        <li><strong>Email:</strong> <a href="mailto:informatika@um.si">informatika@um.si</a></li>
+        <li><strong>Address:</strong> Koroška cesta 46, 2000 Maribor, Slovenia</li>
+        <li><strong>Phone:</strong> (02) 220 7359</li>
+        <li><strong>Web:</strong> <a href="https://ii.feri.um.si" target="_blank">ii.feri.um.si</a></li>
       </ul>
     </div>
   </div>
 
-  <SectionNews tag="interest-groups" label="ZADNJE NOVICE" />
+  <SectionNews tag="interest-groups" label="Latest News" />
 
 </Base>

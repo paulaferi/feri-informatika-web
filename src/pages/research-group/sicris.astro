@@ -5,35 +5,27 @@ import SectionNews from "../../components/SectionNews.astro";
 const base = import.meta.env.BASE_URL;
 
 const sidebarLinks = [
-  { label: "Raziskovalna področja", href: `${base}/research-group/areas` },
-  { label: "Povezava do SICRIS",    href: `${base}/research-group/sicris` },
+  { label: "Research Areas",  href: `${base}/research-group/areas` },
+  { label: "Link to SICRIS",  href: `${base}/research-group/sicris` },
 ];
 ---
-<Base title="Povezava do SICRIS" sidebarLinks={sidebarLinks}>
+<Base title="Link to SICRIS" sidebarLinks={sidebarLinks}>
 
-  <h2 style="font-family:'Titillium Web',sans-serif; font-size:1.4rem; font-weight:400;
-             color:#222; margin-bottom:1.25rem;">
-    Povezava do SICRIS
-  </h2>
+  <h1 class="page-title">Link to SICRIS</h1>
+  <div class="page-title-rule"></div>
 
   <div class="card">
-    <div style="display:flex; gap:0.75rem; align-items:stretch; margin-bottom:1.5rem;">
-      <div style="width:4px; background:#ffc70f; flex-shrink:0; border-radius:1px;"></div>
-      <p style="margin:0; text-align:left;">
-        Celotne informacije o raziskovalni skupini, vključno s člani in bibliografskimi
-        zapisi, so na voljo v nacionalnem sistemu SICRIS.
-      </p>
+    <div class="intro">
+      <p>Full information about the research group, including members and bibliographic records, is available in the national SICRIS system.</p>
     </div>
 
-    <div style="display:flex; gap:0.75rem; align-items:center;">
-      <div style="width:4px; background:#ffc70f; flex-shrink:0; border-radius:1px; min-height:24px;"></div>
+    <div class="section-heading"><h3>External Resource</h3></div>
+    <p style="margin-bottom:0;">
       <a href="https://www.sicris.si/" target="_blank"
-         style="font-size:1.05rem; color:#006A8E; text-decoration:none; font-weight:600;">
-        Ogled na SICRIS →
-      </a>
-    </div>
+         style="font-weight:700; font-size:1rem;">View SICRIS →</a>
+    </p>
   </div>
 
-  <SectionNews tag="scientific" label="ZADNJE NOVICE" />
+  <SectionNews tag="scientific" label="Latest News" />
 
 </Base>

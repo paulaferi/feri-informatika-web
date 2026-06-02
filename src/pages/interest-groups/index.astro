@@ -7,44 +7,39 @@ const groups = await getCollection("interestGroups");
 const base = import.meta.env.BASE_URL;
 
 const sidebarLinks = [
-  { label: "Laboratoriji",      href: `${base}/laboratories` },
-  { label: "Interesne skupine", href: `${base}/interest-groups` },
-  { label: "Osebje",            href: `${base}/staff` },
+  { label: "Laboratories",    href: `${base}/laboratories` },
+  { label: "Interest Groups", href: `${base}/interest-groups` },
+  { label: "Staff",           href: `${base}/staff` },
 ];
 ---
-<Base title="Interesne skupine" sidebarLinks={sidebarLinks}>
+<Base title="Interest Groups" sidebarLinks={sidebarLinks}>
 
-  <h2 style="font-family:'Titillium Web',sans-serif; font-size:1.4rem; font-weight:400;
-             color:#222; margin-bottom:1.25rem;">Interesne skupine</h2>
+  <h1 class="page-title">Interest Groups</h1>
+  <div class="page-title-rule"></div>
 
   <div class="card">
-    <p style="margin-bottom:1.25rem; text-align:left;">
-      Interesne skupine na Inštitutu za informatiko združujejo študente in raziskovalce
-      okoli skupnih tem ter spodbujajo sodelovanje in izmenjavo znanja tudi zunaj okvira
-      uradnih raziskovalnih projektov.
-    </p>
-    <p style="font-weight:600; color:#222; margin-bottom:0.75rem; text-align:left;">
-      Interesne skupine Inštituta za informatiko:
-    </p>
-    <ul style="list-style:none; padding:0;">
+    <div class="intro">
+      <p>Interest groups at the Institute of Informatics bring together students and researchers around shared topics, fostering collaboration and knowledge exchange beyond the scope of formal research projects.</p>
+    </div>
+
+    <div class="section-heading"><h3>Interest Groups of the Institute</h3></div>
+
+    <ul class="arrow-list">
       {groups.map(g => (
-        <li style="display:flex; align-items:center; gap:0.75rem; padding:0.4rem 0;
-                   border-bottom:1px solid #f5f5f5;">
-          <span style="display:inline-flex; align-items:center; justify-content:center;
-                       width:28px; height:28px; background:#ffc70f; flex-shrink:0;">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path d="M2 7h10M8 3l4 4-4 4" stroke="#222" stroke-width="1.8"
+        <li>
+          <span class="arrow-icon">
+            <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+              <path d="M2 7h10M8 3l4 4-4 4" stroke="#1f2933" stroke-width="1.9"
                     stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </span>
-          <a href={`${base}/interest-groups/${g.id}`}
-             style="color:#006A8E; text-decoration:none; font-size:1.05rem;">
-            {g.data.name}
-          </a>
+          <a href={`${base}/interest-groups/${g.id}`}>{g.data.name}</a>
         </li>
       ))}
+      {groups.length === 0 && <li class="empty-state">No interest groups listed yet.</li>}
     </ul>
   </div>
 
-  <SectionNews tag="interest-groups" label="ZADNJE NOVICE" />
+  <SectionNews tag="interest-groups" label="Latest News" />
+
 </Base>

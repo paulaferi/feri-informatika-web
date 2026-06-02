@@ -7,41 +7,53 @@ const { title, sidebarLinks } = Astro.props;
 const base = import.meta.env.BASE_URL;
 
 const mainNav = [
-  { label: "O inštitutu",           href: `${base}/` },
- { label: "Raziskovalna skupina", href: `${base}/research-group/areas` },
- { label: "Raziskave", href: `${base}/research/projects` },
-  { label: "Študij IPT in ITK", href: `${base}/studies/programmes` },
-  { label: "Konferenčne aktivnosti", href: `${base}/conferences` },
-  { label: "Industrija",             href: `${base}/industry` },
-  { label: "Dosežki in aktivnosti",  href: `${base}/achievements` },
-  { label: "Novice",                 href: `${base}/news` },
+  { label: "About the Institute",   href: `${base}/` },
+  { label: "Research Group",        href: `${base}/research-group/areas` },
+  { label: "Research",              href: `${base}/research/projects` },
+  { label: "Studies IPT & ITK",     href: `${base}/studies/programmes` },
+  { label: "Conference Activities", href: `${base}/conferences` },
+  { label: "Industry",              href: `${base}/industry` },
+  { label: "Achievements",          href: `${base}/achievements` },
+  { label: "News",                  href: `${base}/news` },
 ];
 ---
 <!doctype html>
-<html lang="sl">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href={`${base}/styles/global.css`} />
-  <title>{title} — Inštitut za informatiko FERI</title>
+  <title>{title} — Institute of Informatics FERI</title>
 </head>
 <body>
+
+  <div class="top-strip"></div>
 
   <header class="site-header">
     <div class="header-inner">
       <div class="logo-group">
         <a href={`${base}/`}>
-          <img src={`${base}/logos/feri-logo.png`} alt="FERI — Univerza v Mariboru" />
+          <img src={`${base}/logos/feri-logo.png`} alt="FERI — University of Maribor" />
         </a>
       </div>
       <nav class="main-nav">
-        {mainNav.map(item => (
-          <a href={item.href}
-             class={Astro.url.pathname === item.href ? "active" : ""}>
-            {item.label}
-          </a>
-        ))}
+        {mainNav.map(item => {
+          const currentPath = Astro.url.pathname;
+          let isActive = false;
+          if (item.href === `${base}/`) {
+            isActive = currentPath === item.href;
+          } else {
+            const section = item.href.split('/').filter(Boolean)[1];
+            const currentSection = currentPath.split('/').filter(Boolean)[1];
+            isActive = section === currentSection;
+          }
+          return (
+            <a href={item.href} class={isActive ? "active" : ""}>
+              {item.label}
+            </a>
+          );
+        })}
         <a href={`${base}/admin`} class="cms-link">CMS</a>
       </nav>
     </div>
@@ -51,37 +63,29 @@ const mainNav = [
 
     {sidebarLinks && sidebarLinks.length > 0 && (
       <aside class="sidebar">
+        <div class="sidebar-header">Section</div>
         {sidebarLinks.map(link => {
-  const isCurrentPage = Astro.url.pathname === link.href;
-  const isChildActive = link.children && link.children.some(c => Astro.url.pathname === c.href);
-  const isOpen = isCurrentPage || isChildActive;
-
-  return (
-    <div>
-      <a href={link.href} class={isOpen ? "active" : ""}>
-        {link.label}
-      </a>
-      {isOpen && link.children && (
-        <div class="sidebar-children">
-          {link.children.map(child => (
-            <a href={child.href}
-               class={`sidebar-child${Astro.url.pathname === child.href ? " active-child" : ""}`}>
-              {Astro.url.pathname === child.href && (
-                <span style="display:inline-block; width:0; height:0;
-                             border-top:5px solid transparent;
-                             border-bottom:5px solid transparent;
-                             border-left:7px solid #666;
-                             margin-right:6px; flex-shrink:0;">
-                </span>
+          const currentPath = decodeURIComponent(Astro.url.pathname);
+          const isCurrentPage = currentPath === link.href;
+          const isChildActive = link.children &&
+            link.children.some(c => currentPath === decodeURIComponent(c.href));
+          const isOpen = isCurrentPage || isChildActive;
+          return (
+            <div>
+              <a href={link.href} class={isOpen ? "active" : ""}>{link.label}</a>
+              {isOpen && link.children && (
+                <div class="sidebar-children">
+                  {link.children.map(child => (
+                    <a href={child.href}
+                       class={`sidebar-child${currentPath === decodeURIComponent(child.href) ? " active-child" : ""}`}>
+                      {child.label}
+                    </a>
+                  ))}
+                </div>
               )}
-              {child.label}
-            </a>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-})}
+            </div>
+          );
+        })}
       </aside>
     )}
 

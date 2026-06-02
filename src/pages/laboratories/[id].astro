@@ -19,80 +19,63 @@ const members = allStaff.filter(s => (lab.data.members ?? []).includes(s.id));
 
 const sidebarLinks = [
   {
-    label: "Laboratoriji",
+    label: "Laboratories",
     href: `${base}/laboratories`,
     children: allLabs.map(l => ({
       label: l.data.name,
       href: `${base}/laboratories/${l.id}`,
     })),
   },
-  { label: "Interesne skupine", href: `${base}/interest-groups` },
-  { label: "Osebje",            href: `${base}/staff` },
+  { label: "Interest Groups", href: `${base}/interest-groups` },
+  { label: "Staff",           href: `${base}/staff` },
 ];
 ---
 <Base title={lab.data.name} sidebarLinks={sidebarLinks}>
 
-  <h2 style="font-family:'Titillium Web',sans-serif; font-size:1.4rem; font-weight:400;
-             color:#222; margin-bottom:1.25rem;">
+  <h1 class="page-title">
     {lab.data.name}
-    {lab.data.acronym && <span style="font-size:1rem; color:#888; margin-left:8px;">({lab.data.acronym})</span>}
-  </h2>
+    {lab.data.acronym && (
+      <span style="font-size:1rem; color:var(--muted); font-weight:400;">({lab.data.acronym})</span>
+    )}
+  </h1>
+  <div class="page-title-rule"></div>
 
   <div class="card">
 
-    <!-- Descripción -->
-    <div style="display:flex; gap:0.75rem; align-items:stretch; margin-bottom:1.25rem;">
-      <div style="width:4px; background:#ffc70f; flex-shrink:0; border-radius:1px;"></div>
-      <p style="margin:0; text-align:left;">{lab.data.description}</p>
-    </div>
+    <div class="intro"><p>{lab.data.description}</p></div>
 
-    <!-- Research Areas -->
     {lab.data.researchAreas && lab.data.researchAreas.length > 0 && (
-      <div style="margin-bottom:1.25rem;">
-        <div style="display:flex; gap:0.75rem; align-items:center; margin-bottom:0.6rem;">
-          <div style="width:4px; background:#ffc70f; flex-shrink:0; border-radius:1px; align-self:stretch;"></div>
-          <h3 style="margin:0; font-family:'Titillium Web',sans-serif; font-size:1rem; font-weight:700; color:#222;">
-            Področja raziskav
-          </h3>
-        </div>
-        <ul style="padding-left:1.5rem; margin:0;">
-          {lab.data.researchAreas.map((a: string) => (
-            <li style="font-size:1.05rem; color:#444; padding:0.15rem 0;">{a}</li>
-          ))}
+      <div>
+        <div class="section-heading"><h3>Research Areas</h3></div>
+        <ul class="dot-list">
+          {lab.data.researchAreas.map((a: string) => <li>{a}</li>)}
         </ul>
       </div>
     )}
 
-    <!-- Members -->
     {members.length > 0 && (
-      <div style="margin-bottom:0.5rem;">
-        <div style="display:flex; gap:0.75rem; align-items:center; margin-bottom:0.75rem;">
-          <div style="width:4px; background:#ffc70f; flex-shrink:0; border-radius:1px; align-self:stretch;"></div>
-          <h3 style="margin:0; font-family:'Titillium Web',sans-serif; font-size:1rem; font-weight:700; color:#222;">
-            Člani laboratorija
-          </h3>
-        </div>
-        <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(200px,1fr)); gap:0.75rem;">
+      <div style="margin-top:1.5rem;">
+        <div class="section-heading"><h3>Laboratory Members</h3></div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(210px,1fr)); gap:0.75rem;">
           {members.map(m => (
             <a href={`${base}/staff/${m.id}`}
-               style="display:flex; align-items:center; gap:0.75rem; text-decoration:none;
-                      padding:0.6rem; border:1px solid #eee; transition:background .15s;"
-               onmouseover="this.style.background='#f9f9f9'"
-               onmouseout="this.style.background=''">
+               style="display:flex; align-items:center; gap:0.7rem; text-decoration:none;
+                      padding:0.6rem; border:1px solid var(--border); border-radius:4px;
+                      transition:border-color .15s;">
               {m.data.photo
-                ? <Image src={m.data.photo} alt={m.data.name} width={40} height={40}
-                         style="width:40px; height:40px; border-radius:50%; object-fit:cover; flex-shrink:0;" />
-                : <div style="width:40px; height:40px; border-radius:50%; background:#e0f0f7;
+                ? <Image src={m.data.photo} alt={m.data.name} width={42} height={42}
+                         style="width:42px; height:42px; border-radius:50%; object-fit:cover; flex-shrink:0;" />
+                : <div style="width:42px; height:42px; border-radius:50%; background:var(--um-blue-light);
                                display:flex; align-items:center; justify-content:center;
-                               font-size:1rem; color:#006A8E; font-weight:600; flex-shrink:0;">
+                               font-size:1rem; color:var(--um-blue); font-weight:700; flex-shrink:0;">
                     {m.data.name.charAt(0)}
                   </div>
               }
-              <div>
-                <p style="font-size:0.88rem; font-weight:600; color:#006A8E; margin:0; line-height:1.3;">
+              <div style="min-width:0;">
+                <div style="font-size:0.85rem; font-weight:700; color:var(--um-blue); line-height:1.3;">
                   {m.data.name}
-                </p>
-                <p style="font-size:0.75rem; color:#888; margin:0;">{m.data.role}</p>
+                </div>
+                <div style="font-size:0.73rem; color:var(--muted);">{m.data.role}</div>
               </div>
             </a>
           ))}
@@ -100,30 +83,21 @@ const sidebarLinks = [
       </div>
     )}
 
-    <!-- Body content -->
     {lab.data.body && (
-      <div style="margin-top:1.25rem;">
-        <div style="display:flex; gap:0.75rem; align-items:center; margin-bottom:0.6rem;">
-          <div style="width:4px; background:#ffc70f; flex-shrink:0; border-radius:1px; align-self:stretch;"></div>
-          <h3 style="margin:0; font-family:'Titillium Web',sans-serif; font-size:1rem; font-weight:700; color:#222;">
-            Opis
-          </h3>
-        </div>
+      <div style="margin-top:1.5rem;">
+        <div class="section-heading"><h3>Description</h3></div>
         <div class="prose"><Content /></div>
       </div>
     )}
 
-    <!-- External link -->
     {lab.data.externalUrl && (
-      <div style="margin-top:1.25rem; padding-top:1rem; border-top:1px solid #eee;">
-        <a href={lab.data.externalUrl} target="_blank"
-           style="color:#006A8E; font-size:0.9rem;">
-          Spletna stran laboratorija →
-        </a>
+      <div class="external-link">
+        <a href={lab.data.externalUrl} target="_blank">Laboratory website →</a>
       </div>
     )}
 
   </div>
 
-  <SectionNews tag="scientific" label="ZADNJE NOVICE" />
+  <SectionNews tag="scientific" label="Latest News" />
+
 </Base>

@@ -5,35 +5,28 @@ import SectionNews from "../../components/SectionNews.astro";
 const base = import.meta.env.BASE_URL;
 
 const sidebarLinks = [
-  { label: "Raziskovalni projekti", href: `${base}/research/projects` },
-  { label: "Publikacije",           href: `${base}/research/publications` },
-  { label: "Etična komisija",       href: `${base}/research/ethics` },
+  { label: "Research Projects",  href: `${base}/research/projects` },
+  { label: "Publications",       href: `${base}/research/publications` },
+  { label: "Ethics Committee",   href: `${base}/research/ethics` },
 ];
 ---
-<Base title="Publikacije" sidebarLinks={sidebarLinks}>
+<Base title="Publications" sidebarLinks={sidebarLinks}>
 
-  <h2 style="font-family:'Titillium Web',sans-serif; font-size:1.4rem; font-weight:400;
-             color:#222; margin-bottom:1.25rem;">
-    Publikacije
-  </h2>
+  <h1 class="page-title">Publications</h1>
+  <div class="page-title-rule"></div>
 
   <div class="card">
-    <div style="display:flex; gap:0.75rem; align-items:stretch; margin-bottom:1.5rem;">
-      <div style="width:4px; background:#ffc70f; flex-shrink:0; border-radius:1px;"></div>
-      <p style="margin:0; text-align:left;">
-        The full list of the Institute's publications is stored in the national COBISS/SICRIS system.
-        In a future version, API integration is envisaged.
-      </p>
+    <div class="intro">
+      <p>The full list of the Institute's publications is stored in the national COBISS/SICRIS system. In a future version, API integration is envisaged.</p>
     </div>
 
-    <div style="display:flex; gap:0.75rem; align-items:center;">
-      <div style="width:4px; background:#ffc70f; flex-shrink:0; border-radius:1px; min-height:24px;"></div>
+    <div class="section-heading"><h3>External Resource</h3></div>
+    <p style="margin-bottom:0;">
       <a href="https://cris.cobiss.net/ecris/si/sl/rest" target="_blank"
-         style="font-size:1.05rem; color:#006A8E; text-decoration:none; font-weight:600;">
-        View publications on COBISS →
-      </a>
-    </div>
+         style="font-weight:700; font-size:1rem;">View publications on COBISS →</a>
+    </p>
   </div>
 
-  <SectionNews tag="scientific" label="ZADNJE NOVICE" />
+  <SectionNews tag="scientific" label="Latest News" />
+
 </Base>

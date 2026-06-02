@@ -7,83 +7,40 @@ import { getCollection } from "astro:content";
 const staff = await getCollection("staff");
 const base = import.meta.env.BASE_URL;
 
-const allStaff = await getCollection("staff");
-
 const sidebarLinks = [
-  { label: "Laboratoriji",      href: `${base}/laboratories` },
-  { label: "Interesne skupine", href: `${base}/interest-groups` },
-  { label: "Osebje",            href: `${base}/staff` },
+  { label: "Laboratories",    href: `${base}/laboratories` },
+  { label: "Interest Groups", href: `${base}/interest-groups` },
+  { label: "Staff",           href: `${base}/staff` },
 ];
-
 ---
-<Base title="Osebje" sidebarLinks={sidebarLinks}>
+<Base title="Staff" sidebarLinks={sidebarLinks}>
 
-  <h2 style="font-family:'Titillium Web',sans-serif; font-size:1.4rem; font-weight:400;
-             color:#222; margin-bottom:1.25rem;">
-    Osebje
-  </h2>
+  <h1 class="page-title">Staff</h1>
+  <div class="page-title-rule"></div>
+  <p class="page-subtitle">Academic and research staff of the Institute of Informatics</p>
 
-  <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:1rem; margin-bottom:1.5rem;">
-  {staff.map(p => (
-    <a href={`${base}/staff/${p.id}`} style="text-decoration:none;">
-      <div class="card" style="height:100%; display:flex; flex-direction:column;
-                                align-items:center; text-align:center; padding:1rem;
-                                transition:box-shadow .2s, transform .2s;"
-           onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,0.1)'; this.style.transform='translateY(-2px)'"
-           onmouseout="this.style.boxShadow=''; this.style.transform=''">
-
-        <!-- Foto -->
-        <div style="width:64px; height:64px; border-radius:50%; overflow:hidden;
-                    background:#e0f0f7; flex-shrink:0; margin-bottom:0.6rem;
-                    border:2px solid #e0e0e0;">
+  <div class="staff-grid">
+    {staff.map(p => (
+      <a href={`${base}/staff/${p.id}`} class="staff-card">
+        <div class="staff-avatar">
           {p.data.photo
-            ? <Image src={p.data.photo} alt={p.data.name}
-                     width={64} height={64}
-                     style="width:100%; height:100%; object-fit:cover;" />
-            : <div style="width:100%; height:100%; display:flex; align-items:center;
-                           justify-content:center; font-size:1.4rem; color:#006A8E;
-                           font-family:'Titillium Web',sans-serif; font-weight:600;">
-                {p.data.name.charAt(0)}
-              </div>
+            ? <Image src={p.data.photo} alt={p.data.name} width={76} height={76} />
+            : <span>{p.data.name.charAt(0)}</span>
           }
         </div>
+        <p class="staff-name">{p.data.name}</p>
+        {p.data.title && <p class="staff-academic-title">{p.data.title}</p>}
+        <p class="staff-role">{p.data.role}</p>
+        <div class="staff-divider"></div>
+        {p.data.email && <p class="staff-email">{p.data.email}</p>}
+      </a>
+    ))}
+  </div>
 
-        <!-- Nombre -->
-        <p style="font-family:'Titillium Web',sans-serif; font-weight:700;
-                  font-size:0.95rem; color:#006A8E; margin:0 0 0.15rem;
-                  text-align:center; line-height:1.3;">
-          {p.data.name}
-        </p>
+  {staff.length === 0 && (
+    <div class="card"><p class="empty-state" style="margin:0;">No staff members listed yet.</p></div>
+  )}
 
-        <!-- Título académico -->
-        {p.data.title && (
-          <p style="font-size:0.75rem; color:#888; margin:0 0 0.2rem;
-                    text-align:center; font-style:italic;">
-            {p.data.title}
-          </p>
-        )}
-
-        <!-- Rol -->
-        <p style="font-size:0.82rem; color:#444; margin:0 0 0.4rem;
-                  text-align:center; line-height:1.3; flex:1;">
-          {p.data.role}
-        </p>
-
-        <!-- Separador -->
-        <div style="width:32px; height:2px; background:#ffc70f; margin:0.3rem auto;"></div>
-
-        <!-- Email -->
-        {p.data.email && (
-          <p style="font-size:0.75rem; color:#006A8E; margin:0;
-                    word-break:break-all; text-align:center;">
-            {p.data.email}
-          </p>
-        )}
-      </div>
-    </a>
-  ))}
-</div>
-
-  <SectionNews tag="interest-groups" label="ZADNJE NOVICE" />
+  <SectionNews tag="student" label="Latest News" />
 
 </Base>

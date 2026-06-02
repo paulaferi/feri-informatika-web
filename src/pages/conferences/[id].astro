@@ -16,79 +16,55 @@ const allConferences = (await getCollection("conferences"))
   .sort((a, b) => new Date(b.data.date ?? 0).getTime() - new Date(a.data.date ?? 0).getTime());
 
 const sidebarLinks = allConferences.map(c => ({
-  label: c.data.acronym ? `${c.data.acronym} — ${c.data.name}` : c.data.name,
+  label: c.data.acronym ?? c.data.name,
   href: `${base}/conferences/${c.id}`,
 }));
 ---
 <Base title={conference.data.name} sidebarLinks={sidebarLinks}>
 
-  <h2 style="font-family:'Titillium Web',sans-serif; font-size:1.4rem; font-weight:400;
-             color:#222; margin-bottom:1.25rem;">
+  <h1 class="page-title">
     {conference.data.name}
     {conference.data.acronym && (
-      <span style="font-size:1rem; color:#888; margin-left:8px;">
-        ({conference.data.acronym})
-      </span>
+      <span style="font-size:1rem; color:var(--muted); font-weight:400;">({conference.data.acronym})</span>
     )}
-  </h2>
+  </h1>
+  <div class="page-title-rule"></div>
 
   <div class="card">
 
-    <div style="display:flex; gap:0.75rem; align-items:stretch; margin-bottom:1.25rem;">
-      <div style="width:4px; background:#ffc70f; flex-shrink:0; border-radius:1px;"></div>
-      <p style="margin:0; text-align:left;">{conference.data.description}</p>
-    </div>
+    <div class="intro"><p>{conference.data.description}</p></div>
 
     {(conference.data.date || conference.data.location) && (
-      <>
-        <div style="display:flex; gap:0.75rem; align-items:center; margin-bottom:0.6rem;">
-          <div style="width:4px; background:#ffc70f; flex-shrink:0; border-radius:1px; min-height:24px;"></div>
-          <h3 style="margin:0; font-family:'Titillium Web',sans-serif; font-size:1rem;
-                     font-weight:700; color:#222;">Podatki</h3>
-        </div>
-        <ul style="list-style:none; padding:0 0 0 0.5rem; margin:0 0 1.25rem;">
+      <div>
+        <div class="section-heading"><h3>Details</h3></div>
+        <ul class="detail-list">
           {conference.data.date && (
-            <li style="display:flex; gap:0.5rem; padding:0.3rem 0; font-size:1.05rem; color:#444;">
-              <span style="display:inline-block; width:7px; height:7px; border-radius:50%;
-                           background:#ffc70f; flex-shrink:0; margin-top:0.5rem;"></span>
-              <span>
-                <strong>Datum:</strong>{" "}
-                {new Date(conference.data.date).toLocaleDateString("sl-SI")}
-              </span>
-            </li>
+            <li><span><strong>Date:</strong> {new Date(conference.data.date).toLocaleDateString("en-GB")}</span></li>
           )}
           {conference.data.location && (
-            <li style="display:flex; gap:0.5rem; padding:0.3rem 0; font-size:1.05rem; color:#444;">
-              <span style="display:inline-block; width:7px; height:7px; border-radius:50%;
-                           background:#ffc70f; flex-shrink:0; margin-top:0.5rem;"></span>
-              <span><strong>Lokacija:</strong> {conference.data.location}</span>
-            </li>
+            <li><span><strong>Location:</strong> {conference.data.location}</span></li>
           )}
         </ul>
-      </>
+      </div>
     )}
 
     {conference.data.body && (
-      <>
-        <div style="display:flex; gap:0.75rem; align-items:center; margin-bottom:0.6rem;">
-          <div style="width:4px; background:#ffc70f; flex-shrink:0; border-radius:1px; min-height:24px;"></div>
-          <h3 style="margin:0; font-family:'Titillium Web',sans-serif; font-size:1rem;
-                     font-weight:700; color:#222;">Podrobnosti</h3>
-        </div>
+      <div>
+        <div class="section-heading"><h3>About</h3></div>
         <div class="prose"><Content /></div>
-      </>
+      </div>
     )}
 
     {conference.data.url && (
-      <div style="margin-top:1.25rem; padding-top:1rem; border-top:1px solid #eee;">
-        <a href={conference.data.url} target="_blank"
-           style="color:#006A8E; font-size:0.9rem;">
-          Spletna stran konference →
-        </a>
+      <div class="external-link">
+        <a href={conference.data.url} target="_blank">Conference website →</a>
       </div>
     )}
 
   </div>
 
-  <SectionNews tag="conference" label="ZADNJE NOVICE" />
+  <a href={`${base}/conferences`} class="back-link">← Back to Conference Activities</a>
+
+  <SectionNews tag="conference" label="Latest News" />
+
 </Base>

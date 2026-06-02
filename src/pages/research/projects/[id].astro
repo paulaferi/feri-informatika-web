@@ -16,92 +16,57 @@ const allProjects = await getCollection("projects");
 
 const sidebarLinks = [
   {
-    label: "Raziskovalni projekti",
+    label: "Research Projects",
     href: `${base}/research/projects`,
     children: allProjects.map(p => ({
       label: p.data.title,
       href: `${base}/research/projects/${p.id}`,
     })),
   },
-  { label: "Publikacije",     href: `${base}/research/publications` },
-  { label: "Etična komisija", href: `${base}/research/ethics` },
+  { label: "Publications",     href: `${base}/research/publications` },
+  { label: "Ethics Committee", href: `${base}/research/ethics` },
 ];
 ---
 <Base title={project.data.title} sidebarLinks={sidebarLinks}>
 
-  <h2 style="font-family:'Titillium Web',sans-serif; font-size:1.4rem; font-weight:400;
-             color:#222; margin-bottom:1.25rem;">
-    {project.data.title}
-  </h2>
+  <h1 class="page-title">{project.data.title}</h1>
+  <div class="page-title-rule"></div>
 
   <div class="card">
 
-    <div style="display:flex; gap:0.75rem; align-items:stretch; margin-bottom:1.25rem;">
-      <div style="width:4px; background:#ffc70f; flex-shrink:0; border-radius:1px;"></div>
-      <p style="margin:0; text-align:left;">{project.data.description}</p>
-    </div>
+    <div class="intro"><p>{project.data.description}</p></div>
 
-    <div style="display:flex; gap:0.75rem; align-items:center; margin-bottom:0.6rem;">
-      <div style="width:4px; background:#ffc70f; flex-shrink:0; border-radius:1px; min-height:24px;"></div>
-      <h3 style="margin:0; font-family:'Titillium Web',sans-serif; font-size:1rem;
-                 font-weight:700; color:#222;">Podrobnosti</h3>
-    </div>
-
-    <ul style="list-style:none; padding:0 0 0 0.5rem; margin:0 0 1.25rem;">
-      <li style="display:flex; gap:0.5rem; padding:0.3rem 0; font-size:1.05rem; color:#444;">
-        <span style="display:inline-block; width:7px; height:7px; border-radius:50%;
-                     background:#ffc70f; flex-shrink:0; margin-top:0.5rem;"></span>
-        <span>
-          <strong>Status:</strong>{" "}
-          {project.data.status === "active" ? " Aktiven" : " Zaključen"}
-        </span>
-      </li>
+    <div class="section-heading"><h3>Project Details</h3></div>
+    <ul class="detail-list">
+      <li><span><strong>Status:</strong> {project.data.status === "active" ? "Active" : "Completed"}</span></li>
       {project.data.startYear && (
-        <li style="display:flex; gap:0.5rem; padding:0.3rem 0; font-size:1.05rem; color:#444;">
-          <span style="display:inline-block; width:7px; height:7px; border-radius:50%;
-                       background:#ffc70f; flex-shrink:0; margin-top:0.5rem;"></span>
-          <span>
-            <strong>Obdobje:</strong>{" "}
-            {project.data.startYear}–{project.data.endYear ?? "danes"}
-          </span>
-        </li>
+        <li><span><strong>Period:</strong> {project.data.startYear}–{project.data.endYear ?? "present"}</span></li>
       )}
       {project.data.funder && (
-        <li style="display:flex; gap:0.5rem; padding:0.3rem 0; font-size:1.05rem; color:#444;">
-          <span style="display:inline-block; width:7px; height:7px; border-radius:50%;
-                       background:#ffc70f; flex-shrink:0; margin-top:0.5rem;"></span>
-          <span><strong>Financiranje:</strong> {project.data.funder}</span>
-        </li>
+        <li><span><strong>Funding body:</strong> {project.data.funder}</span></li>
       )}
       {project.data.principalInvestigator && (
-        <li style="display:flex; gap:0.5rem; padding:0.3rem 0; font-size:1.05rem; color:#444;">
-          <span style="display:inline-block; width:7px; height:7px; border-radius:50%;
-                       background:#ffc70f; flex-shrink:0; margin-top:0.5rem;"></span>
-          <span><strong>Vodja projekta:</strong> {project.data.principalInvestigator}</span>
-        </li>
+        <li><span><strong>Principal investigator:</strong> {project.data.principalInvestigator}</span></li>
       )}
     </ul>
 
     {project.data.body && (
-      <>
-        <div style="display:flex; gap:0.75rem; align-items:center; margin-bottom:0.6rem;">
-          <div style="width:4px; background:#ffc70f; flex-shrink:0; border-radius:1px; min-height:24px;"></div>
-          <h3 style="margin:0; font-family:'Titillium Web',sans-serif; font-size:1rem;
-                     font-weight:700; color:#222;">Opis</h3>
-        </div>
+      <div>
+        <div class="section-heading"><h3>Description</h3></div>
         <div class="prose"><Content /></div>
-      </>
+      </div>
     )}
 
     {project.data.newsLink && (
-      <div style="margin-top:1.25rem; padding-top:1rem; border-top:1px solid #eee;">
-        <a href={project.data.newsLink} style="color:#006A8E; font-size:0.9rem;">
-          Povezane novice →
-        </a>
+      <div class="external-link">
+        <a href={project.data.newsLink}>Related news →</a>
       </div>
     )}
 
   </div>
 
-  <SectionNews tag="project" label="ZADNJE NOVICE" />
+  <a href={`${base}/research/projects`} class="back-link">← Back to Research Projects</a>
+
+  <SectionNews tag="project" label="Latest News" />
+
 </Base>
