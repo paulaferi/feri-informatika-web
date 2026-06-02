@@ -28,11 +28,12 @@ const tags = ["student", "conference", "scientific", "professional",
       <a href={`${base}/achievements/${a.id}`} class="grid-card achievement-item"
          data-tags={Array.isArray(a.data.tags) ? a.data.tags.join(",") : String(a.data.tags)}>
         <div class="grid-card-image">
-          {a.data.coverImage
-            ? <Image src={a.data.coverImage} alt={a.data.title} width={400} height={168}
-                     style="width:100%; height:100%; object-fit:cover;" />
-            : <div class="grid-card-placeholder"><span>II · FERI</span></div>
-          }
+          {(() => {
+            const cover = a.data.coverImage ?? (a.data.images && a.data.images[0]);
+            return cover
+              ? <Image src={cover} alt={a.data.title} width={600} height={400} />
+              : <div class="grid-card-placeholder"><span>II · FERI</span></div>;
+          })()}
         </div>
         <div class="grid-card-accent"></div>
         <div class="grid-card-body">

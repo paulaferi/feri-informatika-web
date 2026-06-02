@@ -35,12 +35,12 @@ const filtered = allNews
       {filtered.map((n: CollectionEntry<"news">) => (
         <a href={`${base}/news/${n.id}`} class="grid-card">
           <div class="grid-card-image">
-            {n.data.coverImage
-              ? <Image src={n.data.coverImage} alt={n.data.title}
-                       width={400} height={168}
-                       style="width:100%; height:100%; object-fit:cover;" />
-              : <div class="grid-card-placeholder"><span>II · FERI</span></div>
-            }
+            {(() => {
+              const cover = n.data.coverImage ?? (n.data.images && n.data.images[0]);
+              return cover
+                ? <Image src={cover} alt={n.data.title}  />
+                : <div class="grid-card-placeholder"><span>II · FERI</span></div>;
+            })()}
           </div>
           <div class="grid-card-accent"></div>
           <div class="grid-card-body">
