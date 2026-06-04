@@ -93,18 +93,7 @@ const staff = defineCollection({
     contactHours:   z.string().optional(),
     linkedin:       z.string().optional(),
     cobiss:         z.string().optional(),
-    researchTopics: z.string().optional(),
-    publications:   z.string().optional(),
-    cv:             z.string().optional(),
-    teaching:       z.string().optional(),
-    projects:       z.string().optional(),
-    editorial:      z.string().optional(),
-    awards:         z.string().optional(),
-    conferenceOrg:  z.string().optional(),
-    projectsCollab: z.string().optional(),
-    reviewerFor:    z.string().optional(),
-    certificates:   z.string().optional(),
-  }),
+  }).passthrough(),
 });
 
 const industryPartners = defineCollection({
