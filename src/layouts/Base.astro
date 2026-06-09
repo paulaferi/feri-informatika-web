@@ -7,7 +7,7 @@ const { title, sidebarLinks } = Astro.props;
 const base = import.meta.env.BASE_URL;
 
 const mainNav = [
-  { label: "About the Institute",   href: `${base}/` },
+  { label: "About the Institute",   href: `${base}/about` },
   { label: "Research Group",        href: `${base}/research-group/areas` },
   { label: "Research",              href: `${base}/research/projects` },
   { label: "Studies IPT & ITK",     href: `${base}/studies/programmes` },
@@ -44,15 +44,16 @@ const mainNav = [
       <div class="header-right">
 
         <a href={`${base}/`} class="brand-link">
-          <span class="brand-name">INŠTITUT ZA INFORMATIKO</span>
-          <span class="brand-sub">FAKULTETA ZA ELEKTROTEHNIKO, RAČUNALNIŠTVO IN INFORMATIKO</span>
+          <span class="brand-name">Inštitut za Informatiko</span>
         </a>
 
         <nav class="main-nav">
           {mainNav.map(item => {
             const currentPath = Astro.url.pathname;
             let isActive = false;
-            if (item.href === `${base}/`) {
+            if (item.href === `${base}/about`) {
+              isActive = currentPath === item.href || currentPath.startsWith(`${base}/about`);
+            } else if (item.href === `${base}/`) {
               isActive = currentPath === item.href;
             } else {
               const section = item.href.split('/').filter(Boolean)[1];
