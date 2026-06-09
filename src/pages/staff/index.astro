@@ -8,39 +8,60 @@ const staff = await getCollection("staff");
 const base = import.meta.env.BASE_URL;
 
 const sidebarLinks = [
-  { label: "Laboratories",    href: `${base}/laboratories` },
-  { label: "Interest Groups", href: `${base}/interest-groups` },
-  { label: "Staff",           href: `${base}/staff` },
+  { label: "Laboratoriji",      href: `${base}/laboratories` },
+  { label: "Interesne skupine", href: `${base}/interest-groups` },
+  { label: "Osebje",            href: `${base}/staff` },
 ];
+
+const sections = [
+  { key: "predstojnik", label: "Predstojnik inštituta" },
+  { key: "profesorji",  label: "Profesorji in predavatelji" },
+  { key: "asistenti",   label: "Asistenti in raziskovalci" },
+  { key: "tehnicno",    label: "Tehnično osebje" },
+  { key: "prejsnji",    label: "Prejšnji člani" },
+];
+
+function getSection(member: typeof staff[0]) {
+  return member.data.section ?? "profesorji";
+}
 ---
-<Base title="Staff" sidebarLinks={sidebarLinks}>
+<Base title="Osebje" sidebarLinks={sidebarLinks}>
 
-  <h1 class="page-title">Staff</h1>
+  <h1 class="page-title">Osebje</h1>
   <div class="page-title-rule"></div>
-  <p class="page-subtitle">Academic and research staff of the Institute of Informatics</p>
+  <p class="page-subtitle">Akademsko in raziskovalno osebje Inštituta za informatiko</p>
 
-  <div class="staff-grid">
-    {staff.map(p => (
-      <a href={`${base}/staff/${p.id}`} class="staff-card">
-        <div class="staff-avatar">
-          {p.data.photo
-            ? <Image src={p.data.photo} alt={p.data.name} width={76} height={76} />
-            : <span>{p.data.name.charAt(0)}</span>
-          }
+  {sections.map(({ key, label }) => {
+    const members = staff.filter(p => getSection(p) === key);
+    if (members.length === 0) return null;
+    return (
+      <div style="margin-bottom:2rem;">
+        <h2 style="font-family:'Titillium Web',sans-serif; font-size:1.1rem; font-weight:700;
+                   color:var(--ink); margin-bottom:1rem; padding-bottom:0.4rem;
+                   border-bottom:2px solid var(--accent);">
+          {label}
+        </h2>
+        <div class="staff-grid">
+          {members.map(p => (
+            <a href={`${base}/staff/${p.id}`} class="staff-card">
+              <div class="staff-avatar">
+                {p.data.photo
+                  ? <Image src={p.data.photo} alt={p.data.name} width={76} height={76} />
+                  : <span>{p.data.name.charAt(0)}</span>
+                }
+              </div>
+              <p class="staff-name">{p.data.name}</p>
+              {p.data.title && <p class="staff-academic-title">{p.data.title}</p>}
+              <p class="staff-role">{p.data.role}</p>
+              <div class="staff-divider"></div>
+              {p.data.email && <p class="staff-email">{p.data.email}</p>}
+            </a>
+          ))}
         </div>
-        <p class="staff-name">{p.data.name}</p>
-        {p.data.title && <p class="staff-academic-title">{p.data.title}</p>}
-        <p class="staff-role">{p.data.role}</p>
-        <div class="staff-divider"></div>
-        {p.data.email && <p class="staff-email">{p.data.email}</p>}
-      </a>
-    ))}
-  </div>
+      </div>
+    );
+  })}
 
-  {staff.length === 0 && (
-    <div class="card"><p class="empty-state" style="margin:0;">No staff members listed yet.</p></div>
-  )}
-
-  <SectionNews tag="student" label="Latest News" />
+  <SectionNews tag="student" label="Zadnje novice" />
 
 </Base>

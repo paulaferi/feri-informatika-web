@@ -1,14 +1,17 @@
 ---
-name: "Grega Vrbančič"
-title: "doc. dr. računalništva in informatike"
-role: "Researcher"
-email: "grega.vrbancic@um.si"
-phone: "(02) 220 4711"
-office: "G2‐1N.07 Laboratorij Newton"
-contactHours: "Povezava"
-linkedin: "LinkedIn"
-cobiss: "http://splet02.izum.si/cobiss/bibliography?code=50652&wos=on"
-izbranePublikacije: |
+name: Grega Vrbančič
+title: doc. dr. računalništva in informatike
+role: Researcher
+section: profesorji
+email: grega.vrbancic@um.si
+phone: (02) 220 4711
+office: G2‐1N.07 Laboratorij Newton
+contactHours: Povezava
+linkedin: LinkedIn
+cobiss: http://splet02.izum.si/cobiss/bibliography?code=50652&wos=on
+researchTopics: ''
+publications: ''
+izbranePublikacije: |-
   - Vrbančič, G. and Podgorelec, V., 2021. Efficient ensemble for image-based identification of Pneumonia utilizing deep CNN and SGD with warm restarts. Expert Systems with Applications, p.115834. DOI: 10.1016/j.eswa.2021.115834
   - Podgorelec, V., Pečnik, Š. and Vrbančič, G., 2020. Classification of Similar Sports Images Using Convolutional Neural Network with Hyper-Parameter Optimization. Applied Sciences, 10(23), p.8494. DOI: 10.3390/app10238494
   - Vrbančič, G. and Podgorelec, V., 2020. Transfer Learning With Adaptive Fine-Tuning. IEEE Access, 8, pp.196197-196211. DOI: 10.1109/ACCESS.2020.3034343
@@ -22,5 +25,4 @@ izbranePublikacije: |
   - International Journal of Bio-Inspired Computation
   - Data in Brief
   - Celoten izpis na voljo na Publons .
-
 ---

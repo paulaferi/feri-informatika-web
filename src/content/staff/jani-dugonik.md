@@ -1,27 +1,17 @@
 ---
-name: "Jani Dugonik"
-title: "dr. računalništva in informatike"
-role: "Researcher"
-email: "jani.dugonik@um.si"
-phone: "+386 2 220 7432"
-office: "F-202"
-contactHours: "Povezava"
-linkedin: "Povezava"
-cobiss: "https://bib.cobiss.net/bibliographies/si/webBiblio/bib201_20250523_125643_a199878499.html"
-pedagoškoDelo: |
-  - Predmeti: Razvoj mobilnih rešitev (I-TK VS) Vseprisotni sistemi v medijih (MED MAG) Podatkovne strukture (I-TK VS, R-IT VS) Napredno programiranje (I-TK VS) SQL programiranje (I-TK VS)
-  - Razvoj mobilnih rešitev (I-TK VS)
-  - Vseprisotni sistemi v medijih (MED MAG)
-  - Podatkovne strukture (I-TK VS, R-IT VS)
-  - Napredno programiranje (I-TK VS)
-  - SQL programiranje (I-TK VS)
-  - Učna gradiva: /
-  - Zaključna dela (mentorstva): /
-  - Delavnice / izobraževanja: NVIDIA DIGI-SI EDIH
-  - NVIDIA
-  - DIGI-SI EDIH
-
-raziskovalnoDelo: |
+name: Jani Dugonik
+title: dr. računalništva in informatike
+role: Researcher
+section: asistenti
+email: jani.dugonik@um.si
+phone: +386 2 220 7432
+office: F-202
+contactHours: Povezava
+linkedin: Povezava
+cobiss: https://bib.cobiss.net/bibliographies/si/webBiblio/bib201_20250523_125643_a199878499.html
+researchTopics: ''
+publications: ''
+raziskovalnoDelo: |-
   - Področja: Procesiranje naravnega jezika Evolucijski algoritmi Umetna inteligenca Kibernetska varnost
   - Procesiranje naravnega jezika
   - Evolucijski algoritmi
@@ -37,8 +27,16 @@ raziskovalnoDelo: |
   - UP FAMNIT
   - IEEE
   - ACM
-
-projekti: |
+članstva: |-
+  - IEEE IEEE Student Branch Maribor (svetovalec) IEEE Young Professionals Slovenia (član) IEEE Computational Intelligence Society Slovenia (blagajnik) Women in Engineering Region 8 (član odbora)
+  - IEEE Student Branch Maribor (svetovalec)
+  - IEEE Young Professionals Slovenia (član)
+  - IEEE Computational Intelligence Society Slovenia (blagajnik)
+  - Women in Engineering Region 8 (član odbora)
+  - ACM ACM Student Chapter Maribor (spletni administrator)
+  - ACM Student Chapter Maribor (spletni administrator)
+publikacije: '- Celoten seznam na COBISS -u.'
+projekti: |-
   - Raziskovalni projekti: Hibridno strojno prevajanje Klasifikacija odpadkov Razdelitev med strojno in programsko opremo Inteligentni agenti z velikimi jezikovnimi modeli za zaznavanje lažnega predstavljanja (angl. phishinga)
   - Hibridno strojno prevajanje
   - Klasifikacija odpadkov
@@ -54,17 +52,16 @@ projekti: |
   - HORIZON-SLAIF
   - Študentski projekti: Razvoj mobilnih aplikacij pri predmetih Razvoj mobilnih rešitev in Vseprisotni sistemi v medijih
   - Razvoj mobilnih aplikacij pri predmetih Razvoj mobilnih rešitev in Vseprisotni sistemi v medijih
-
-publikacije: |
-  - Celoten seznam na COBISS -u.
-
-članstva: |
-  - IEEE IEEE Student Branch Maribor (svetovalec) IEEE Young Professionals Slovenia (član) IEEE Computational Intelligence Society Slovenia (blagajnik) Women in Engineering Region 8 (član odbora)
-  - IEEE Student Branch Maribor (svetovalec)
-  - IEEE Young Professionals Slovenia (član)
-  - IEEE Computational Intelligence Society Slovenia (blagajnik)
-  - Women in Engineering Region 8 (član odbora)
-  - ACM ACM Student Chapter Maribor (spletni administrator)
-  - ACM Student Chapter Maribor (spletni administrator)
-
+pedagoškoDelo: |-
+  - Predmeti: Razvoj mobilnih rešitev (I-TK VS) Vseprisotni sistemi v medijih (MED MAG) Podatkovne strukture (I-TK VS, R-IT VS) Napredno programiranje (I-TK VS) SQL programiranje (I-TK VS)
+  - Razvoj mobilnih rešitev (I-TK VS)
+  - Vseprisotni sistemi v medijih (MED MAG)
+  - Podatkovne strukture (I-TK VS, R-IT VS)
+  - Napredno programiranje (I-TK VS)
+  - SQL programiranje (I-TK VS)
+  - Učna gradiva: /
+  - Zaključna dela (mentorstva): /
+  - Delavnice / izobraževanja: NVIDIA DIGI-SI EDIH
+  - NVIDIA
+  - DIGI-SI EDIH
 ---

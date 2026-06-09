@@ -1,25 +1,31 @@
 ---
-name: "Boštjan Brumen"
-title: "Izr. Prof. Dr."
-role: "Researcher"
-email: "bostjan.brumen@um.si"
-phone: "+386 2 2207292"
-office: "G2-M19"
-contactHours: "Po dogovoru"
-cobiss: "http://splet02.izum.si/cobiss/bibliography?langbib=eng&li=si&homelang=eng&code=18848"
-teaching: |
+name: Boštjan Brumen
+title: Izr. Prof. Dr.
+role: Researcher
+section: profesorji
+email: bostjan.brumen@um.si
+phone: +386 2 2207292
+office: G2-M19
+contactHours: Po dogovoru
+linkedin: ''
+cobiss: http://splet02.izum.si/cobiss/bibliography?langbib=eng&li=si&homelang=eng&code=18848
+researchTopics: ''
+publications: ''
+teaching: |-
   - Courses
   - Advanced data security (2nd year master studies)
   - Information security (doctoral studies)
-
-researchAreas: |
+conferences: |-
+  - 2002, member of organizing committee, JCKBSE
+  - 2001, member of organizing committee, EJC
+  - 1999, member of organizing committee, ADBIS
+researchAreas: |-
   - security password and user interface security
   - password and user interface security
   - privacy
   - machine learning decision trees
   - decision trees
-
-selectedPublications: |
+selectedPublications: |-
   - TANESKI, Viktor, HERIČKO, Marjan, BRUMEN, Boštjan. Systematic overview of password security problems. Acta polytechnica Hungarica. 2019, vol. 16, no. 3, str. 143-165. ISSN 1785-8860. http://www.uni-obuda.hu/journal/Taneski_Hericko_Brumen_90.pdf.
   - BRUMEN, Boštjan. Security analysis of game changer password system. International journal of human-computer studies. [Print ed.]. June 2019, vol. 126, str. 44-52. ISSN 1071-5819. https://dx.doi.org/10.1016/j.ijhcs.2019.01.004.
   - BOŠNJAK, Leon, BRUMEN, Boštjan. Shoulder surfing: from an experimental study to a comparative framework. International journal of human-computer studies. [Print ed.]. Oct. 2019, vol. 130, str. 1-20. ISSN 1071-5819. https://dx.doi.org/10.1016/j.ijhcs.2019.04.003.
@@ -37,18 +43,9 @@ selectedPublications: |
   - BRUMEN, Boštjan, ROZMAN, Ivan, ČERNEZEL, Aleš. Modeling of classification error rate based on neural networks learners. V: THALHEIM, Bernhard (ur.), et al. Information modelling and knowledge bases XXVI. Amsterdam [etc.]: Ios Press, cop. 2014. Str. 41-52. Frontiers in artificial intelligence and applications, Vol. 272. ISBN 978-1-61499-471-8, ISBN 978-1-61499-472-5. ISSN 0922-6389. https://dx.doi.org/10.3233/978-1-61499-472-5-41.
   - ČERNEZEL, Aleš, ROZMAN, Ivan, BRUMEN, Boštjan. Comparison between three cross-validation measuring learnersʼ performances. V: THALHEIM, Bernhard (ur.), et al. Information modelling and knowledge bases XXVI. Amsterdam [etc.]: Ios Press, cop. 2014. Str. 77-87. Frontiers in artificial intelligence and applications, Vol. 272. ISBN 978-1-61499-471-8, ISBN 978-1-61499-472-5. ISSN 0922-6389.
   - BRUMEN, Boštjan. Assessment of classification algorithms in artificial intelligence. Saarbrücken: LAP Lambert Academic Publishing, cop. 2014. X, 152 str., ilustr. ISBN 978-3-659-56251-8. [COBISS.SI-ID 18160918]
-
-conferences: |
-  - 2002, member of organizing committee, JCKBSE
-  - 2001, member of organizing committee, EJC
-  - 1999, member of organizing committee, ADBIS
-
-visiting: |
+visiting: |-
   - Visiting professor, Jan-Apr 2020 Cochin University of Science And Technology, Kochi, India
   - Visiting researcher, Jun-Sep 2013 Tampere University of Technology, Pori Unit, Pori, Finland
   - Erasmus exchange, Nov 1999 – Jul 2000 Tampere University of Tedchnology, Pori Unit, Pori, Finland Student Erasmus exchange in postgraduate studies
-
-listOfPublications: |
-  - For the full list of publications click: COBISS .
-
+listOfPublications: '- For the full list of publications click: COBISS .'
 ---

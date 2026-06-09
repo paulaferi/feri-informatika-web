@@ -87,6 +87,13 @@ const staff = defineCollection({
     photo:          image().optional(),
     title:          z.string().optional(),
     role:           z.string(),
+    section: z.enum([
+      "predstojnik",
+      "profesorji",
+      "asistenti",
+      "tehnicno",
+      "prejsnji",
+    ]).optional(),
     email:          z.string().optional(),
     phone:          z.string().optional(),
     office:         z.string().optional(),
@@ -136,6 +143,8 @@ const achievements = defineCollection({
     images:     z.array(image()).optional(),
   }),
 });
+
+
 
 export const collections = {
   laboratories, interestGroups, staff, projects,

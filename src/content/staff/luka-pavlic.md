@@ -1,42 +1,17 @@
 ---
-name: "Luka Pavlič"
-title: "izr. prof. dr. Luka Pavlič, univ. dipl. inž. rač. in inf."
-role: "Researcher"
-email: "luka.pavlic@um.si"
-phone: "+386 2 220 7356"
-office: "G2-1N.13"
-contactHours: "povezava"
-cobiss: "http://splet02.izum.si/cobiss/bibliography?code=27561"
-glavnaPodročjaRaziskovanja: |
-  - IT arhitekture
-  - razvoj informacijskih rešitev in storitev
-  - programsko inženirstvo, DevOps
-  - razvojne metode s poudarkom na metodah agilnega razvoja, uporaba v velikem obsegu
-  - zagotavljanje kakovosti, tehničen dolg
-
-inTudi: |
-  - domorodne in hibridne metode razvoja mobilnih in spletnih informacijskih rešitev
-  - mobilne rešitve in mobilne programske produktne linije
-  - nosql podatkovne baze
-  - objektna orientacija, predvsem na primeru Javanskih platform
-  - (mikro)storitveno usmerjene arhitekture
-  - objektno načrtovanje in analiza z jezikom UML
-  - ponovna uporaba in načrtovalski vzorci
-  - tehnologije, temelječe na XML, še posebej XSD, XSLT, XPath, XQuery
-  - semantični splet
-  - informacijske rešitve velikih organizacij
-  - platforme Java/Jakarta EE/Eclipse Microprofile/Spring
-
-izobrazba: |
-  - 2009 – doktor znanosti s področja računalništva in informatike, Univerza v Mariboru, FERI.
-  - 2004 – univ. dipl. inž. Računalništva in informatike, Univerza v Mariboru, FERI.
-  - 2000 – računalniški tehnik, Šolski Center Velenje, PTERŠ.
-
-strokovniCertifikati: |
-  - Sun Java Certified Programmer 6.0
-  - Certified SCRUM Master
-
-zaposlitev: |
+name: Luka Pavlič
+title: izr. prof. dr. Luka Pavlič, univ. dipl. inž. rač. in inf.
+role: Researcher
+section: profesorji
+email: luka.pavlic@um.si
+phone: +386 2 220 7356
+office: G2-1N.13
+contactHours: povezava
+linkedin: ''
+cobiss: http://splet02.izum.si/cobiss/bibliography?code=27561
+researchTopics: ''
+publications: ''
+zaposlitev: |-
   - 2023 - : Raziskovalec, izredni profesor, Univerza v Mariboru, FERI.
   - 2017 - : Raziskovalec, docent, Univerza v Mariboru, FERI.
   - 2010 - : Raziskovalec, asistent, Univerza v Mariboru, FERI.
@@ -48,24 +23,7 @@ zaposlitev: |
   - 2003: Učitelj predmetu Algoritmi in programski jezikom, SERŠ Maribor.
   - 2002: Asistent predmetu Programska orodja in sistemi, večerna šole, Šolskem centru Velenje, PTERŠ.
   - 2000 - 2003: Demonstrator na različnih seminarjih, Šolski center Velenje, PTERŠ.
-
-pedagoškoDeloNaUmFeri: |
-  - ZAGOTAVLJANJE KAKOVOSTI, 2017 - , ITK UN
-  - IT ARHITEKTURE, 2021 - , ITK MAG
-  - RAZVOJ INFORMACIJSKIH SISTEMOV, 2017 - , ITK UN
-  - PRAKTIKUM II, 2010 - , ITK UN
-  - PRAKTIKUM, SPLETNI SISTEMI IN VSEBINE, 2019 - , ITK/MK UN
-  - ARHITEKTURE INFORMACIJSKIH SISITEMOV IN VZORCI, 2010 - , ITK UN
-  - STRATEŠKO PLANIRANJE, 2017 - , ITK MAG
-  - STORITVENO USMERJENE ARHITEKTURE, 2012 - 2017, ITK MAG
-  - PRAKTIKUM I, 2010 - 2017, ITK UN
-  - OSNOVE SPLETNIH TEHNOLOGIJ, 2013 - 2017, ITK UN
-  - PLATFOME INFORMACIJSKIH SISTEMOV, 2012, ITK UN
-  - RAZVOJ IN UPORABA KOMPONENT V JAVI, 2007 - 2010, ITK UN
-  - PROGRAMIRANJE 2, 2004 - 2007, RI UN
-  - GRADNJA INFORMACIJSKIH SISTEMOV, 2005 - 2007, RI UN
-
-izvedbaDelavnicIzobraževanjInPočitniškihŠol: |
+izvedbaDelavnicIzobraževanjInPočitniškihŠol: |-
   - DevOps prakse pri avtomatizaciji dostave informacijskih rešitev
   - Decentraliziran sistem za upravljanje sprememb GIT
   - Virtualizacija in delo z zabojniki s pomočjo platforme Docker
@@ -109,8 +67,47 @@ izvedbaDelavnicIzobraževanjInPočitniškihŠol: |
   - Java EE – strežniška zrna in spletne komponente
   - XPath 2.0 in XSLT 2.0 za razvijalce
   - Napredna obdelava dokumentov XML v podatkovni bazi Oracle
-
-daljšiDelovniObiskiInPredavanjaVTujini: |
+strokovniCertifikati: |-
+  - Sun Java Certified Programmer 6.0
+  - Certified SCRUM Master
+izobrazba: |-
+  - 2009 – doktor znanosti s področja računalništva in informatike, Univerza v Mariboru, FERI.
+  - 2004 – univ. dipl. inž. Računalništva in informatike, Univerza v Mariboru, FERI.
+  - 2000 – računalniški tehnik, Šolski Center Velenje, PTERŠ.
+inTudi: |-
+  - domorodne in hibridne metode razvoja mobilnih in spletnih informacijskih rešitev
+  - mobilne rešitve in mobilne programske produktne linije
+  - nosql podatkovne baze
+  - objektna orientacija, predvsem na primeru Javanskih platform
+  - (mikro)storitveno usmerjene arhitekture
+  - objektno načrtovanje in analiza z jezikom UML
+  - ponovna uporaba in načrtovalski vzorci
+  - tehnologije, temelječe na XML, še posebej XSD, XSLT, XPath, XQuery
+  - semantični splet
+  - informacijske rešitve velikih organizacij
+  - platforme Java/Jakarta EE/Eclipse Microprofile/Spring
+glavnaPodročjaRaziskovanja: |-
+  - IT arhitekture
+  - razvoj informacijskih rešitev in storitev
+  - programsko inženirstvo, DevOps
+  - razvojne metode s poudarkom na metodah agilnega razvoja, uporaba v velikem obsegu
+  - zagotavljanje kakovosti, tehničen dolg
+pedagoškoDeloNaUmFeri: |-
+  - ZAGOTAVLJANJE KAKOVOSTI, 2017 - , ITK UN
+  - IT ARHITEKTURE, 2021 - , ITK MAG
+  - RAZVOJ INFORMACIJSKIH SISTEMOV, 2017 - , ITK UN
+  - PRAKTIKUM II, 2010 - , ITK UN
+  - PRAKTIKUM, SPLETNI SISTEMI IN VSEBINE, 2019 - , ITK/MK UN
+  - ARHITEKTURE INFORMACIJSKIH SISITEMOV IN VZORCI, 2010 - , ITK UN
+  - STRATEŠKO PLANIRANJE, 2017 - , ITK MAG
+  - STORITVENO USMERJENE ARHITEKTURE, 2012 - 2017, ITK MAG
+  - PRAKTIKUM I, 2010 - 2017, ITK UN
+  - OSNOVE SPLETNIH TEHNOLOGIJ, 2013 - 2017, ITK UN
+  - PLATFOME INFORMACIJSKIH SISTEMOV, 2012, ITK UN
+  - RAZVOJ IN UPORABA KOMPONENT V JAVI, 2007 - 2010, ITK UN
+  - PROGRAMIRANJE 2, 2004 - 2007, RI UN
+  - GRADNJA INFORMACIJSKIH SISTEMOV, 2005 - 2007, RI UN
+daljšiDelovniObiskiInPredavanjaVTujini: |-
   - Univerzita Konštantína Filozofa v Nitre, Nitra, Slovaška Daljši raziskovalni in pedagoški obisk
   - Management Center Innsbruck, Avstrija Izvajanje pedagoškega procesa pri predmetih Software Engineering, eCommunication, Current and Applied Technologies, Master IT foundation course.
   - European Institute od Innovation & Technology (EIT), Budimpešta, Madžarska Sodelovenja v EIT ICT Labs, udeležba na tematskih delavnicah (Health & Wellbeing Outreach Workshop)
@@ -122,8 +119,7 @@ daljšiDelovniObiskiInPredavanjaVTujini: |
   - Eötvös Loránd University, Faculty of informatics, Budimpešta, Madžarska Daljši raziskovalni obiski, izvedba pedagoškega procesa pri izbirnem predmetu (OO concepts in UML, Java and C#)
   - Tampere University of Technology, Finska Erasmus izmenjava, izvedba vabljenih predavanj.
   - University College Cork, Irska Izvedba vabljenih predavanj.
-
-najpomembnejšePublikacije: |
+najpomembnejšePublikacije: |-
   - SAKLAMAEVA, Vasilka, PAVLIČ, Luka. The potential of ai-driven assistants in scaled agile software development. Applied sciences. 2024, vol. 14, iss. 1, [article no.] 319, 20 str., ilustr. ISSN 2076-3417. DKUM, DOI: 10.3390/app14010319.
   - PAVLIČ, Luka, SAKLAMAEVA, Vasilka, BERANIČ, Tina. Can large-language models replace humans in agile effort estimation? Lessons from a controlled experiment. Applied sciences. Dec. 2024, vol. 14, iss. 20, [article no.] 12006, 21 str. ISSN 2076-3417. DKUM, DOI: 10.3390/app142412006.
   - BERANIČ, Tina, HERIČKO, Marjan, PAVLIČ, Luka. Knowledge assessment patterns for distant educationž : the perceived impact on grading, motivation, and satisfaction. Sustainability. 16 May 2024, vol. 16, iss. 310, [article no.] 4166, 17 str. ISSN 2071-1050. DKUM, DOI: 10.3390/su16104166.
@@ -170,5 +166,4 @@ najpomembnejšePublikacije: |
   - PAVLIČ, Luka. Projektno vodenje v virtualnih skupinah. V: NOVAKOVIĆ, Aleksander (ur.), et al. Informatika kot temelj povezovanja : zbornik posvetovanja, DSI - Dnevi slovenske informatike 2005, Portorož, Slovenija, 13.-15. april. Ljubljana: Slovensko društvo Informatika, 2005, str. 778-784.
   - ŠUMAK, Boštjan, PUŠNIK, Maja, PAVLIČ, Luka. Podpora tehnologijam XML v podatkovni bazi Oracle : predavanje na 10. strokovnem srečanju uporabnikov programske opreme Oracle SIOUG 2005 in Oracle konferenci za razvijalce, Portorož, 18. - 21. september 2005. Portorož, 2005.
   - Seznam vseh publikacij: COBISS
-
 ---

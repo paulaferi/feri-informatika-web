@@ -1,6 +1,10 @@
 ---
 import Base from "../layouts/Base.astro";
 import SectionNews from "../components/SectionNews.astro";
+import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
+import { readFileSync } from "fs";
+import { resolve } from "path";
 
 const base = import.meta.env.BASE_URL;
 
@@ -9,6 +13,60 @@ const sidebarLinks = [
   { label: "Interest Groups", href: `${base}/interest-groups` },
   { label: "Staff",           href: `${base}/staff` },
 ];
+
+let highlightedNewsIds: string[]        = [];
+let highlightedAchievementsIds: string[] = [];
+let highlightedProjectsIds: string[]    = [];
+
+try {
+  const configPath = resolve("src/content/config/highlighted.json");
+  const raw = readFileSync(configPath, "utf-8");
+  const config = JSON.parse(raw);
+  highlightedNewsIds        = config.news         ?? [];
+  highlightedAchievementsIds = config.achievements ?? [];
+  highlightedProjectsIds    = config.projects      ?? [];
+} catch {
+}
+
+function normalizeId(str: string): string {
+  return str
+    .toLowerCase()
+    .replace(/[\u{1F000}-\u{1FFFF}]/gu, '')
+    .replace(/[\u{2600}-\u{27BF}]/gu, '')
+    .replace(/[»«""''–—]/g, '')
+    .replace(/[čć]/g, 'c')
+    .replace(/[šś]/g, 's')
+    .replace(/[žź]/g, 'z')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/[^\w-]/g, '')
+    .trim();
+}
+
+function findById<T extends { id: string; slug?: string }>(
+  collection: T[],
+  ids: string[]
+): T[] {
+  return ids
+    .map(id => {
+      const norm = normalizeId(id);
+      return collection.find(n =>
+        n.id === id ||
+        n.slug === id ||
+        normalizeId(n.id) === norm ||
+        normalizeId(n.slug ?? '') === norm
+      );
+    })
+    .filter(Boolean) as T[];
+}
+
+const allNews         = await getCollection("news");
+const allAchievements = await getCollection("achievements");
+const allProjects     = await getCollection("projects");
+
+const highlightedNews         = findById(allNews, highlightedNewsIds).slice(0, 3);
+const highlightedAchievements = findById(allAchievements, highlightedAchievementsIds).slice(0, 3);
+const highlightedProjects     = findById(allProjects, highlightedProjectsIds).slice(0, 3);
 ---
 <Base title="Institute of Informatics" sidebarLinks={sidebarLinks}>
 
@@ -18,29 +76,93 @@ const sidebarLinks = [
     Faculty of Electrical Engineering, Computer Science and Information Science · University of Maribor
   </p>
 
-  <div class="card">
-    <div class="intro">
-      <p>The Institute of Informatics conducts research in the field of informatics aimed at the effective development and management of safe, intelligent and reliable information systems, solutions and services. The focus of the research work is on data engineering and big data, artificial intelligence and intelligent systems, cyber, information and digital security and privacy, software engineering and agile development and process automation, centralized and decentralized architectures and systems.</p>
-    </div>
+  
 
-    <p>At UM FERI, the Institute of Informatics is the main provider of education in undergraduate and postgraduate programs in Informatics and Data Technologies.</p>
-    <p>As part of our research in the field of IS architectures, we explore decentralized, cloud, big data, microservices and serverless architectures; data warehouses, data lakes and data spaces, and decentralized AI networks and systems.</p>
-    <p>Research in the broader field of intelligent systems addresses the challenges of the growing scale, complexity and multimodality of data, biased and unfair decisions of AI models, the need for customized machine learning solutions, and the challenges of models in production environments (MLOps/AI engineering).</p>
-    <p>We develop advanced approaches to IS development using intelligent components in the cloud, with a particular focus on DevSecOps practices, including CI/CD automation that ensures continuous testing, enforcement of secure code practices, and metric-based quality assessment.</p>
-    <p>Research in the field of cybersecurity and privacy focuses on the evaluation of approaches to improving system security and privacy, modern centralized and decentralized authentication methods, and proactive approaches to detecting and preventing cyber threats, including the use of artificial intelligence. Within the institute there is a certified Laboratory for Digital Forensics.</p>
-    <p>New models and methods for UX research contribute to improving the quality of user experience, especially through the use of advanced intelligent tools and approaches, including inclusive UX and user experience in the context of explainable artificial intelligence (XAI).</p>
-    <p style="margin-bottom:0;">The research work in the field of business process management deals with a dynamic view of modern information solutions driven by advanced approaches to process modeling, flexible and unstructured process modeling, and process mining.</p>
-
-    <div style="margin-top:1.6rem; padding-top:1.3rem; border-top:1px solid var(--border);">
-      <div class="section-heading"><h3>Contact</h3></div>
-      <ul class="contact-info">
-        <li><strong>Email:</strong> <a href="mailto:informatika@um.si">informatika@um.si</a></li>
-        <li><strong>Address:</strong> Koroška cesta 46, 2000 Maribor, Slovenia</li>
-        <li><strong>Phone:</strong> (02) 220 7359</li>
-        <li><strong>Web:</strong> <a href="https://ii.feri.um.si" target="_blank">ii.feri.um.si</a></li>
-      </ul>
+  {highlightedNews.length > 0 && (
+    <div class="card" style="margin-top:1.25rem;">
+      <div class="section-heading"><h3>Highlighted News</h3></div>
+      <div class="card-grid">
+        {highlightedNews.map(n => (
+          <a href={`${base}/news/${n.id}`} class="grid-card">
+            <div class="grid-card-image">
+              {(() => {
+                const cover = n.data.coverImage ?? (n.data.images && n.data.images[0]);
+                return cover
+                  ? <Image src={cover} alt={n.data.title}  />
+                  : <div class="grid-card-placeholder"><span>II · FERI</span></div>;
+              })()}
+            </div>
+            <div class="grid-card-accent"></div>
+            <div class="grid-card-body">
+              <time class="grid-card-date">
+                {new Date(n.data.date).toLocaleDateString("en-GB", {
+                  day: "numeric", month: "long", year: "numeric"
+                })}
+              </time>
+              <h3 class="grid-card-title">{n.data.title}</h3>
+              <p class="grid-card-summary">{n.data.summary}</p>
+            </div>
+          </a>
+        ))}
+      </div>
     </div>
-  </div>
+  )}
+
+  {highlightedAchievements.length > 0 && (
+    <div class="card" style="margin-top:1.25rem;">
+      <div class="section-heading"><h3>Highlighted Achievements</h3></div>
+      <div class="card-grid">
+        {highlightedAchievements.map(a => (
+          <a href={`${base}/achievements/${a.id}`} class="grid-card">
+            <div class="grid-card-image">
+              {(() => {
+                const cover = a.data.coverImage ?? (a.data.images && a.data.images[0]);
+                return cover
+                  ? <Image src={cover} alt={a.data.title} />
+                  : <div class="grid-card-placeholder"><span>II · FERI</span></div>;
+              })()}
+            </div>
+            <div class="grid-card-accent"></div>
+            <div class="grid-card-body">
+              <time class="grid-card-date">
+                {new Date(a.data.date).toLocaleDateString("en-GB", {
+                  day: "numeric", month: "long", year: "numeric"
+                })}
+              </time>
+              <h3 class="grid-card-title">{a.data.title}</h3>
+              {a.data.subtitle && (
+                <p style="font-size:0.78rem; color:var(--muted); font-style:italic; margin:0 0 0.4rem;">
+                  {a.data.subtitle}
+                </p>
+              )}
+              <p class="grid-card-summary">{a.data.summary}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  )}
+
+  {highlightedProjects.length > 0 && (
+    <div class="card" style="margin-top:1.25rem;">
+      <div class="section-heading"><h3>Highlighted Projects</h3></div>
+      <div class="card-grid">
+        {highlightedProjects.map(p => (
+          <a href={`${base}/research/projects/${p.id}`} class="project-card">
+            <div class={`project-card-status ${p.data.status}`}>
+              {p.data.status === "active" ? "Active" : "Completed"}
+            </div>
+            <h3 class="project-card-title">{p.data.title}</h3>
+            <p class="project-card-desc">{p.data.description}</p>
+            <p class="project-card-year">
+              {p.data.startYear}
+              {p.data.endYear ? `–${p.data.endYear}` : p.data.status === "active" ? "–present" : ""}
+            </p>
+          </a>
+        ))}
+      </div>
+    </div>
+  )}
 
   <SectionNews tag="interest-groups" label="Latest News" />
 

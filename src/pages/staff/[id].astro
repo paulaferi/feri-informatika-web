@@ -27,13 +27,12 @@ const sidebarLinks = [
   },
 ];
 
-// Campos que NO son secciones de texto libre
+
 const skipFields = new Set([
   'name', 'photo', 'title', 'role', 'email', 'phone',
-  'office', 'contactHours', 'linkedin', 'cobiss',
+  'office', 'contactHours', 'linkedin', 'cobiss', 'section',
 ]);
 
-// Etiquetas legibles para campos conocidos
 const knownLabels: Record<string, string> = {
   researchTopics:    "Glavna področja raziskovanja",
   publications:      "Pomembnejše publikacije",
@@ -78,14 +77,12 @@ const knownLabels: Record<string, string> = {
 
 function camelToLabel(key: string): string {
   if (knownLabels[key]) return knownLabels[key];
-  // Convierte camelCase a texto legible como fallback
   return key
     .replace(/([A-Z])/g, ' $1')
     .replace(/^./, s => s.toUpperCase())
     .trim();
 }
 
-// Extrae todas las secciones de texto dinámicamente
 const sections = Object.entries(person.data)
   .filter(([key, value]) => !skipFields.has(key) && value && typeof value === 'string' && value.trim() !== '')
   .map(([key, value]) => ({ key, label: camelToLabel(key), value: value as string }));
@@ -97,7 +94,6 @@ const sections = Object.entries(person.data)
 
   <div class="card">
 
-    <!-- Header: foto + contacto -->
     <div style="display:flex; gap:1.6rem; align-items:flex-start; flex-wrap:wrap; margin-bottom:1.5rem;">
       {person.data.photo
         ? <Image src={person.data.photo} alt={person.data.name} width={130} height={130}
@@ -126,7 +122,6 @@ const sections = Object.entries(person.data)
       </div>
     </div>
 
-    <!-- Secciones dinámicas — todas las que existan en el frontmatter -->
     {sections.map(({ key, label, value }) => (
       <div style="margin-bottom:1.4rem;">
         <div class="section-heading"><h3>{label}</h3></div>
@@ -134,7 +129,6 @@ const sections = Object.entries(person.data)
       </div>
     ))}
 
-    <!-- COBISS -->
     {person.data.cobiss && (
       <div class="external-link">
         <div class="section-heading" style="margin-top:0;"><h3>Publikacije</h3></div>

@@ -32,30 +32,43 @@ const mainNav = [
 
   <header class="site-header">
     <div class="header-inner">
-      <div class="logo-group">
-        <a href={`${base}/`}>
-          <img src={`${base}/logos/feri-logo.png`} alt="FERI — University of Maribor" />
+
+      
+      <a href={`${base}/`} class="logo-group">
+        <img src={`${base}/logos/ii-logo.png`} alt="Inštitut za Informatiko"
+            onerror="this.style.display='none'" />
+        <img src={`${base}/logos/feri-logo.png`} alt="FERI — Univerza v Mariboru" />
+      </a>
+
+      
+      <div class="header-right">
+
+        <a href={`${base}/`} class="brand-link">
+          <span class="brand-name">INŠTITUT ZA INFORMATIKO</span>
+          <span class="brand-sub">FAKULTETA ZA ELEKTROTEHNIKO, RAČUNALNIŠTVO IN INFORMATIKO</span>
         </a>
+
+        <nav class="main-nav">
+          {mainNav.map(item => {
+            const currentPath = Astro.url.pathname;
+            let isActive = false;
+            if (item.href === `${base}/`) {
+              isActive = currentPath === item.href;
+            } else {
+              const section = item.href.split('/').filter(Boolean)[1];
+              const currentSection = currentPath.split('/').filter(Boolean)[1];
+              isActive = section === currentSection;
+            }
+            return (
+              <a href={item.href} class={isActive ? "active" : ""}>
+                {item.label}
+              </a>
+            );
+          })}
+          <a href={`${base}/admin`} class="cms-link">CMS</a>
+        </nav>
+
       </div>
-      <nav class="main-nav">
-        {mainNav.map(item => {
-          const currentPath = Astro.url.pathname;
-          let isActive = false;
-          if (item.href === `${base}/`) {
-            isActive = currentPath === item.href;
-          } else {
-            const section = item.href.split('/').filter(Boolean)[1];
-            const currentSection = currentPath.split('/').filter(Boolean)[1];
-            isActive = section === currentSection;
-          }
-          return (
-            <a href={item.href} class={isActive ? "active" : ""}>
-              {item.label}
-            </a>
-          );
-        })}
-        <a href={`${base}/admin`} class="cms-link">CMS</a>
-      </nav>
     </div>
   </header>
 
