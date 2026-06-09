@@ -71,7 +71,7 @@ const highlightedProjects     = findById(allProjects, highlightedProjectsIds).sl
               {(() => {
                 const cover = n.data.coverImage ?? (n.data.images && n.data.images[0]);
                 return cover
-                  ? <Image src={cover} alt={n.data.title} width={400} height={168} />
+                  ? <Image src={cover} alt={n.data.title}  />
                   : <div class="grid-card-placeholder"><span>II · FERI</span></div>;
               })()}
             </div>
@@ -101,7 +101,7 @@ const highlightedProjects     = findById(allProjects, highlightedProjectsIds).sl
               {(() => {
                 const cover = a.data.coverImage ?? (a.data.images && a.data.images[0]);
                 return cover
-                  ? <Image src={cover} alt={a.data.title} width={400} height={168} />
+                  ? <Image src={cover} alt={a.data.title}  />
                   : <div class="grid-card-placeholder"><span>II · FERI</span></div>;
               })()}
             </div>
