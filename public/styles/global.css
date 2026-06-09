@@ -135,7 +135,6 @@ body {
   font-size: 0.8rem;
   margin-left: 0.25rem;
   padding-left: 0.7rem;
-  border-left: 1px solid var(--border);
 }
 .main-nav a.cms-link::after { display: none; }
 .main-nav a.cms-link:hover { color: var(--um-blue); }
