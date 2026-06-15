@@ -17,7 +17,7 @@ const galleryImages = article.data.images ?? [];
 const coverImage = article.data.coverImage
   ?? (galleryImages.length > 0 ? galleryImages[0] : undefined);
 ---
-<Base title={article.data.title}>
+<Base title={article.data.title} wide>
 
   <h1 class="page-title">{article.data.title}</h1>
   <div class="page-title-rule"></div>

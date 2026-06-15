@@ -51,11 +51,6 @@ const filtered = allNews
             </time>
             <h3 class="grid-card-title">{n.data.title}</h3>
             <p class="grid-card-summary">{n.data.summary}</p>
-            <div class="grid-card-tags">
-              {(Array.isArray(n.data.tags) ? n.data.tags : [String(n.data.tags)]).map((t: string) => (
-                <span class="tag">{t}</span>
-              ))}
-            </div>
           </div>
         </a>
       ))}

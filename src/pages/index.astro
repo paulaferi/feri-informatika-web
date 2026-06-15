@@ -57,9 +57,54 @@ const allProjects     = await getCollection("projects");
 const highlightedNews         = findById(allNews, highlightedNewsIds).slice(0, 3);
 const highlightedAchievements = findById(allAchievements, highlightedAchievementsIds).slice(0, 3);
 const highlightedProjects     = findById(allProjects, highlightedProjectsIds).slice(0, 3);
----
-<Base title="Inštitut za Informatiko">
 
+const slides = [
+  {
+    title: "Inštitut za Informatiko",
+    subtitle: "Research that shapes safe, intelligent and reliable information systems, solutions and services.",
+    image: `${base}/images/hero-1.jpg`,
+  },
+  {
+    title: "Study Informatics & Data Technologies",
+    subtitle: "Undergraduate and postgraduate programmes combining theory with hands-on industry practice.",
+    image: `${base}/images/hero-2.jpg`,
+  },
+  {
+    title: "Research with Real Impact",
+    subtitle: "From AI and cybersecurity to decentralized systems — our work shapes the technology of tomorrow.",
+    image: `${base}/images/hero-3.jpg`,
+  },
+];
+---
+<Base title="Inštitut za Informatiko" fullWidth>
+
+  <section class="hero-carousel">
+    <button class="hero-carousel-arrow hero-carousel-prev" aria-label="Previous slide">‹</button>
+    <button class="hero-carousel-arrow hero-carousel-next" aria-label="Next slide">›</button>
+
+    <div class="hero-carousel-track" id="hero-track">
+      {slides.map(s => (
+        <div class="hero-slide">
+          <div class="hero-slide-text">
+            <h1 class="hero-slide-title">{s.title}</h1>
+            <p class="hero-slide-subtitle">{s.subtitle}</p>
+          </div>
+          <div class="hero-slide-image" style={`background-image: url(${s.image});`}></div>
+        </div>
+      ))}
+    </div>
+
+    <div class="hero-carousel-dots">
+      {slides.map((_, i) => (
+        <span class={`hero-carousel-dot${i === 0 ? " active" : ""}`} data-index={i}></span>
+      ))}
+    </div>
+  </section>
+
+  <div class="home-section">
+
+    <h1 class="page-title">Inštitut za Informatiko</h1>
+    <div class="page-title-rule"></div>
 
   {highlightedNews.length > 0 && (
     <div class="card" style="margin-top:1.25rem;">
@@ -147,4 +192,29 @@ const highlightedProjects     = findById(allProjects, highlightedProjectsIds).sl
     </div>
   )}
 
+  </div>
+
 </Base>
+
+<script>
+  const track = document.getElementById("hero-track");
+  const heroDots = document.querySelectorAll(".hero-carousel-dot");
+  const prevHero = document.querySelector(".hero-carousel-prev");
+  const nextHero = document.querySelector(".hero-carousel-next");
+  const slideCount = heroDots.length;
+  let currentSlide = 0;
+
+  function showSlide(index: number) {
+    if (!track || slideCount === 0) return;
+    currentSlide = (index + slideCount) % slideCount;
+    track.style.transform = `translateX(-${currentSlide * 100}%)`;
+    heroDots.forEach((dot, i) => dot.classList.toggle("active", i === currentSlide));
+  }
+
+  if (track && prevHero && nextHero && slideCount > 0) {
+    prevHero.addEventListener("click", () => showSlide(currentSlide - 1));
+    nextHero.addEventListener("click", () => showSlide(currentSlide + 1));
+    heroDots.forEach((dot, i) => dot.addEventListener("click", () => showSlide(i)));
+    setInterval(() => showSlide(currentSlide + 1), 6000);
+  }
+</script>
