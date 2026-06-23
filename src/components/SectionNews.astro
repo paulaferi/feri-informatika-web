@@ -6,10 +6,31 @@ import type { CollectionEntry } from "astro:content";
 interface Props {
   tag: string;
   label?: string;
+  lang?: "sl" | "en";
 }
 
-const { tag, label = "Related News" } = Astro.props;
+const { tag, label, lang = "sl" } = Astro.props;
+const defaultLabel = lang === "en" ? "Latest News" : "Najnovejše novice";
+const resolvedLabel = label ?? defaultLabel;
+const tagLabels: Record<string, Record<string, string>> = {
+  sl: {
+    student: "Študentsko", conference: "Konferenca", scientific: "Znanstveno",
+    professional: "Strokovno", project: "Projekt", awards: "Nagrade",
+    "interest-groups": "Interesne skupine",
+  },
+  en: {
+    student: "Student", conference: "Conference", scientific: "Scientific",
+    professional: "Professional", project: "Project", awards: "Awards",
+    "interest-groups": "Interest Groups",
+  },
+};
+
+function translateTag(t: string) {
+  return tagLabels[lang]?.[t] ?? t;
+}
 const base = import.meta.env.BASE_URL;
+const newsBase = lang === "en" ? `${base}/en/news` : `${base}/news`;
+const locale = lang === "en" ? "en-GB" : "sl-SI";
 
 const allNews = await getCollection("news");
 const filtered = allNews
@@ -30,10 +51,10 @@ const filtered = allNews
 
 {filtered.length > 0 && (
   <div class="section-news">
-    <div class="section-news-title">{label}</div>
+    <div class="section-news-title">{resolvedLabel}</div>
     <div class="card-grid">
       {filtered.map((n: CollectionEntry<"news">) => (
-        <a href={`${base}/news/${n.id}`} class="grid-card">
+        <a href={`${newsBase}/${n.id}`} class="grid-card">
           <div class="grid-card-image">
             {(() => {
               const cover = n.data.coverImage ?? (n.data.images && n.data.images[0]);
@@ -45,7 +66,7 @@ const filtered = allNews
           <div class="grid-card-accent"></div>
           <div class="grid-card-body">
             <time class="grid-card-date">
-              {new Date(n.data.date).toLocaleDateString("en-GB", {
+              {new Date(n.data.date).toLocaleDateString(locale, {
                 day: "numeric", month: "long", year: "numeric"
               })}
             </time>

@@ -7,21 +7,21 @@ const base = import.meta.env.BASE_URL;
 const projects = await getCollection("studentProjects");
 
 const sidebarLinks = [
-  { label: "Study Programmes",   href: `${base}/studies/programmes` },
-  { label: "Student Activities", href: `${base}/studies/student-projects` },
+  { label: "Študijski programi",   href: `${base}/studies/programmes` },
+  { label: "Študentske dejavnosti", href: `${base}/studies/student-projects` },
 ];
 ---
-<Base title="Student Activities" sidebarLinks={sidebarLinks}>
+<Base title="Študentske dejavnosti" sidebarLinks={sidebarLinks}>
 
-  <h1 class="page-title">Student Activities</h1>
+  <h1 class="page-title">Študentske dejavnosti</h1>
   <div class="page-title-rule"></div>
 
   <div class="card">
     <div class="intro">
-      <p>Students at the Institute of Informatics take part in numerous projects and activities that complement formal education and develop practical skills.</p>
+      <p>Študentje na Inštitutu za informatiko sodelujejo v številnih projektih in dejavnostih, ki dopolnjujejo formalno izobraževanje in razvijajo prakso.</p>
     </div>
 
-    <div class="section-heading"><h3>Projects</h3></div>
+    <div class="section-heading"><h3>Projekti</h3></div>
     <ul class="arrow-list">
       {projects.map(p => (
         <li>
@@ -39,10 +39,10 @@ const sidebarLinks = [
           </a>
         </li>
       ))}
-      {projects.length === 0 && <li class="empty-state">No student projects listed yet.</li>}
+      {projects.length === 0 && <li class="empty-state">Projektov še ni na seznamu.</li>}
     </ul>
   </div>
 
-  <SectionNews tag="student" label="Latest News" />
+  <SectionNews tag="student" label="Najnovejše novice" />
 
 </Base>

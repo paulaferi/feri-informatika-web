@@ -19,15 +19,15 @@ const members = allStaff.filter(s => (lab.data.members ?? []).includes(s.id));
 
 const sidebarLinks = [
   {
-    label: "Laboratories",
+    label: "Laboratoriji",
     href: `${base}/laboratories`,
     children: allLabs.map(l => ({
       label: l.data.name,
       href: `${base}/laboratories/${l.id}`,
     })),
   },
-  { label: "Interest Groups", href: `${base}/interest-groups` },
-  { label: "Staff",           href: `${base}/staff` },
+  { label: "Interesne skupine", href: `${base}/interest-groups` },
+  { label: "Osebje",           href: `${base}/staff` },
 ];
 ---
 <Base title={lab.data.name} sidebarLinks={sidebarLinks}>
@@ -46,7 +46,7 @@ const sidebarLinks = [
 
     {lab.data.researchAreas && lab.data.researchAreas.length > 0 && (
       <div>
-        <div class="section-heading"><h3>Research Areas</h3></div>
+        <div class="section-heading"><h3>Raziskovalna področja</h3></div>
         <ul class="dot-list">
           {lab.data.researchAreas.map((a: string) => <li>{a}</li>)}
         </ul>
@@ -55,7 +55,7 @@ const sidebarLinks = [
 
     {members.length > 0 && (
       <div style="margin-top:1.5rem;">
-        <div class="section-heading"><h3>Laboratory Members</h3></div>
+        <div class="section-heading"><h3>Člani laboratorija</h3></div>
         <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(210px,1fr)); gap:0.75rem;">
           {members.map(m => (
             <a href={`${base}/staff/${m.id}`}
@@ -85,19 +85,19 @@ const sidebarLinks = [
 
     {lab.data.body && (
       <div style="margin-top:1.5rem;">
-        <div class="section-heading"><h3>Description</h3></div>
+        <div class="section-heading"><h3>Opis</h3></div>
         <div class="prose"><Content /></div>
       </div>
     )}
 
     {lab.data.externalUrl && (
       <div class="external-link">
-        <a href={lab.data.externalUrl} target="_blank">Laboratory website →</a>
+        <a href={lab.data.externalUrl} target="_blank">Spletna stran laboratorija →</a>
       </div>
     )}
 
   </div>
 
-  <SectionNews tag="scientific" label="Latest News" />
+  <SectionNews tag="scientific" label="Najnovejše novice" />
 
 </Base>

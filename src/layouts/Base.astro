@@ -1,26 +1,24 @@
 ---
+import { getLangFromUrl, useTranslations, type Lang } from "@/i18n/translations";
+import { getAlternateUrl, getNavLinks, localePath } from "@/i18n/utils";
+
 interface Props {
   title: string;
+  lang?: Lang;
   sidebarLinks?: { label: string; href: string; children?: { label: string; href: string }[] }[];
   fullWidth?: boolean;
   wide?: boolean;
 }
-const { title, sidebarLinks, fullWidth, wide } = Astro.props;
-const base = import.meta.env.BASE_URL;
 
-const mainNav = [
-  { label: "About the Institute",   href: `${base}/about` },
-  { label: "Research Group",        href: `${base}/research-group/areas` },
-  { label: "Research",              href: `${base}/research/projects` },
-  { label: "Studies IPT & ITK",     href: `${base}/studies/programmes` },
-  { label: "Conference Activities", href: `${base}/conferences` },
-  { label: "Industry",              href: `${base}/industry` },
-  { label: "Achievements",          href: `${base}/achievements` },
-  { label: "News",                  href: `${base}/news` },
-];
+const { title, sidebarLinks, fullWidth, wide } = Astro.props;
+const lang: Lang = Astro.props.lang ?? getLangFromUrl(Astro.url, import.meta.env.BASE_URL);
+const t = useTranslations(lang);
+const alternateUrl = getAlternateUrl(Astro.url, lang);
+const mainNav = getNavLinks(lang);
+const base = import.meta.env.BASE_URL;
 ---
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -35,39 +33,42 @@ const mainNav = [
   <header class="site-header">
     <div class="header-inner">
 
-      
-      <a href={`${base}/`} class="logo-group">
+      <a href={localePath(lang, "/")} class="logo-group">
         <img src={`${base}/logos/ii-logo.png`} alt="Inštitut za Informatiko"
             onerror="this.style.display='none'" />
         <img src={`${base}/logos/feri-logo.png`} alt="FERI — Univerza v Mariboru" />
       </a>
 
-      
       <div class="header-right">
 
-        <a href={`${base}/`} class="brand-link">
-          <span class="brand-name">Inštitut za Informatiko</span>
+        <a href={localePath(lang, "/")} class="brand-link">
+          <span class="brand-name">{lang === "sl" ? "Inštitut za Informatiko" : "Institute of Informatics"}</span>
         </a>
 
         <nav class="main-nav">
           {mainNav.map(item => {
             const currentPath = Astro.url.pathname;
             let isActive = false;
-            if (item.href === `${base}/about`) {
-              isActive = currentPath === item.href || currentPath.startsWith(`${base}/about`);
-            } else if (item.href === `${base}/`) {
+            if (item.href.endsWith("/about")) {
+              isActive = currentPath === item.href || currentPath.startsWith(item.href);
+            } else if (item.href === localePath(lang, "/")) {
               isActive = currentPath === item.href;
             } else {
-              const section = item.href.split('/').filter(Boolean)[1];
-              const currentSection = currentPath.split('/').filter(Boolean)[1];
-              isActive = section === currentSection;
+              const section = item.href.split('/').filter(Boolean).at(-1);
+              const currentSection = currentPath.split('/').filter(Boolean).at(-1);
+              isActive = !!section && section === currentSection;
             }
             return (
               <a href={item.href} class={isActive ? "active" : ""}>
-                {item.label}
+                {t(item.key as any)}
               </a>
             );
           })}
+
+          <a href={alternateUrl} class="lang-switcher" id="lang-switcher-link" aria-label="Switch language">
+            {lang === "sl" ? "EN" : "SL"}
+          </a>
+
           <a href={`${base}/admin`} class="cms-link">CMS</a>
         </nav>
 
@@ -82,7 +83,7 @@ const mainNav = [
 
     {sidebarLinks && sidebarLinks.length > 0 && (
       <aside class="sidebar">
-        <div class="sidebar-header">Section</div>
+        <div class="sidebar-header">{lang === "sl" ? "Oddelek" : "Section"}</div>
         {sidebarLinks.map(link => {
           const currentPath = decodeURIComponent(Astro.url.pathname);
           const isCurrentPage = currentPath === link.href;

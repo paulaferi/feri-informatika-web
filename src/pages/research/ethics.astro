@@ -8,19 +8,19 @@ const opinions = (await getCollection("ethicsOpinions"))
   .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
 
 const sidebarLinks = [
-  { label: "Research Projects",  href: `${base}/research/projects` },
-  { label: "Publications",       href: `${base}/research/publications` },
-  { label: "Ethics Committee",   href: `${base}/research/ethics` },
+  { label: "Raziskovalni projekti",  href: `${base}/research/projects` },
+  { label: "Publikacije",       href: `${base}/research/publications` },
+  { label: "Etični odbor",   href: `${base}/research/ethics` },
 ];
 ---
-<Base title="Research Ethics Committee" sidebarLinks={sidebarLinks}>
+<Base title="Etični odbor" sidebarLinks={sidebarLinks}>
 
-  <h1 class="page-title">Research Ethics Committee</h1>
+  <h1 class="page-title">Odbor za raziskovalno etiko</h1>
   <div class="page-title-rule"></div>
 
   <div class="card">
 
-    <div class="section-heading"><h3>Information</h3></div>
+    <div class="section-heading"><h3>Informacije</h3></div>
     <ul class="arrow-list" style="margin-bottom:1.75rem;">
       <li>
         <span class="arrow-icon">
@@ -29,7 +29,7 @@ const sidebarLinks = [
                   stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </span>
-        <a href={`${base}/research/ethics/mandate`}>Tasks and functioning of the Committee</a>
+        <a href={`${base}/research/ethics/mandate`}>Naloge in delovanje odbora</a>
       </li>
       <li>
         <span class="arrow-icon">
@@ -38,12 +38,12 @@ const sidebarLinks = [
                   stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </span>
-        <a href={`${base}/research/ethics/submissions`}>Submission of applications and decisions of the Committee</a>
+        <a href={`${base}/research/ethics/submissions`}>Predloži zahteve in odločitve odbora</a>
       </li>
     </ul>
 
-    <div class="section-heading"><h3>Issued Opinions</h3></div>
-    {opinions.length === 0 && <p class="empty-state" style="margin:0;">No opinions recorded yet.</p>}
+    <div class="section-heading"><h3>Izdana mnenja</h3></div>
+    {opinions.length === 0 && <p class="empty-state" style="margin:0;">Mnenja še niso bila zabeležena.</p>}
     {opinions.length > 0 && (
       <div style="overflow-x:auto;">
         <table style="table-layout:fixed;">
@@ -55,10 +55,10 @@ const sidebarLinks = [
           </colgroup>
           <thead>
             <tr>
-              <th>Date</th>
-              <th>Research</th>
-              <th>Researchers</th>
-              <th>Decision</th>
+              <th>Datum</th>
+              <th>Raziskava</th>
+              <th>Raziskovalci</th>
+              <th>Odločitev</th>
             </tr>
           </thead>
           <tbody>
@@ -79,6 +79,6 @@ const sidebarLinks = [
 
   </div>
 
-  <SectionNews tag="scientific" label="Latest News" />
+  <SectionNews tag="scientific" label="Najnovejše novice" />
 
 </Base>

@@ -5,37 +5,38 @@ import SectionNews from "../../../components/SectionNews.astro";
 const base = import.meta.env.BASE_URL;
 
 const sidebarLinks = [
-  { label: "Research Projects",  href: `${base}/research/projects` },
-  { label: "Publications",       href: `${base}/research/publications` },
+  { label: "Raziskovalni projekti",  href: `${base}/research/projects` },
+  { label: "Publikacije",       href: `${base}/research/publications` },
   {
-    label: "Ethics Committee",
+    label: "Etični odbor",
     href: `${base}/research/ethics`,
     children: [
-      { label: "Tasks and functioning of the Committee", href: `${base}/research/ethics/mandate` },
-      { label: "Submission of applications and decisions", href: `${base}/research/ethics/submissions` },
+      { label: "Naloge in delovanje odbora", href: `${base}/research/ethics/mandate` },
+      { label: "Predloži zahteve in odločitve odbora", href: `${base}/research/ethics/submissions` },
     ],
   },
 ];
 ---
-<Base title="Submission of applications and decisions" sidebarLinks={sidebarLinks}>
+<Base title="Predloži zahteve in odločitve odbora" sidebarLinks={sidebarLinks}>
 
-  <h1 class="page-title">Submission of Applications and Decisions</h1>
+  <h1 class="page-title">Vložitev vlog in odločitve</h1>
   <div class="page-title-rule"></div>
 
   <div class="card">
 
     <div class="intro">
-      <p>Researchers wishing to submit an application for ethical review must complete the standard form and submit it to the Committee secretariat.</p>
+      <p>Raziskovalci, ki želijo predložiti zahtevek za etično pregled, morajo izpolniti standardno obliko in jo predložiti sekretariatu odbora.</p>
     </div>
 
-    <div class="section-heading"><h3>Decisions</h3></div>
+    <div class="section-heading"><h3>Odločitve</h3></div>
     <p style="margin-bottom:0;">
-      Decisions are published in the opinions table on the
-      <a href={`${base}/research/ethics`}>main Ethics Committee page</a>.
+      Odločitve so objavljene v tabeli mnenj na
+
+      <a href={`${base}/research/ethics`}>glavna stran Etike komisije</a>.
     </p>
 
   </div>
 
-  <SectionNews tag="scientific" label="Latest News" />
+  <SectionNews tag="scientific" label="Najnovejše novice" />
 
 </Base>

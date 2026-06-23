@@ -502,6 +502,17 @@ tr:hover td { background: #fff9e6; }
 .prose ul { padding-left: 1.4rem; margin-bottom: 0.9rem; }
 .prose a { font-weight: 600; }
 
+.prose ol,
+.prose ul {
+  padding-left: 1.5rem;
+}
+
+.prose ol li,
+.prose ul li {
+  margin-bottom: 0.5rem;
+  padding-left: 0.25rem;
+}
+
 /* ── STAFF GRID ── */
 .staff-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
 .staff-card {
@@ -760,3 +771,54 @@ tr:hover td { background: #fff9e6; }
   .page-wrapper { padding: 1.5rem 1rem 3rem; }
   .card { padding: 1.35rem 1.25rem; }
 }
+
+
+
+/* ── LANGUAGE SWITCHER ─────────────────────────────────────── */
+.lang-switcher {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2rem;
+  padding: 0.15rem 0.5rem;
+  margin-left: 1rem;
+  border: 2px solid var(--accent);
+  border-radius: 3px;
+  color: var(--accent);
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  transition: background-color 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+.lang-switcher:hover {
+  background-color: var(--accent);
+  color: #fff;
+}
+
+/* ── LANG SWITCHER & CMS (inside nav) ─────────────────────────────── */
+.main-nav .lang-switcher {
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  margin-left: 0.5rem;
+  padding: 0;
+  border: none;
+  background: none;
+  transition: opacity 0.15s;
+}
+.main-nav .lang-switcher:hover { opacity: 0.75; }
+
+.main-nav .cms-link {
+  color: var(--muted);
+  font-weight: 400;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.main-nav .cms-link:hover { color: var(--ink); }

@@ -144,10 +144,19 @@ const achievements = defineCollection({
   }),
 });
 
-
+const heroSlides = defineCollection({
+  loader: sveltiaLoader("heroSlides"),
+  schema: ({ image }) => z.object({
+    title:    z.string(),
+    subtitle: z.string(),
+    image:    image().optional(),
+    order: z.coerce.number().min(1),
+  }),
+});
 
 export const collections = {
   laboratories, interestGroups, staff, projects,
   ethicsOpinions, studyProgrammes, studentProjects,
-  conferences, industryPartners, achievements, news,
+  conferences, industryPartners, achievements, news, 
+  heroSlides,
 };

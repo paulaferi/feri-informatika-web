@@ -1,0 +1,71 @@
+---
+import Base from "@/layouts/Base.astro";
+import { Image } from "astro:assets";
+import SectionNews from "@/components/SectionNews.astro";
+import { getCollection } from "astro:content";
+import { useTranslations } from "@/i18n/translations";
+import { localePath } from "@/i18n/utils";
+
+const lang = "en";
+const t = useTranslations(lang);
+
+const staff = await getCollection("staff");
+
+const sidebarLinks = [
+  { label: t("about.sidebar.labs"),   href: localePath(lang, "/laboratories") },
+  { label: t("about.sidebar.groups"), href: localePath(lang, "/interest-groups") },
+  { label: t("about.sidebar.staff"),  href: localePath(lang, "/staff") },
+];
+
+const sections = [
+  { key: "predstojnik", label: t("staff.section.predstojnik") },
+  { key: "profesorji",  label: t("staff.section.profesorji") },
+  { key: "asistenti",   label: t("staff.section.asistenti") },
+  { key: "tehnicno",    label: t("staff.section.tehnicno") },
+  { key: "prejsnji",    label: t("staff.section.prejsnji") },
+];
+
+function getSection(member: typeof staff[0]) {
+  return member.data.section ?? "profesorji";
+}
+---
+<Base title={t("staff.title")} lang={lang} sidebarLinks={sidebarLinks}>
+
+  <h1 class="page-title">{t("staff.title")}</h1>
+  <div class="page-title-rule"></div>
+  <p class="page-subtitle">Academic and research staff of the Institute of Informatics</p>
+
+  {sections.map(({ key, label }) => {
+    const members = staff.filter(p => getSection(p) === key);
+    if (members.length === 0) return null;
+    return (
+      <div style="margin-bottom:2rem;">
+        <h2 style="font-family:'Titillium Web',sans-serif; font-size:1.1rem; font-weight:700;
+                   color:var(--ink); margin-bottom:1rem; padding-bottom:0.4rem;
+                   border-bottom:2px solid var(--accent);">
+          {label}
+        </h2>
+        <div class="staff-grid">
+          {members.map(p => (
+            <a href={localePath(lang, `/staff/${p.id}`)} class="staff-card">
+              <div class="staff-avatar">
+                {p.data.photo
+                  ? <Image src={p.data.photo} alt={p.data.name} width={76} height={76} />
+                  : <span>{p.data.name.charAt(0)}</span>
+                }
+              </div>
+              <p class="staff-name">{p.data.name}</p>
+              {p.data.title && <p class="staff-academic-title">{p.data.title}</p>}
+              <p class="staff-role">{p.data.role}</p>
+              <div class="staff-divider"></div>
+              {p.data.email && <p class="staff-email">{p.data.email}</p>}
+            </a>
+          ))}
+        </div>
+      </div>
+    );
+  })}
+
+  <SectionNews tag="student" label={t("common.latestNews")} lang="en" />
+
+</Base>

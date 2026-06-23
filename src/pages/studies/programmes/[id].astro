@@ -16,14 +16,14 @@ const allProgrammes = await getCollection("studyProgrammes");
 
 const sidebarLinks = [
   {
-    label: "Study Programmes",
+    label: "Študijski programi",
     href: `${base}/studies/programmes`,
     children: allProgrammes.map(p => ({
       label: p.data.title,
       href: `${base}/studies/programmes/${p.id}`,
     })),
   },
-  { label: "Student Activities", href: `${base}/studies/student-projects` },
+  { label: "Študentske dejavnosti", href: `${base}/studies/student-projects` },
 ];
 ---
 <Base title={programme.data.title} sidebarLinks={sidebarLinks}>
@@ -37,30 +37,30 @@ const sidebarLinks = [
       <div class="intro"><p>{programme.data.scope}</p></div>
     )}
 
-    <div class="section-heading"><h3>Programme Information</h3></div>
+    <div class="section-heading"><h3>Informacije o programu</h3></div>
     <ul class="detail-list">
-      <li><span><strong>Type:</strong> {programme.data.type}</span></li>
-      <li><span><strong>Duration:</strong> {programme.data.duration} {programme.data.duration === 1 ? "year" : "years"}</span></li>
-      <li><span><strong>ECTS credits:</strong> {programme.data.ects}</span></li>
+      <li><span><strong>Vrsta:</strong> {programme.data.type}</span></li>
+      <li><span><strong>Trajanje:</strong> {programme.data.duration} {programme.data.duration === 1 ? "leto" : "leta"}</span></li>
+      <li><span><strong>ECTS krediti:</strong> {programme.data.ects}</span></li>
     </ul>
 
     {programme.data.body && (
       <div>
-        <div class="section-heading"><h3>Curriculum &amp; General Information</h3></div>
+        <div class="section-heading"><h3>Učni načrt &amp; Splošne informacije</h3></div>
         <div class="prose"><Content /></div>
       </div>
     )}
 
     {programme.data.externalUrl && (
       <div class="external-link">
-        <a href={programme.data.externalUrl} target="_blank">View programme on moja.um.si →</a>
+        <a href={programme.data.externalUrl} target="_blank">Oglejte si program na moja.um.si →</a>
       </div>
     )}
 
   </div>
 
-  <a href={`${base}/studies/programmes`} class="back-link">← Back to Study Programmes</a>
+  <a href={`${base}/studies/programmes`} class="back-link">← Nazaj na študijske programe</a>
 
-  <SectionNews tag="student" label="Latest News" />
+  <SectionNews tag="student" label="Najnovejše novice" />
 
 </Base>

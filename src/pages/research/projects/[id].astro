@@ -16,15 +16,15 @@ const allProjects = await getCollection("projects");
 
 const sidebarLinks = [
   {
-    label: "Research Projects",
+    label: "Raziskovalni projekti",
     href: `${base}/research/projects`,
     children: allProjects.map(p => ({
       label: p.data.title,
       href: `${base}/research/projects/${p.id}`,
     })),
   },
-  { label: "Publications",     href: `${base}/research/publications` },
-  { label: "Ethics Committee", href: `${base}/research/ethics` },
+  { label: "Publikacije",     href: `${base}/research/publications` },
+  { label: "Etični odbor", href: `${base}/research/ethics` },
 ];
 ---
 <Base title={project.data.title} sidebarLinks={sidebarLinks}>
@@ -36,37 +36,37 @@ const sidebarLinks = [
 
     <div class="intro"><p>{project.data.description}</p></div>
 
-    <div class="section-heading"><h3>Project Details</h3></div>
+    <div class="section-heading"><h3>Podrobnosti projekta</h3></div>
     <ul class="detail-list">
-      <li><span><strong>Status:</strong> {project.data.status === "active" ? "Active" : "Completed"}</span></li>
+      <li><span><strong>Stanje:</strong> {project.data.status === "active" ? "Aktivno" : "Zaključeno"}</span></li>
       {project.data.startYear && (
-        <li><span><strong>Period:</strong> {project.data.startYear}–{project.data.endYear ?? "present"}</span></li>
+        <li><span><strong>Obdobje:</strong> {project.data.startYear}–{project.data.endYear ?? "sedanjost"}</span></li>
       )}
       {project.data.funder && (
-        <li><span><strong>Funding body:</strong> {project.data.funder}</span></li>
+        <li><span><strong>Financer:</strong> {project.data.funder}</span></li>
       )}
       {project.data.principalInvestigator && (
-        <li><span><strong>Principal investigator:</strong> {project.data.principalInvestigator}</span></li>
+        <li><span><strong>Glavni raziskovalec:</strong> {project.data.principalInvestigator}</span></li>
       )}
     </ul>
 
     {project.data.body && (
       <div>
-        <div class="section-heading"><h3>Description</h3></div>
+        <div class="section-heading"><h3>Opis</h3></div>
         <div class="prose"><Content /></div>
       </div>
     )}
 
     {project.data.newsLink && (
       <div class="external-link">
-        <a href={project.data.newsLink}>Related news →</a>
+        <a href={project.data.newsLink}>Povezane novice →</a>
       </div>
     )}
 
   </div>
 
-  <a href={`${base}/research/projects`} class="back-link">← Back to Research Projects</a>
+  <a href={`${base}/research/projects`} class="back-link">← Nazaj na raziskovalne projekte</a>
 
-  <SectionNews tag="project" label="Latest News" />
+  <SectionNews tag="project" label="Najnovejše novice" />
 
 </Base>

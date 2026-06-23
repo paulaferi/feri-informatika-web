@@ -15,10 +15,10 @@ const base = import.meta.env.BASE_URL;
 
 const allStaff = await getCollection("staff");
 const sidebarLinks = [
-  { label: "Laboratories",    href: `${base}/laboratories` },
-  { label: "Interest Groups", href: `${base}/interest-groups` },
+  { label: "Laboratoriji",    href: `${base}/laboratories` },
+  { label: "Interesne skupine", href: `${base}/interest-groups` },
   {
-    label: "Staff",
+    label: "Osebje",
     href: `${base}/staff`,
     children: allStaff.map(p => ({
       label: p.data.name,

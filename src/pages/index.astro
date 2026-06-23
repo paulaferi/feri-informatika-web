@@ -7,6 +7,9 @@ import { resolve } from "path";
 
 const base = import.meta.env.BASE_URL;
 
+const slidesRaw = (await getCollection("heroSlides"))
+  .sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
+
 let highlightedNewsIds: string[]         = [];
 let highlightedAchievementsIds: string[] = [];
 let highlightedProjectsIds: string[]     = [];
@@ -58,23 +61,11 @@ const highlightedNews         = findById(allNews, highlightedNewsIds).slice(0, 3
 const highlightedAchievements = findById(allAchievements, highlightedAchievementsIds).slice(0, 3);
 const highlightedProjects     = findById(allProjects, highlightedProjectsIds).slice(0, 3);
 
-const slides = [
-  {
-    title: "Inštitut za Informatiko",
-    subtitle: "Research that shapes safe, intelligent and reliable information systems, solutions and services.",
-    image: `${base}/images/hero-1.jpg`,
-  },
-  {
-    title: "Study Informatics & Data Technologies",
-    subtitle: "Undergraduate and postgraduate programmes combining theory with hands-on industry practice.",
-    image: `${base}/images/hero-2.jpg`,
-  },
-  {
-    title: "Research with Real Impact",
-    subtitle: "From AI and cybersecurity to decentralized systems — our work shapes the technology of tomorrow.",
-    image: `${base}/images/hero-3.jpg`,
-  },
-];
+const slides = slidesRaw.map(s => ({
+  title: s.data.title,
+  subtitle: s.data.subtitle,
+  image: s.data.image?.src ?? "",  
+}));
 ---
 <Base title="Inštitut za Informatiko" fullWidth>
 
@@ -108,7 +99,7 @@ const slides = [
 
   {highlightedNews.length > 0 && (
     <div class="card" style="margin-top:1.25rem;">
-      <div class="section-heading"><h3>Highlighted News</h3></div>
+      <div class="section-heading"><h3>Izpostavljene novice</h3></div>
       <div class="card-grid">
         {highlightedNews.map(n => (
           <a href={`${base}/news/${n.id}`} class="grid-card">
@@ -123,7 +114,7 @@ const slides = [
             <div class="grid-card-accent"></div>
             <div class="grid-card-body">
               <time class="grid-card-date">
-                {new Date(n.data.date).toLocaleDateString("en-GB", {
+                {new Date(n.data.date).toLocaleDateString("sl-SI", {
                   day: "numeric", month: "long", year: "numeric"
                 })}
               </time>
@@ -138,7 +129,7 @@ const slides = [
 
   {highlightedAchievements.length > 0 && (
     <div class="card" style="margin-top:1.25rem;">
-      <div class="section-heading"><h3>Highlighted Achievements</h3></div>
+      <div class="section-heading"><h3>Izpostavljene dosežke</h3></div>
       <div class="card-grid">
         {highlightedAchievements.map(a => (
           <a href={`${base}/achievements/${a.id}`} class="grid-card">
@@ -153,7 +144,7 @@ const slides = [
             <div class="grid-card-accent"></div>
             <div class="grid-card-body">
               <time class="grid-card-date">
-                {new Date(a.data.date).toLocaleDateString("en-GB", {
+                {new Date(a.data.date).toLocaleDateString("sl-SI", {
                   day: "numeric", month: "long", year: "numeric"
                 })}
               </time>
@@ -173,18 +164,18 @@ const slides = [
 
   {highlightedProjects.length > 0 && (
     <div class="card" style="margin-top:1.25rem;">
-      <div class="section-heading"><h3>Highlighted Projects</h3></div>
+      <div class="section-heading"><h3>Izpostavljeni projekti</h3></div>
       <div class="card-grid">
         {highlightedProjects.map(p => (
           <a href={`${base}/research/projects/${p.id}`} class="project-card">
             <div class={`project-card-status ${p.data.status}`}>
-              {p.data.status === "active" ? "Active" : "Completed"}
+              {p.data.status === "active" ? "Aktivno" : "Zaključeno"}
             </div>
             <h3 class="project-card-title">{p.data.title}</h3>
             <p class="project-card-desc">{p.data.description}</p>
             <p class="project-card-year">
               {p.data.startYear}
-              {p.data.endYear ? `–${p.data.endYear}` : p.data.status === "active" ? "–present" : ""}
+              {p.data.endYear ? `–${p.data.endYear}` : p.data.status === "active" ? "-sedanjost" : ""}
             </p>
           </a>
         ))}

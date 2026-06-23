@@ -7,21 +7,21 @@ const base = import.meta.env.BASE_URL;
 const programmes = await getCollection("studyProgrammes");
 
 const sidebarLinks = [
-  { label: "Study Programmes",   href: `${base}/studies/programmes` },
-  { label: "Student Activities", href: `${base}/studies/student-projects` },
+  { label: "Študijski programi",   href: `${base}/studies/programmes` },
+  { label: "Študentske dejavnosti", href: `${base}/studies/student-projects` },
 ];
 ---
-<Base title="Study Programmes" sidebarLinks={sidebarLinks}>
+<Base title="Študijski programi" sidebarLinks={sidebarLinks}>
 
-  <h1 class="page-title">Study Programmes</h1>
+  <h1 class="page-title">Študijski programi</h1>
   <div class="page-title-rule"></div>
 
   <div class="card">
     <div class="intro">
-      <p>The Institute of Informatics is the main provider of education in the undergraduate and postgraduate study programmes Informatics and Data Technologies (IPT) and Information and Communication Technologies (ITK).</p>
+      <p>Inštitut za informatiko je glavni izvajalec izobraževanja v dodiplomskih in podiplomskih študijskih programih »Informatika in podatkovne tehnologije« (IPT) ter »Informacijske in komunikacijske tehnologije« (ITK).</p>
     </div>
 
-    <div class="section-heading"><h3>Available Programmes</h3></div>
+    <div class="section-heading"><h3>Na voljo so naslednji programi</h3></div>
     <ul class="arrow-list">
       {programmes.map(p => (
         <li>
@@ -39,10 +39,10 @@ const sidebarLinks = [
           </a>
         </li>
       ))}
-      {programmes.length === 0 && <li class="empty-state">No programmes listed yet.</li>}
+      {programmes.length === 0 && <li class="empty-state">Programov še ni na seznamu.</li>}
     </ul>
   </div>
 
-  <SectionNews tag="student" label="Latest News" />
+  <SectionNews tag="student" label="Najnovejše novice" />
 
 </Base>

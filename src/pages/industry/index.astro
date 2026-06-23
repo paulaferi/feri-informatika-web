@@ -12,14 +12,14 @@ const sidebarLinks = partners.map(p => ({
   href: `${base}/industry#${p.id}`,
 }));
 ---
-<Base title="Industry" sidebarLinks={sidebarLinks}>
+<Base title="Industrija" sidebarLinks={sidebarLinks}>
 
-  <h1 class="page-title">Industry</h1>
+  <h1 class="page-title">Industrija</h1>
   <div class="page-title-rule"></div>
-  <p class="page-subtitle">Who we work with</p>
+  <p class="page-subtitle">Z katerimi delujemo</p>
 
   {partners.length === 0 && (
-    <div class="card"><p class="empty-state" style="margin:0;">No partners listed yet.</p></div>
+    <div class="card"><p class="empty-state" style="margin:0;">Partnerjev še ni na seznamu.</p></div>
   )}
 
   {partners.map(p => (
@@ -33,12 +33,12 @@ const sidebarLinks = partners.map(p => ({
         <p class="partner-name">{p.data.name}</p>
         <p class="partner-desc">{p.data.description}</p>
         {p.data.url && (
-          <a href={p.data.url} target="_blank" class="partner-link">Website →</a>
+          <a href={p.data.url} target="_blank" class="partner-link">Spletna stran →</a>
         )}
       </div>
     </div>
   ))}
 
-  <SectionNews tag="professional" label="Latest News" />
+  <SectionNews tag="professional" label="Najnovejše novice" />
 
 </Base>

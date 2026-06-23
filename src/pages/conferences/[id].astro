@@ -36,13 +36,13 @@ const sidebarLinks = allConferences.map(c => ({
 
     {(conference.data.date || conference.data.location) && (
       <div>
-        <div class="section-heading"><h3>Details</h3></div>
+        <div class="section-heading"><h3>Podrobnosti</h3></div>
         <ul class="detail-list">
           {conference.data.date && (
-            <li><span><strong>Date:</strong> {new Date(conference.data.date).toLocaleDateString("en-GB")}</span></li>
+            <li><span><strong>Datum:</strong> {new Date(conference.data.date).toLocaleDateString("en-GB")}</span></li>
           )}
           {conference.data.location && (
-            <li><span><strong>Location:</strong> {conference.data.location}</span></li>
+            <li><span><strong>Lokacija:</strong> {conference.data.location}</span></li>
           )}
         </ul>
       </div>
@@ -50,21 +50,21 @@ const sidebarLinks = allConferences.map(c => ({
 
     {conference.data.body && (
       <div>
-        <div class="section-heading"><h3>About</h3></div>
+        <div class="section-heading"><h3>O konferenci</h3></div>
         <div class="prose"><Content /></div>
       </div>
     )}
 
     {conference.data.url && (
       <div class="external-link">
-        <a href={conference.data.url} target="_blank">Conference website →</a>
+        <a href={conference.data.url} target="_blank">Spletna stran konference →</a>
       </div>
     )}
 
   </div>
 
-  <a href={`${base}/conferences`} class="back-link">← Back to Conference Activities</a>
+  <a href={`${base}/conferences`} class="back-link">← Nazaj na konference</a>
 
-  <SectionNews tag="conference" label="Latest News" />
+  <SectionNews tag="conference" label="Najnovejše novice" />
 
 </Base>

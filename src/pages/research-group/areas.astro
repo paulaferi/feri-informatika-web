@@ -5,34 +5,34 @@ import SectionNews from "../../components/SectionNews.astro";
 const base = import.meta.env.BASE_URL;
 
 const sidebarLinks = [
-  { label: "Research Areas",  href: `${base}/research-group/areas` },
-  { label: "Link to SICRIS",  href: `${base}/research-group/sicris` },
+  { label: "Raziskovalna področja",  href: `${base}/research-group/areas` },
+  { label: "Povezava do SICRIS-a",  href: `${base}/research-group/sicris` },
 ];
 
 const areas = [
-  "Information Systems",
-  "Software Engineering",
-  "Embedded Systems",
-  "Intelligent Systems",
-  "Information and Communication Technologies",
+  "Informacijski sistemi",
+  "Inženirstvo programske opreme",
+  "Vdelani sistemi",
+  "Inteligentni sistemi",
+  "Informacijske in komunikacijske tehnologije",
 ];
 ---
-<Base title="Research Areas" sidebarLinks={sidebarLinks}>
+<Base title="Raziskovalna področja" sidebarLinks={sidebarLinks}>
 
-  <h1 class="page-title">Research Areas</h1>
+  <h1 class="page-title">Raziskovalna področja</h1>
   <div class="page-title-rule"></div>
 
   <div class="card">
     <div class="intro">
-      <p>The Institute of Informatics covers a wide range of research areas, including distributed systems, artificial intelligence, computer networks, software development and human-computer interaction.</p>
+      <p>Inštitut za informatiko pokriva širok spekter raziskovalnih področij, vključno z razširjenimi sistemi, umetno inteligenco, računalniškimi omrežji, razvojem programske opreme in interakcijo med človekom in računalnikom.</p>
     </div>
 
-    <div class="section-heading"><h3>Main Areas</h3></div>
+    <div class="section-heading"><h3>Glavna področja</h3></div>
     <ul class="dot-list">
       {areas.map(area => <li>{area}</li>)}
     </ul>
   </div>
 
-  <SectionNews tag="scientific" label="Latest News" />
+  <SectionNews tag="scientific" label="Najnovejše novice" />
 
 </Base>

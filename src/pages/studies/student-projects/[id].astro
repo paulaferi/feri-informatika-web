@@ -15,9 +15,9 @@ const base = import.meta.env.BASE_URL;
 const allProjects = await getCollection("studentProjects");
 
 const sidebarLinks = [
-  { label: "Study Programmes", href: `${base}/studies/programmes` },
+  { label: "Študijski programi", href: `${base}/studies/programmes` },
   {
-    label: "Student Activities",
+    label: "Študentske dejavnosti",
     href: `${base}/studies/student-projects`,
     children: allProjects.map(p => ({
       label: p.data.title,
@@ -35,29 +35,29 @@ const sidebarLinks = [
 
     <div class="intro"><p>{project.data.description}</p></div>
 
-    <div class="section-heading"><h3>Project Information</h3></div>
+    <div class="section-heading"><h3>Informacije o projektu</h3></div>
     <ul class="detail-list">
-      <li><span><strong>Student(s):</strong> {project.data.student}</span></li>
-      <li><span><strong>Year:</strong> {project.data.year}</span></li>
+      <li><span><strong>Študent(i):</strong> {project.data.student}</span></li>
+      <li><span><strong>Leto:</strong> {project.data.year}</span></li>
     </ul>
 
     {project.data.body && (
       <div>
-        <div class="section-heading"><h3>Details</h3></div>
+        <div class="section-heading"><h3>Podrobnosti</h3></div>
         <div class="prose"><Content /></div>
       </div>
     )}
 
     {project.data.externalUrl && (
       <div class="external-link">
-        <a href={project.data.externalUrl} target="_blank">View on praktik.um.si →</a>
+        <a href={project.data.externalUrl} target="_blank">Oglejte si projekt na praktik.um.si →</a>
       </div>
     )}
 
   </div>
 
-  <a href={`${base}/studies/student-projects`} class="back-link">← Back to Student Activities</a>
+  <a href={`${base}/studies/student-projects`} class="back-link">← Nazaj na študentske dejavnosti</a>
 
-  <SectionNews tag="student" label="Latest News" />
+  <SectionNews tag="student" label="Najnovejše novice" />
 
 </Base>

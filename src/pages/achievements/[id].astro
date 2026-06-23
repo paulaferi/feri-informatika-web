@@ -55,7 +55,7 @@ const galleryImages = achievement.data.images ?? [];
 
     {galleryImages.length > 0 && (
       <div style="margin-top:1.75rem;">
-        <div class="section-heading"><h3>Gallery</h3></div>
+        <div class="section-heading"><h3>Galerija</h3></div>
         <div class="gallery-masonry">
           {galleryImages.map((img: ImageMetadata, i: number) => (
             <button class="gallery-thumb" data-index={i} type="button"
@@ -84,9 +84,9 @@ const galleryImages = achievement.data.images ?? [];
 
   </div>
 
-  <a href={`${base}/achievements`} class="back-link">← Back to Achievements</a>
+  <a href={`${base}/achievements`} class="back-link">← Nazaj na dosežke</a>
 
-  <SectionNews tag="awards" label="Latest News" />
+  <SectionNews tag="awards" label="Najnovejše novice" />
 
 </Base>
 

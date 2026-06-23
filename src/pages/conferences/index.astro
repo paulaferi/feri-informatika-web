@@ -12,19 +12,19 @@ const sidebarLinks = conferences.map(c => ({
   href: `${base}/conferences/${c.id}`,
 }));
 ---
-<Base title="Conference Activities" sidebarLinks={sidebarLinks}>
+<Base title="Konferenčne dejavnosti" sidebarLinks={sidebarLinks}>
 
-  <h1 class="page-title">Conference Activities</h1>
+  <h1 class="page-title">Konferenčne dejavnosti</h1>
   <div class="page-title-rule"></div>
 
   <div class="card">
     <div class="intro" style="margin-bottom:0;">
-      <p>The Institute of Informatics actively organizes and participates in international scientific conferences in the field of informatics and computer science.</p>
+      <p>Inštitut za informatiko aktivno organizira in sodeluje na mednarodnih znanstvenih konferencah v področju informatike in računalništva.</p>
     </div>
   </div>
 
   {conferences.length === 0 && (
-    <div class="card"><p class="empty-state" style="margin:0;">No conferences listed yet.</p></div>
+    <div class="card"><p class="empty-state" style="margin:0;">Konferenc še ni na seznamu.</p></div>
   )}
 
   {conferences.map(c => (
@@ -48,12 +48,12 @@ const sidebarLinks = conferences.map(c => ({
       <p style="margin-bottom:0.5rem;">{c.data.description}</p>
       {c.data.url && (
         <a href={c.data.url} target="_blank" style="font-size:0.86rem; font-weight:600;">
-          Conference website →
+          Spletna stran konference →
         </a>
       )}
     </div>
   ))}
 
-  <SectionNews tag="conference" label="Latest News" />
+  <SectionNews tag="conference" label="Najnovejše novice" />
 
 </Base>
