@@ -144,7 +144,7 @@ const slides = slidesRaw.map(s => ({
             <div class="grid-card-accent"></div>
             <div class="grid-card-body">
               <time class="grid-card-date">
-                {new Date(a.data.date).toLocaleDateString("sl-SI", {
+                {a.data.date && new Date(a.data.date).toLocaleDateString("sl-SI", {
                   day: "numeric", month: "long", year: "numeric"
                 })}
               </time>

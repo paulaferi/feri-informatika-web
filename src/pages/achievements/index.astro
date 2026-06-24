@@ -36,14 +36,14 @@ const tagLabels: Record<string, string> = {
           {(() => {
             const cover = a.data.coverImage ?? (a.data.images && a.data.images[0]);
             return cover
-              ? <Image src={cover} alt={a.data.title} width={600} height={400} />
+              ? <Image src={cover} alt={a.data.title}  />
               : <div class="grid-card-placeholder"><span>II · FERI</span></div>;
           })()}
         </div>
         <div class="grid-card-accent"></div>
         <div class="grid-card-body">
           <time class="grid-card-date">
-            {new Date(a.data.date).toLocaleDateString("sl-SI", {
+            {a.data.date && new Date(a.data.date).toLocaleDateString("sl-SI", {
               day: "numeric", month: "long", year: "numeric"
             })}
           </time>

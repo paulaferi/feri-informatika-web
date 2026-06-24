@@ -98,7 +98,7 @@ const sections = Object.entries(person.data)
 
     <div style="display:flex; gap:1.6rem; align-items:flex-start; flex-wrap:wrap; margin-bottom:1.5rem;">
       {person.data.photo
-        ? <Image src={person.data.photo} alt={person.data.name} width={130} height={130}
+        ? <Image src={person.data.photo} alt={person.data.name} 
                  style="width:130px; height:130px; object-fit:cover; border-radius:4px;
                         border:1px solid var(--border); flex-shrink:0;" />
         : <div style="width:130px; height:130px; border-radius:4px; background:var(--um-blue-light);

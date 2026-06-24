@@ -86,7 +86,7 @@ const tags = ["student", "conference", "scientific", "professional",
     });
     empty.style.display = visible === 0 ? "block" : "none";
 
-    // persist tag in URL and update language switcher
+    
     const url = new URL(window.location.href);
     if (tag) url.searchParams.set("tag", tag);
     else url.searchParams.delete("tag");
@@ -94,7 +94,7 @@ const tags = ["student", "conference", "scientific", "professional",
     updateLangSwitcher(tag);
   }
 
-  // restore filter from URL on load
+  
   const initialTag = new URLSearchParams(window.location.search).get("tag") ?? "";
   if (initialTag) filter(initialTag);
   updateLangSwitcher(initialTag);

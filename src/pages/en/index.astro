@@ -157,7 +157,7 @@ const slides = [
               <div class="grid-card-accent"></div>
               <div class="grid-card-body">
                 <time class="grid-card-date">
-                  {new Date(a.data.date).toLocaleDateString("en-GB", {
+                  {a.data.date && new Date(a.data.date).toLocaleDateString("en-GB", {
                     day: "numeric", month: "long", year: "numeric"
                   })}
                 </time>

@@ -133,7 +133,7 @@ const achievements = defineCollection({
   schema: ({ image }) => z.object({
     title:      z.string(),
     subtitle:   z.string().optional(),
-    date:       z.coerce.date(),
+    date:       z.coerce.date().optional(),
     tags:       z.array(z.enum([
       "student", "conference", "scientific", "professional",
       "project", "awards", "interest-groups"
@@ -141,6 +141,7 @@ const achievements = defineCollection({
     summary:    z.string().optional(),
     coverImage: image().optional(),
     images:     z.array(image()).optional(),
+    videos:     z.array(z.string()).optional(),  
   }),
 });
 

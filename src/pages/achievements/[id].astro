@@ -26,8 +26,8 @@ const galleryImages = achievement.data.images ?? [];
   <div class="card" style="min-width:0; overflow:hidden;">
 
     <p class="meta" style="margin-bottom:0.75rem;">
-      {new Date(achievement.data.date).toLocaleDateString("en-GB", {
-        day: "numeric", month: "long", year: "numeric"
+      {achievement.data.date && new Date(achievement.data.date).toLocaleDateString("sl-SI", {
+              day: "numeric", month: "long", year: "numeric"
       })}
     </p>
 
@@ -41,7 +41,6 @@ const galleryImages = achievement.data.images ?? [];
       <div style="margin-bottom:1.5rem; display:flex; justify-content:center;
                   background:var(--um-blue-light); border-radius:4px; padding:1rem;">
         <Image src={achievement.data.coverImage} alt={achievement.data.title}
-               width={1200} height={1200}
                style="max-width:100%; max-height:550px; width:auto; height:auto;
                       object-fit:contain; display:block;" />
       </div>
@@ -67,7 +66,7 @@ const galleryImages = achievement.data.images ?? [];
 
         <div id="lightbox-data" style="display:none;">
           {galleryImages.map((img: ImageMetadata) => (
-            <Image src={img} alt="" width={1600} height={1600}
+            <Image src={img} alt="" 
                    class="lightbox-source" style="display:none;" />
           ))}
         </div>
@@ -79,6 +78,24 @@ const galleryImages = achievement.data.images ?? [];
           <button class="lightbox-next" aria-label="Next">›</button>
           <div class="lightbox-counter"></div>
         </div>
+      </div>
+    )}
+
+    {achievement.data.videos && achievement.data.videos.length > 0 && (
+      <div style="margin-top:1.75rem;">
+        <div class="section-heading"><h3>Videos</h3></div>
+        {achievement.data.videos.map((videoUrl: string) => (
+          <div style="margin-bottom:1rem; border-radius:4px; overflow:hidden; background:var(--um-blue-light);">
+            <video 
+              width="100%" 
+              height="auto" 
+              controls 
+              style="display:block; max-width:100%;">
+              <source src={videoUrl} type="video/mp4" />
+              Tvoj brskalnik ne podpira videoposnetkov v formatu HTML5.
+            </video>
+          </div>
+        ))}
       </div>
     )}
 

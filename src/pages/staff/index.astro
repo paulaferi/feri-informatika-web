@@ -46,7 +46,7 @@ function getSection(member: typeof staff[0]) {
             <a href={`${base}/staff/${p.id}`} class="staff-card">
               <div class="staff-avatar">
                 {p.data.photo
-                  ? <Image src={p.data.photo} alt={p.data.name} width={76} height={76} />
+                  ? <Image src={p.data.photo} alt={p.data.name}  />
                   : <span>{p.data.name.charAt(0)}</span>
                 }
               </div>

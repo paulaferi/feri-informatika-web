@@ -248,6 +248,13 @@ export default defineConfig({
               { name: "images", label: "Dodatne slike", widget: "list", required: false,
                 field: { name: "image", label: "Slika", widget: "image" } },
               { name: "body", label: "Celotno besedilo", widget: "markdown" },
+              {
+                name: "videos",
+                label: "Videoposnetki",
+                widget: "list",
+                required: false,
+                field: { name: "video", label: "Video (ruta o URL)", widget: "string" },
+              },
             ],
           },
           {
