@@ -6,7 +6,7 @@ A professional website for the Institute of Informatics (FERI, University of Mar
 
 A professional institutional website with full bilingual support (Slovenian + English) and content management through a graphical interface, no coding required.
 
-**Live website:** https://paulaferi.github.io/feri-informatika-web
+**Live website:** https://institut-za-informatiko.github.io/feri-informatika-web
 **CMS (editing):** `/admin` (free access via Sveltia CMS)
 
 ##  What's on the website?
@@ -25,7 +25,7 @@ A professional institutional website with full bilingual support (Slovenian + En
 
 ### For Editors
 
-1. Go to **https://paulaferi.github.io/feri-informatika-web/admin**
+1. Go to **https://institut-za-informatiko.github.io/feri-informatika-web/admin**
 2. Login with GitHub account (must be repo contributor)
 3. Select a collection (e.g., "News", "Achievements", "Staff")
 4. Add, edit or delete content
@@ -35,18 +35,21 @@ A professional institutional website with full bilingual support (Slovenian + En
 ### For Development Teams
 
 ```bash
+# Enable pnpm (once, via corepack)
+corepack enable
+
 # Install dependencies
-npm install
+pnpm install
 
 # Local development server
-npm run dev
+pnpm dev
 # Access: http://localhost:4321/feri-informatika-web
 
 # Production build
-npm run build
+pnpm build
 
 # Preview the build
-npm run preview
+pnpm preview
 ```
 
 **Detailed guide:** See `DEVELOPMENT.md`

@@ -5,25 +5,55 @@
 ### Requirements
 
 - **Node.js** ≥ 22.12.0
-- **npm** (or pnpm/yarn)
+- **pnpm** (enable via `corepack enable`)
 - **Git** (for version control)
-- **VS Code** (recommended) with Astro extensions
+- **VS Code** (recommended) with Astro + Biome extensions
+- _Optional (secrets):_ `sops`, `age`, `just` — `brew install sops age just`
 
 ### Installation
 
 ```bash
 # Clone the repository
-git clone https://github.com/paulaferi/feri-informatika-web.git
+git clone https://github.com/Institut-za-informatiko/feri-informatika-web.git
 cd feri-informatika-web
 
+# Enable pnpm (once)
+corepack enable
+
 # Install dependencies
-npm install
+pnpm install
 
 # Start local development server
-npm run dev
+pnpm dev
 ```
 
 Access: **http://localhost:4321/feri-informatika-web**
+
+### Lint & format
+
+Biome handles linting and formatting (JS/TS/JSON; `.astro` files are left to
+the Astro tooling).
+
+```bash
+pnpm lint       # check + auto-fix + organize imports
+pnpm format     # format only
+pnpm lint:ci    # check without writing (used in CI)
+```
+
+### Secrets (sops + age)
+
+The repo currently needs **no environment variables** to build or run — the
+tooling below is scaffolded for when a secret is first introduced.
+
+Encrypted `.env.enc` is committed; the plaintext `.env` is gitignored. Recipients
+are configured in `.sops.yaml`. Your **private** age key lives outside the repo at
+the sops default path (macOS: `~/Library/Application Support/sops/age/keys.txt`).
+
+```bash
+just decrypt    # .env.enc -> .env
+just encrypt    # .env -> .env.enc
+just edit-env   # edit .env.enc in place
+```
 
 ##  Architecture
 

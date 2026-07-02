@@ -4,7 +4,7 @@ For editors and content managers using Sveltia CMS. **No coding required.**
 
 ##  How to Login
 
-1. Open: **https://paulaferi.github.io/feri-informatika-web/admin**
+1. Open: **https://institut-za-informatiko.github.io/feri-informatika-web/admin**
 2. Click **"Login with GitHub"**
 3. Authenticate with your GitHub account (must be repo contributor)
 4. You're now in the CMS!

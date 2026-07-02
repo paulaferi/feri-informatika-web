@@ -13,9 +13,13 @@ yarn-error.log*
 pnpm-debug.log*
 
 
-# environment variables
+# environment variables (encrypted .env.enc is committed)
 .env
 .env.production
+
+# age private key material (must never be committed)
+age-key.txt
+keys.txt
 
 # macOS-specific files
 .DS_Store

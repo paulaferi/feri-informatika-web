@@ -1,0 +1,52 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.4.16/schema.json",
+  "files": {
+    "includes": [
+      "src/**/*.ts",
+      "src/**/*.tsx",
+      "src/**/*.js",
+      "src/**/*.mjs",
+      "src/**/*.json",
+      "*.ts",
+      "*.mjs",
+      "*.json",
+      "!**/node_modules",
+      "!**/dist",
+      "!**/.astro",
+      "!**/*.astro"
+    ]
+  },
+  "assist": { "actions": { "source": { "organizeImports": "on" } } },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "complexity": { "noStaticOnlyClass": "off", "noForEach": "off" },
+      "style": { "noNonNullAssertion": "off" },
+      "suspicious": { "noExplicitAny": "off", "noImplicitAnyLet": "off" },
+      "security": { "noDangerouslySetInnerHtml": "off" },
+      "correctness": {
+        "noUnusedImports": { "level": "error", "fix": "safe" },
+        "useExhaustiveDependencies": "off"
+      },
+      "a11y": { "useKeyWithClickEvents": "off" }
+    }
+  },
+  "formatter": { "enabled": true, "indentStyle": "space", "indentWidth": 2 },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single",
+      "trailingCommas": "es5",
+      "lineEnding": "lf",
+      "semicolons": "always"
+    }
+  },
+  "json": {
+    "formatter": {
+      "enabled": true,
+      "indentStyle": "space",
+      "indentWidth": 2,
+      "lineEnding": "lf"
+    }
+  }
+}
